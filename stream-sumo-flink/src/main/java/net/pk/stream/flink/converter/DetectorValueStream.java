@@ -1,5 +1,7 @@
 package net.pk.stream.flink.converter;
 
+import java.io.File;
+
 import javax.annotation.Nullable;
 
 import org.apache.flink.core.fs.FileSystem.WriteMode;
@@ -8,7 +10,7 @@ import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.time.Time;
 
-import net.pk.stream.api.converter.Querying;
+import net.pk.stream.api.query.Querying;
 import net.pk.stream.format.DetectorValue;
 
 /**
@@ -25,6 +27,11 @@ import net.pk.stream.format.DetectorValue;
  */
 public class DetectorValueStream implements Querying {
 
+	/**
+	 * 
+	 */
+	public final static String DETECTOR_VALUE_FILE_PATH = System.getProperty("detectorvalue.filepath",
+			System.getProperty("project.build.directory") + File.separator + "detector-value.csv");
 	private String host;
 	private int port;
 	private final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
