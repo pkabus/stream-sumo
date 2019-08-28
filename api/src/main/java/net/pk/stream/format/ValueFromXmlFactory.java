@@ -12,45 +12,30 @@ import org.xml.sax.SAXException;
 
 import net.pk.stream.xml.util.DocumentDelivery;
 
-/** This factory is responsible for the creation and parsing (xml) of {@link DetectorValue} objects.
+/**
+ * This interface extends the {@link Factory} class to a factory that is able to
+ * parse xml to create an {@link AbstractValue}.
+ * 
  * @author peter
  *
+ * @param <V> generic type that is created by the factory
  */
-public class DetectorValueFactory implements Factory<DetectorValue> {
+public interface ValueFromXmlFactory<V extends AbstractValue> extends Factory<V> {
 
-	private static DetectorValueFactory instance;
-
-	private DetectorValueFactory() {
-		//
-	}
-
-	/** Singleton class. Use this to get the only instance.
-	 * @return factory instance
-	 */
-	public static DetectorValueFactory getInstance() {
-		if (instance == null) {
-			instance = new DetectorValueFactory();
-		}
-
-		return instance;
-	}
-
-	@Override
-	public DetectorValue create() {
-		return new DetectorValue();
-	}
-
-	/** Parse the given xml to a {@link DetectorValue} object. Warning: some attributes may not be set.
+	/**
+	 * Parse the given xml to a {@link E1DetectorValue} object. Warning: some
+	 * attributes may not be set.
+	 * 
 	 * @param str xml representation
 	 * @return value object
 	 */
 	@Nullable
-	public DetectorValue parseXml(@Nullable final String str) {
+	default V parseXml(@Nullable final String str) {
 		if (str == null) {
 			return null;
 		}
-		
-		final DetectorValue detValue = this.create();
+
+		final V detValue = this.create();
 		Document document = null;
 		try {
 			document = new DocumentDelivery().convertDocument(str);
@@ -65,4 +50,5 @@ public class DetectorValueFactory implements Factory<DetectorValue> {
 		}
 		return detValue;
 	}
+
 }

@@ -4,7 +4,7 @@ package net.pk.stream.format;
  * @author peter
  *
  */
-public class DetectorValue implements AbstractValue {
+public class E1DetectorValue implements AbstractValue {
 
 	public final static String SUFFIX = "/>";
 	public final static String PREFIX = "<interval";
@@ -250,9 +250,9 @@ public class DetectorValue implements AbstractValue {
 	
 	@Override
 	public boolean equals(Object other) {
-		DetectorValue val = null;
-		if (other instanceof DetectorValue) {
-			val = (DetectorValue) other;
+		E1DetectorValue val = null;
+		if (other instanceof E1DetectorValue) {
+			val = (E1DetectorValue) other;
 		} else {
 			return false;
 		}
@@ -272,5 +272,10 @@ public class DetectorValue implements AbstractValue {
 				+ KEY_OCCUPANCY + "=\"" + this.occupancy + "\" " + KEY_SPEED + "=\"" + this.speed + "\" "
 				+ KEY_HARMONICMEANSPEED + "=\"" + this.harmonicMeanSpeed + "\" " + KEY_LENGTH + "=\"" + this.length + "\" "
 				+ KEY_NVEHENTERED + "=\"" + this.nVehEntered + "\" />";
+	}
+
+	@Override
+	public Number getTimestamp() {
+		return this.end;
 	}
 }

@@ -86,4 +86,9 @@ public class TLSValue implements AbstractValue {
 		return state;
 	}
 
+	@Override
+	public Number getTimestamp() {
+		return this.time;
+	}
+
 }

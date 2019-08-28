@@ -3,9 +3,9 @@ package net.pk.stream.flink.converter;
 import org.apache.flink.streaming.api.datastream.DataStream;
 
 import net.pk.stream.flink.function.FileToDetectorValueFunction;
-import net.pk.stream.format.DetectorValue;
+import net.pk.stream.format.E1DetectorValue;
 
-/** Converts a plain text stream to a {@link DetectorValue} stream.
+/** Converts a plain text stream to a {@link E1DetectorValue} stream.
  * @author peter
  *
  */
@@ -15,7 +15,7 @@ public class DetectorValueConverter {
 	 * @param plainStream text stream
 	 * @return object stream
 	 */
-	public static DataStream<DetectorValue> convert(DataStream<String> plainStream) {
+	public static DataStream<E1DetectorValue> convert(DataStream<String> plainStream) {
 		return plainStream.filter(s -> {
 			// only allow records like '<interval[...]/>'
 			return s.trim().startsWith("<interval") && s.trim().endsWith("/>");

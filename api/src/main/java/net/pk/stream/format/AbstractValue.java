@@ -6,7 +6,7 @@ package net.pk.stream.format;
  * @author peter
  *
  */
-public interface AbstractValue {
+public interface AbstractValue extends Comparable<AbstractValue> {
 
 	/**
 	 * Set given attribute with the given value.
@@ -15,5 +15,49 @@ public interface AbstractValue {
 	 * @param value value to set
 	 */
 	void set(String key, String value);
+
+	/**
+	 * An id for this value type.
+	 * 
+	 * @return id
+	 */
+	String getId();
+
+	/**
+	 * A timestamp related to this object.
+	 * 
+	 * @return timestamp
+	 */
+	Number getTimestamp();
+
+	@Override
+	public default int compareTo(final AbstractValue o) {
+		if (!this.getClass().equals(o.getClass())) {
+			throw new IllegalArgumentException("Cannot compare type " + o.getClass() + " with " + this.getClass());
+		}
+
+		float diff = this.getTimestamp().floatValue() - o.getTimestamp().floatValue();
+		return Math.round(Math.signum(diff));
+	}
+
+	/**
+	 * True, if this value is greater than the given value, false otherwise.
+	 * 
+	 * @param o compare to value
+	 * @return true, if greater
+	 */
+	default boolean greaterThan(final AbstractValue o) {
+		return this.compareTo(o) > 0;
+	}
+
+	/**
+	 * True, if this value is less than the given value, false otherwise.
+	 * 
+	 * @param o compare to value
+	 * @return true, if less
+	 */
+	default boolean lessThan(final AbstractValue o) {
+		return this.compareTo(o) < 0;
+	}
 
 }

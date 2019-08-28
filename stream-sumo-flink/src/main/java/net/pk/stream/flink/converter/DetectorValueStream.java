@@ -11,17 +11,17 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.time.Time;
 
 import net.pk.stream.api.query.Querying;
-import net.pk.stream.format.DetectorValue;
+import net.pk.stream.format.E1DetectorValue;
 
 /**
  * This stream encapsulation is a set of flink stream jobs. It defines the
  * stream queries that are put on the incoming socket stream of sensor data.
  * First, it converts the incoming raw line separated text to value-objects
- * {@link DetectorValue}s. Then a set of filtering and grouping jobs reduce the
+ * {@link E1DetectorValue}s. Then a set of filtering and grouping jobs reduce the
  * amount of data. In the end the output is written to a file (and printed on
  * the command line).
  * 
- * @see DetectorValue
+ * @see E1DetectorValue
  * @author peter
  *
  */
@@ -31,12 +31,12 @@ public class DetectorValueStream implements Querying {
 	 * 
 	 */
 	public final static String DETECTOR_VALUE_FILE_PATH = System.getProperty("detectorvalue.filepath",
-			System.getProperty("project.build.directory") + File.separator + "detector-value.csv");
+			System.getProperty("user.dir") + File.separator + "detector-value.csv");
 	private String host;
 	private int port;
 	private final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 	@Nullable
-	private DataStream<DetectorValue> stream;
+	private DataStream<E1DetectorValue> stream;
 
 	/**
 	 * Constructor with socket host and port.
@@ -67,7 +67,7 @@ public class DetectorValueStream implements Querying {
 	 */
 	protected Querying filterStream() {
 		DataStreamSource<String> streamSource = env.socketTextStream(host, port);
-		DataStream<DetectorValue> detectorValuesAll = DetectorValueConverter.convert(streamSource);
+		DataStream<E1DetectorValue> detectorValuesAll = DetectorValueConverter.convert(streamSource);
 		stream = detectorValuesAll //
 				.keyBy("id").reduce((v1, v2) -> v1.getBegin() > v2.getBegin() ? v1 : v2) //
 				/* .keyBy("begin") */.filter(v -> v.getOccupancy() > 0).timeWindowAll(Time.milliseconds(100)) //
