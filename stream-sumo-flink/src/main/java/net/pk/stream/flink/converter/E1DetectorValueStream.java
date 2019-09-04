@@ -25,7 +25,7 @@ import net.pk.stream.format.E1DetectorValue;
  * @author peter
  *
  */
-public class DetectorValueStream implements Querying {
+public class E1DetectorValueStream implements Querying {
 
 	
 	private String host;
@@ -40,7 +40,7 @@ public class DetectorValueStream implements Querying {
 	 * @param host of socket connection
 	 * @param port of socket connection
 	 */
-	public DetectorValueStream(final String host, final int port) {
+	public E1DetectorValueStream(final String host, final int port) {
 		this.host = host;
 		this.port = port;
 	}
