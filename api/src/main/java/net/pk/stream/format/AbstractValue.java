@@ -24,7 +24,7 @@ public interface AbstractValue extends Comparable<AbstractValue> {
 	String getId();
 
 	/**
-	 * A timestamp related to this object.
+	 * A (relative) timestamp related to this object.
 	 * 
 	 * @return timestamp
 	 */
