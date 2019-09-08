@@ -8,7 +8,15 @@ import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.datastream.KeyedStream;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
+import org.apache.flink.streaming.connectors.cassandra.CassandraSink.CassandraPojoSinkBuilder;
+import org.apache.flink.streaming.connectors.cassandra.CassandraSink.CassandraSinkBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.datastax.driver.mapping.Mapper;
+
+import net.pk.db.cassandra.DbBuilder;
+import net.pk.db.cassandra.config.DbConfig;
 import net.pk.stream.api.file.ValueFilePaths;
 import net.pk.stream.api.query.Querying;
 import net.pk.stream.flink.converter.DetectorValueConverter;
@@ -29,8 +37,10 @@ import net.pk.stream.format.E1DetectorValue;
  */
 public class E1DetectorValueStream extends WindowedStreamJob implements Querying {
 
+	private Logger log;
 	private String host;
 	private int port;
+	private boolean useDb;
 	@Nullable
 	private DataStream<E1DetectorValue> stream;
 
@@ -44,6 +54,8 @@ public class E1DetectorValueStream extends WindowedStreamJob implements Querying
 		super();
 		this.host = host;
 		this.port = port;
+		this.useDb = DbConfig.getInstance().getCassandraHost() != null;
+		this.log = LoggerFactory.getLogger(this.getClass());
 	}
 
 	/**
@@ -56,6 +68,8 @@ public class E1DetectorValueStream extends WindowedStreamJob implements Querying
 		super(window);
 		this.host = host;
 		this.port = port;
+		this.useDb = DbConfig.getInstance().getCassandraHost() != null;
+		this.log = LoggerFactory.getLogger(this.getClass());
 	}
 
 	@Override
@@ -63,10 +77,14 @@ public class E1DetectorValueStream extends WindowedStreamJob implements Querying
 		filterStream();
 		stream.writeAsText(ValueFilePaths.getPathE1DetectorValue(), WriteMode.OVERWRITE).setParallelism(1);
 
+		if (useDb) {
+			setCassandraSink();
+		}
+
 		try {
 			getEnv().execute();
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Flink job failed", e);
 		}
 	}
 
@@ -84,6 +102,25 @@ public class E1DetectorValueStream extends WindowedStreamJob implements Querying
 				/* .keyBy("begin") */.filter(v -> v.getOccupancy() > 0).timeWindowAll(getWindow()) //
 				.reduce((v1, v2) -> v1.getOccupancy() > v2.getOccupancy() ? v1 : v2);
 		return this;
+	}
+
+	protected void setCassandraSink() {
+		String cassandraHost = DbConfig.getInstance().getCassandraHost();
+		DbBuilder b = new DbBuilder(E1DetectorValue.CQL_KEYSPACE);
+
+		// drop old keyspace!
+		b.dropKeyspace();
+
+		// create (keyspace and) new table
+		b.createTableE1DetectorValue("e1detectorvalue");
+		CassandraSinkBuilder<E1DetectorValue> sinkBuilder = new CassandraPojoSinkBuilder<>(stream, stream.getType(),
+				stream.getType().createSerializer(stream.getExecutionEnvironment().getConfig()));
+		try {
+			sinkBuilder.setHost(cassandraHost)
+					.setMapperOptions(() -> new Mapper.Option[] { Mapper.Option.saveNullFields(true) }).build();
+		} catch (Exception e) {
+			log.error("Cassandra failed", e);
+		}
 	}
 
 }
