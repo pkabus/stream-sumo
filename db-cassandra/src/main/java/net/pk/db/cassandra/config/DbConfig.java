@@ -12,6 +12,8 @@ import javax.annotation.Nullable;
  *
  */
 public class DbConfig {
+	
+	public final static String SYS_PROP_CASSANDRA_HOST = "cassandra.host";
 
 	private static DbConfig instance;
 	private String cassandraHost;
@@ -54,7 +56,7 @@ public class DbConfig {
 	}
 
 	private void validate() {
-		this.cassandraHost = System.getProperty("cassandra.host");
+		this.cassandraHost = System.getProperty(SYS_PROP_CASSANDRA_HOST);
 	}
 
 	/**
@@ -63,5 +65,13 @@ public class DbConfig {
 	@Nullable
 	public String getCassandraHost() {
 		return cassandraHost;
+	}
+	
+	/**
+	 * @param host
+	 */
+	public void setCassandraHost(final String host) {
+		this.cassandraHost = host;
+		System.getProperty(SYS_PROP_CASSANDRA_HOST);
 	}
 }
