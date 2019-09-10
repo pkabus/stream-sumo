@@ -1,0 +1,34 @@
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://sumo.dlr.de/xsd/additional_file.xsd">
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n10_n1_0" lane="n10_n1_0" pos="87.1"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n10_n1_1" lane="n10_n1_1" pos="87.1"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n11_n1_0" lane="n11_n1_0" pos="87.1"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n11_n1_1" lane="n11_n1_1" pos="87.1"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n2_n1_0" lane="n2_n1_0" pos="76.7"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n2_n1_1" lane="n2_n1_1" pos="76.7"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n4_n1_0" lane="n4_n1_0" pos="76.7"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n4_n1_1" lane="n4_n1_1" pos="76.7"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n1_n2_0" lane="n1_n2_0" pos="76.7"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n1_n2_1" lane="n1_n2_1" pos="76.7"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n20_n2_0" lane="n20_n2_0" pos="87.1"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n20_n2_1" lane="n20_n2_1" pos="87.1"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n21_n2_0" lane="n21_n2_0" pos="87.1"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n21_n2_1" lane="n21_n2_1" pos="87.1"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n3_n2_0" lane="n3_n2_0" pos="76.7"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n3_n2_1" lane="n3_n2_1" pos="76.7"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n1_n4_0" lane="n1_n4_0" pos="76.7"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n1_n4_1" lane="n1_n4_1" pos="76.7"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n3_n4_0" lane="n3_n4_0" pos="76.7"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n3_n4_1" lane="n3_n4_1" pos="76.7"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n40_n4_0" lane="n40_n4_0" pos="87.1"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n40_n4_1" lane="n40_n4_1" pos="87.1"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n41_n4_0" lane="n41_n4_0" pos="87.1"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n41_n4_1" lane="n41_n4_1" pos="87.1"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n2_n3_0" lane="n2_n3_0" pos="76.7"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n2_n3_1" lane="n2_n3_1" pos="76.7"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n30_n3_0" lane="n30_n3_0" pos="87.09"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n30_n3_1" lane="n30_n3_1" pos="87.09"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n31_n3_0" lane="n31_n3_0" pos="87.09"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n31_n3_1" lane="n31_n3_1" pos="87.09"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n4_n3_0" lane="n4_n3_0" pos="76.7"/>
+    <e1Detector file="${host}:${port}" freq="1" friendlyPos="x" id="e1det_n4_n3_1" lane="n4_n3_1" pos="76.7"/>
+</additional>

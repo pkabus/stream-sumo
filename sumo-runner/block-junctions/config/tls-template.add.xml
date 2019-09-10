@@ -1,0 +1,95 @@
+<additional
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+	<tlLogic id="n1" type="static" programID="n11_n1" offset="0">
+		<phase duration="3" state="rrrryyyyrrrryyyy" />
+		<phase duration="57" state="GGGgrrrrGGGgrrrr" />
+	</tlLogic>
+
+	<tlLogic id="n1" type="static" programID="n4_n1" offset="0">
+		<phase duration="3" state="rrrryyyyrrrryyyy" />
+		<phase duration="57" state="GGGgrrrrGGGgrrrr" />
+	</tlLogic>
+
+	<tlLogic id="n1" type="static" programID="n10_n1" offset="0">
+		<phase duration="3" state="yyyyrrrryyyyrrrr" />
+		<phase duration="57" state="rrrrGGGgrrrrGGGg" />
+	</tlLogic>
+
+	<tlLogic id="n1" type="static" programID="n2_n1" offset="0">
+		<phase duration="3" state="yyyyrrrryyyyrrrr" />
+		<phase duration="57" state="rrrrGGGgrrrrGGGg" />
+	</tlLogic>
+
+
+	<tlLogic id="n2" type="static" programID="n20_n2" offset="0">
+		<phase duration="3" state="rrrryyyyrrrryyyy" />
+		<phase duration="57" state="GGGgrrrrGGGgrrrr" />
+	</tlLogic>
+
+	<tlLogic id="n2" type="static" programID="n3_n2" offset="0">
+		<phase duration="3" state="rrrryyyyrrrryyyy" />
+		<phase duration="57" state="GGGgrrrrGGGgrrrr" />
+	</tlLogic>
+
+	<tlLogic id="n2" type="static" programID="n21_n2" offset="0">
+		<phase duration="3" state="yyyyrrrryyyyrrrr" />
+		<phase duration="57" state="rrrrGGGgrrrrGGGg" />
+	</tlLogic>
+
+	<tlLogic id="n2" type="static" programID="n1_n2" offset="0">
+		<phase duration="3" state="yyyyrrrryyyyrrrr" />
+		<phase duration="57" state="rrrrGGGgrrrrGGGg" />
+	</tlLogic>
+
+
+	<tlLogic id="n3" type="static" programID="n2_n3" offset="0">
+		<phase duration="3" state="rrrryyyyrrrryyyy" />
+		<phase duration="57" state="GGGgrrrrGGGgrrrr" />
+	</tlLogic>
+
+	<tlLogic id="n3" type="static" programID="n31_n3" offset="0">
+		<phase duration="3" state="rrrryyyyrrrryyyy" />
+		<phase duration="57" state="GGGgrrrrGGGgrrrr" />
+	</tlLogic>
+
+	<tlLogic id="n3" type="static" programID="n4_n3" offset="0">
+		<phase duration="3" state="yyyyrrrryyyyrrrr" />
+		<phase duration="57" state="rrrrGGGgrrrrGGGg" />
+	</tlLogic>
+
+	<tlLogic id="n3" type="static" programID="n30_n3" offset="0">
+		<phase duration="3" state="yyyyrrrryyyyrrrr" />
+		<phase duration="57" state="rrrrGGGgrrrrGGGg" />
+	</tlLogic>
+
+
+	<tlLogic id="n4" type="static" programID="n1_n4" offset="0">
+		<phase duration="3" state="rrrryyyyrrrryyyy" />
+		<phase duration="57" state="GGGgrrrrGGGgrrrr" />
+	</tlLogic>
+
+	<tlLogic id="n4" type="static" programID="n40_n4" offset="0">
+		<phase duration="3" state="rrrryyyyrrrryyyy" />
+		<phase duration="57" state="GGGgrrrrGGGgrrrr" />
+	</tlLogic>
+
+	<tlLogic id="n4" type="static" programID="n41_n4" offset="0">
+		<phase duration="3" state="yyyyrrrryyyyrrrr" />
+		<phase duration="57" state="rrrrGGGgrrrrGGGg" />
+	</tlLogic>
+
+	<tlLogic id="n4" type="static" programID="n3_n4" offset="0">
+		<phase duration="3" state="yyyyrrrryyyyrrrr" />
+		<phase duration="57" state="rrrrGGGgrrrrGGGg" />
+	</tlLogic>
+
+<!-- 	<timedEvent type="SaveTLSStates" source="n1" -->
+<!-- 		dest="${host}:${port}" /> -->
+<!-- 	<timedEvent type="SaveTLSStates" source="n2" -->
+<!-- 		dest="${host}:${port}" /> -->
+<!-- 	<timedEvent type="SaveTLSStates" source="n3" -->
+<!-- 		dest="${host}:${port}" /> -->
+<!-- 	<timedEvent type="SaveTLSStates" source="n4" -->
+<!-- 		dest="${host}:${port}" /> -->
+</additional>

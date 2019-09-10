@@ -1,0 +1,14 @@
+<interval begin="11.0" end="12.0" id="e1Detector-n2_0_n2-0" nVehContrib="0" flow="0.0" occupancy="71.26" speed="-1.0" harmonicMeanSpeed="-1.0" length="-1.0" nVehEntered="1" />
+<interval begin="12.0" end="13.0" id="e1Detector-n2_0_n2-0" nVehContrib="0" flow="0.0" occupancy="100.0" speed="-1.0" harmonicMeanSpeed="-1.0" length="-1.0" nVehEntered="0" />
+<interval begin="13.0" end="14.0" id="e1Detector-n2_0_n2-0" nVehContrib="0" flow="0.0" occupancy="100.0" speed="-1.0" harmonicMeanSpeed="-1.0" length="-1.0" nVehEntered="0" />
+<interval begin="14.0" end="15.0" id="e1Detector-n2_1_n2-0" nVehContrib="1" flow="3600.0" occupancy="14.73" speed="12.22" harmonicMeanSpeed="12.22" length="5.0" nVehEntered="0" />
+<interval begin="14.0" end="15.0" id="e1Detector-n2_0_n2-0" nVehContrib="0" flow="0.0" occupancy="100.0" speed="-1.0" harmonicMeanSpeed="-1.0" length="-1.0" nVehEntered="0" />
+<interval begin="15.0" end="16.0" id="e1Detector-n2_0_n2-0" nVehContrib="0" flow="0.0" occupancy="100.0" speed="-1.0" harmonicMeanSpeed="-1.0" length="-1.0" nVehEntered="0" />
+<interval begin="16.0" end="17.0" id="e1Detector-n2_0_n2-0" nVehContrib="0" flow="0.0" occupancy="100.0" speed="-1.0" harmonicMeanSpeed="-1.0" length="-1.0" nVehEntered="0" />
+<interval begin="17.0" end="18.0" id="e1Detector-n2_0_n2-0" nVehContrib="1" flow="3600.0" occupancy="9.23" speed="0.86" harmonicMeanSpeed="0.86" length="5.0" nVehEntered="0" />
+<interval begin="17.0" end="18.0" id="e1Detector-n3_1_n3-0" nVehContrib="0" flow="0.0" occupancy="19.48" speed="-1.0" harmonicMeanSpeed="-1.0" length="-1.0" nVehEntered="1" />
+<interval begin="18.0" end="19.0" id="e1Detector-n3_1_n3-0" nVehContrib="0" flow="0.0" occupancy="100.0" speed="-1.0" harmonicMeanSpeed="-1.0" length="-1.0" nVehEntered="0" />
+<interval begin="19.0" end="20.0" id="e1Detector-n3_1_n3-0" nVehContrib="0" flow="0.0" occupancy="100.0" speed="-1.0" harmonicMeanSpeed="-1.0" length="-1.0" nVehEntered="0" />
+<interval begin="20.0" end="21.0" id="e1Detector-n3_1_n3-0" nVehContrib="0" flow="0.0" occupancy="100.0" speed="-1.0" harmonicMeanSpeed="-1.0" length="-1.0" nVehEntered="0" />
+<interval begin="21.0" end="22.0" id="e1Detector-n2_n1-0" nVehContrib="0" flow="0.0" occupancy="2.99" speed="-1.0" harmonicMeanSpeed="-1.0" length="-1.0" nVehEntered="1" />
+<interval begin="21.0" end="22.0" id="e1Detector-n3_1_n3-0" nVehContrib="0" flow="0.0" occupancy="100.0" speed="-1.0" harmonicMeanSpeed="-1.0" length="-1.0" nVehEntered="0" />

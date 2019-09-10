@@ -1,0 +1,10 @@
+target/
+.settings/
+.classpath
+.project
+*.pyc
+*.class
+*.out.xml
+*value.csv
+testfile
+*.uxf
