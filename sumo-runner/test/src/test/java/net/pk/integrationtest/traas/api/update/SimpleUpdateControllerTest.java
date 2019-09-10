@@ -20,6 +20,25 @@ import net.pk.traas.server.controller.update.SimpleUpdateController;
  */
 public class SimpleUpdateControllerTest extends UpdateFileIntegrationTest {
 
+	
+	/**
+	 * Test the remove method.
+	 */
+	@Test
+	public void testRemove() {
+		ValueFilePaths.setPathE1DetectorValue(Paths.get("target", "test-classes", TEST_FILE_IMAGINARY).toString());
+		
+		copyFileForce(TEST_FILE_FULL, TEST_FILE_IMAGINARY);
+		SimpleUpdateController<E1DetectorValue> controller = new SimpleUpdateController<>(E1DetectorValue.class);
+		controller.update();
+		Collection<E1DetectorValue> values = controller.getValues();
+		assertEquals(15, values.size());
+
+		controller.remove(values.iterator().next());
+		values = controller.getValues();
+		assertEquals(14, values.size());
+	}
+	
 	/**
 	 * Reads the full text file and expects 15 entries for all the most recent
 	 * E1Detector values.
