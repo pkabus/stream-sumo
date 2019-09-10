@@ -1,5 +1,9 @@
 package net.pk.db.cassandra;
 
+import java.time.Duration;
+import java.time.LocalTime;
+import java.util.function.BooleanSupplier;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +19,8 @@ import net.pk.db.cassandra.config.DbConfig;
  */
 public class DbBuilder {
 
+	private final static Duration TIMEOUT = Duration.ofMillis(2500);
+
 	private Logger log;
 	private String keyspace;
 	private String host;
@@ -29,6 +35,26 @@ public class DbBuilder {
 		this.log = LoggerFactory.getLogger(getClass());
 	}
 
+	/**
+	 * @param waitUntil
+	 * @param timeout
+	 */
+	protected void waitForDbOperation(BooleanSupplier waitUntil, Duration timeout) {
+		LocalTime out = LocalTime.now().plus(timeout);
+
+		while (!waitUntil.getAsBoolean() || out.isAfter(LocalTime.now())) {
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				log.error(e.getLocalizedMessage());
+			}
+		}
+
+		if (!waitUntil.getAsBoolean()) {
+			throw new RuntimeException("DB operation failed or timed out.");
+		}
+	}
+
 	public void createKeyspace() {
 		Cluster cluster = Cluster.builder().addContactPoint(host).build();
 		Session session = cluster.connect();
@@ -37,6 +63,8 @@ public class DbBuilder {
 				+ " WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '1'};";
 
 		session.execute(createQuery);
+
+		waitForDbOperation(() -> cluster.getMetadata().getKeyspace(this.keyspace) != null, TIMEOUT);
 	}
 
 	public void dropKeyspace() {
@@ -46,6 +74,7 @@ public class DbBuilder {
 		String dropQuery = "DROP KEYSPACE IF EXISTS " + this.keyspace + ";";
 
 		session.execute(dropQuery);
+		waitForDbOperation(() -> cluster.getMetadata().getKeyspace(this.keyspace) == null, TIMEOUT);
 	}
 
 	/**
@@ -61,6 +90,7 @@ public class DbBuilder {
 				+ "	occupancy float, speed float, harmonicMeanSpeed float, length float, nVehEntered int);";
 
 		session.execute(createQuery);
+		waitForDbOperation(() -> cluster.getMetadata().getKeyspace(this.keyspace).getTable(tableName) != null, TIMEOUT);
 	}
 
 	/**
@@ -79,6 +109,7 @@ public class DbBuilder {
 
 		String dropQuery = "DROP TABLE IF EXISTS " + tableName + ";";
 		session.execute(dropQuery);
+		waitForDbOperation(() -> cluster.getMetadata().getKeyspace(this.keyspace).getTable(tableName) == null, TIMEOUT);
 	}
 
 }

@@ -19,7 +19,7 @@ import net.pk.db.cassandra.config.DbConfig;
  * @author peter
  *
  */
-class DbBuilderTest {
+public class DbBuilderTest {
 	public final static String TEST_KEYSPACE = "junit5_testcase";
 	public final static String TEST_TABLE_E1DETECTORVALUE = "e1detectorvalue";
 	public final static String TEST_HOST = "127.0.0.1";
