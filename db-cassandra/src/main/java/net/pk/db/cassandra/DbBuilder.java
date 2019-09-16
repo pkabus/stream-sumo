@@ -14,6 +14,9 @@ import com.datastax.driver.core.exceptions.InvalidQueryException;
 import net.pk.db.cassandra.config.DbConfig;
 
 /**
+ * This class is responsible for creating and editing a single keyspace using
+ * the com.datastax driver.
+ * 
  * @author peter
  *
  */
@@ -26,8 +29,10 @@ public class DbBuilder {
 	private String host;
 
 	/**
-	 * @param keyspace
-	 * @param host
+	 * Constructor.
+	 * 
+	 * @param keyspace to create and/or edit.
+	 * @param host     of cassandra DB
 	 */
 	public DbBuilder(final String keyspace) {
 		this.host = DbConfig.getInstance().getCassandraHost();
@@ -36,8 +41,11 @@ public class DbBuilder {
 	}
 
 	/**
-	 * @param waitUntil
-	 * @param timeout
+	 * This method offers a blocking wait until the given condition is fulfilled or
+	 * the timeout expired.
+	 * 
+	 * @param waitUntil condition
+	 * @param timeout   max wait
 	 */
 	protected void waitForDbOperation(BooleanSupplier waitUntil, Duration timeout) {
 		LocalTime out = LocalTime.now().plus(timeout);
@@ -55,6 +63,11 @@ public class DbBuilder {
 		}
 	}
 
+	/**
+	 * Create the keyspace given to this object's constructor. If the keyspace
+	 * already exists, nothing happens. The method waits until the keyspace has been
+	 * created.
+	 */
 	public void createKeyspace() {
 		Cluster cluster = Cluster.builder().addContactPoint(host).build();
 		Session session = cluster.connect();
@@ -67,6 +80,10 @@ public class DbBuilder {
 		waitForDbOperation(() -> cluster.getMetadata().getKeyspace(this.keyspace) != null, TIMEOUT);
 	}
 
+	/**
+	 * Drop keyspace if it exists. The method waits until the modification can be
+	 * retrieved from the DB.
+	 */
 	public void dropKeyspace() {
 		Cluster cluster = Cluster.builder().addContactPoint(host).build();
 		Session session = cluster.connect();
@@ -78,7 +95,11 @@ public class DbBuilder {
 	}
 
 	/**
-	 * @param tableName
+	 * Create table for abstract value E1DetectorValue. If the predefined keyspace
+	 * does not yet exist, this method creates it first. After the table has been
+	 * created, the method blocks until one get retrieve the table from the DB.
+	 * 
+	 * @param tableName of table to create
 	 */
 	public void createTableE1DetectorValue(final String tableName) {
 		Cluster cluster = Cluster.builder().addContactPoint(host).build();
@@ -94,7 +115,10 @@ public class DbBuilder {
 	}
 
 	/**
-	 * @param tableName
+	 * Drops the table with the given name in the predefined keyspace. If the table
+	 * does not exist, nothing happens. Method blocks until change is made.
+	 * 
+	 * @param tableName to delete
 	 */
 	public void dropTableE1DetectorValue(final String tableName) {
 		Cluster cluster = Cluster.builder().addContactPoint(host).build();
@@ -103,7 +127,7 @@ public class DbBuilder {
 			session = cluster.connect(keyspace);
 		} catch (InvalidQueryException e) {
 			// keyspace does not exists, so we do not need to do anything else
-			this.log.debug("See exception, probably keyspace " + keyspace + " does not exist.", e);
+			this.log.debug("See exception, probably the keyspace " + keyspace + " does not exist.", e);
 			return;
 		}
 

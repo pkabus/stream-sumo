@@ -8,6 +8,8 @@ import net.pk.stream.format.E1DetectorValue;
 import net.pk.traas.api.EnvironmentConfig;
 
 /**
+ * Abstract class that is defining the TraCI lifecycle for the scenarios. Starts Sumo and the stream job(s).
+ * 
  * @author peter
  *
  */
@@ -42,7 +44,8 @@ public abstract class TraasServer {
 
 			@Override
 			public void run() {
-				E1DetectorValueStream streamHandler = new E1DetectorValueStream(config.getStreamProcessingHost(), config.getStreamProcessingPortBy(E1DetectorValue.class));
+				E1DetectorValueStream streamHandler = new E1DetectorValueStream(config.getStreamProcessingHost(),
+						config.getStreamProcessingPortBy(E1DetectorValue.class));
 				streamHandler.out();
 			}
 		});

@@ -4,7 +4,7 @@ import net.pk.traas.server.AsyncServer;
 import net.pk.traas.server.start.StartupUtil;
 
 /**
- * Start the sumo simulation scenario 'TCross' supported by the intelligent
+ * Start the sumo simulation scenario 'grid-stretched' supported by the intelligent
  * transportation system which is based on a streaming engine.
  * 
  * @author peter
