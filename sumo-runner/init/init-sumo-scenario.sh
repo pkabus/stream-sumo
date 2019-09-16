@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SUMO_RUNNER_HOME=/home/peter/master/sumo-runner/
+SUMO_RUNNER_HOME=/home/peter/master/modules/sumo-runner/
 INIT_HOME=$SUMO_RUNNER_HOME/init/
 
 create_dirs() {
@@ -14,6 +14,7 @@ create_dirs() {
 	sed -e "s|\${scenario-name}|$1|g" $INIT_HOME/generate.sh  > $SUMO_RUNNER_HOME/$1/config/generate.sh
 	sed -e "s|\${scenario-name}|$1|g" $INIT_HOME/generate-e1detectors.sh > $SUMO_RUNNER_HOME/$1/config/generate-e1detectors.sh
 }
+
 
 if [ -z "${1}" ]
 then
