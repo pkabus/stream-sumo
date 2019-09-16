@@ -1,0 +1,1 @@
+python $SUMO_HOME/tools/randomTrips.py -n /home/peter/master/sumo-runner/grid-stretched/config/grid-stretched.net.xml -e 500 -o /home/peter/master/sumo-runner/grid-stretched/config/trips.trips.xml --validate --seed 42 --fringe-factor 1000

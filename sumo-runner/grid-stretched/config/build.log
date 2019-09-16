@@ -1,0 +1,11 @@
+# Tools:
+# init-sumo-scenario.sh
+# NETGENERATE
+# NETEDIT (manual modifications)
+
+~/master/modules/sumo-runner/init/init-sumo-scenario grid-stretched && cd ~/master/modules/sumo-runner/grid-stretched/config
+NETGENERATE --grid --output-file=grid-stretched.net.xml
+
+# NETEDIT: added dead ends
+# NETEDIT: added tls and saved to extra file (tls.add.xml) 
+# TEXTEDITOR: added tls phases for all junctions and all possible programs
