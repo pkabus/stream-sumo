@@ -488,4 +488,24 @@
 		<phase duration="42" state="rrGGGr" />
 	</tlLogic>
 
+	<timedEvent type="SaveTLSStates" source="A0" dest="${host}:${port}"/> 
+	<timedEvent type="SaveTLSStates" source="A1" dest="${host}:${port}"/> 
+	<timedEvent type="SaveTLSStates" source="A2" dest="${host}:${port}"/> 
+	<timedEvent type="SaveTLSStates" source="A3" dest="${host}:${port}"/> 
+	<timedEvent type="SaveTLSStates" source="A4" dest="${host}:${port}"/> 
+	<timedEvent type="SaveTLSStates" source="B0" dest="${host}:${port}"/> 
+	<timedEvent type="SaveTLSStates" source="B1" dest="${host}:${port}"/> 
+	<timedEvent type="SaveTLSStates" source="B2" dest="${host}:${port}"/> 
+	<timedEvent type="SaveTLSStates" source="B3" dest="${host}:${port}"/> 
+	<timedEvent type="SaveTLSStates" source="B4" dest="${host}:${port}"/> 
+	<timedEvent type="SaveTLSStates" source="C0" dest="${host}:${port}"/> 
+	<timedEvent type="SaveTLSStates" source="C1" dest="${host}:${port}"/> 
+	<timedEvent type="SaveTLSStates" source="C2" dest="${host}:${port}"/> 
+	<timedEvent type="SaveTLSStates" source="C3" dest="${host}:${port}"/> 
+	<timedEvent type="SaveTLSStates" source="C4" dest="${host}:${port}"/> 
+	<timedEvent type="SaveTLSStates" source="D0" dest="${host}:${port}"/> 
+	<timedEvent type="SaveTLSStates" source="D1" dest="${host}:${port}"/> 
+	<timedEvent type="SaveTLSStates" source="D2" dest="${host}:${port}"/> 
+	<timedEvent type="SaveTLSStates" source="D3" dest="${host}:${port}"/> 
+	<timedEvent type="SaveTLSStates" source="D4" dest="${host}:${port}"/> 
 </additionals>

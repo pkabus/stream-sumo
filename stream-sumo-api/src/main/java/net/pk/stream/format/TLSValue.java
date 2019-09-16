@@ -91,4 +91,11 @@ public class TLSValue implements AbstractValue {
 		return this.time;
 	}
 
+	@Override
+	public String toString() {
+		return "<tlsState " + KEY_TIME + "=\"" + this.getTime() + "\" " + KEY_ID + "=\"" + this.id + "\" "
+				+ KEY_PROGRAMID + "=\"" + this.programId + "\" " + KEY_PHASE + "=\"" + this.phase + "\" " + KEY_STATE
+				+ "=\"" + this.state + "\" />";
+	}
+
 }

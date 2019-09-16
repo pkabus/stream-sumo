@@ -4,17 +4,11 @@ import java.net.SocketTimeoutException;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.pk.comm.socket.server.ForwardingSocketServer;
-import net.pk.stream.format.E1DetectorValue;
-import net.pk.stream.format.TLSValue;
+import net.pk.stream.format.AbstractValue;
 import net.pk.traas.api.EnvironmentConfig;
 
 /**
@@ -30,96 +24,50 @@ public final class StartupUtil {
 
 	private EnvironmentConfig env = EnvironmentConfig.getInstance();
 	private List<ForwardingSocketServer> socketServers = new LinkedList<ForwardingSocketServer>();
+	private Logger log = LoggerFactory.getLogger(getClass());
+
 
 	/**
-	 * Ingest program arguments.
+	 * Create socketServer {@link Thread} for the given type.
 	 * 
-	 * @param args
+	 * @param <V>  type
+	 * @param type class of type {@link AbstractValue}
+	 * @param waitForServer if true, this 
+	 * @return new thread
 	 */
-	public void ingestArgs(String... args) {
-		Options options = new Options();
+	public <V extends AbstractValue> Thread createSocketServerForType(final Class<V> type, boolean waitForServer) {
+		int port = env.getStreamProcessingPortBy(type);
+		final ForwardingSocketServer typeSpecificSocketServer = new ForwardingSocketServer(port);
 
-		Option h = new Option("h", "host", true, "Socket Host, where the stream processor gets its input from");
-		h.setRequired(false);
-		options.addOption(h);
-
-		Option p = new Option("p", "port", true, "Socket Port");
-		p.setRequired(false);
-		options.addOption(p);
-
-		CommandLineParser parser = new DefaultParser();
-		HelpFormatter formatter = new HelpFormatter();
-		CommandLine cmd = null;
-
-		try {
-			cmd = parser.parse(options, args);
-		} catch (ParseException pe) {
-			formatter.printHelp("Block-Cross SUMO scenario", options);
+		if (waitForServer) {
+			socketServers.add(typeSpecificSocketServer);
 		}
-
-		String host = cmd.getOptionValue("host");
-		String port = cmd.getOptionValue("port");
-
-		if (host != null) {
-			env.setStreamProcessingHost(host);
-		}
-
-		if (port != null) {
-			int portNumber = Integer.parseInt(port);
-
-			env.setStreamProcessingPortFor(E1DetectorValue.class, portNumber++);
-			env.setStreamProcessingPortFor(TLSValue.class, portNumber++);
-		}
-	}
-
-	/**
-	 * Create {@link Thread} for {@link E1DetectorValue} socketServer.
-	 * 
-	 * @return thread
-	 */
-	public Thread createE1DetectorValueSocketServer() {
-		final ForwardingSocketServer detectorSocketServer = new ForwardingSocketServer(
-				env.getStreamProcessingPortBy(E1DetectorValue.class));
-		socketServers.add(detectorSocketServer);
 
 		return new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				try {
-					detectorSocketServer.run();
+					String waitBefore = (waitForServer) ? " and wait for it to start up." : "";
+					StartupUtil.this.log.info("Use port " + port + " for values of " + type + waitBefore);
+					typeSpecificSocketServer.run();
 				} catch (SocketTimeoutException e) {
 					e.printStackTrace();
 					System.exit(1);
 				}
 			}
 		});
-
 	}
 
 	/**
-	 * Create {@link Thread} for {@link TLSValue} socketServer.
+	 * Create socketServer {@link Thread} for the given type. Wait for socketServer included.
 	 * 
-	 * @return thread
+	 * @param <V>  type
+	 * @param type class of type {@link AbstractValue}
+	 * @return new thread
 	 */
-	public Thread createTLSValueSocketServer() {
-		final ForwardingSocketServer tlsSocketServer = new ForwardingSocketServer(
-				env.getStreamProcessingPortBy(TLSValue.class));
-		socketServers.add(tlsSocketServer);
-
-		return new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					tlsSocketServer.run();
-				} catch (SocketTimeoutException e) {
-					e.printStackTrace();
-					System.exit(1);
-				}
-			}
-		});
-
+	public <V extends AbstractValue> Thread createSocketServerForType(final Class<V> type) {
+		return this.createSocketServerForType(type, true);
 	}
 
 	/**

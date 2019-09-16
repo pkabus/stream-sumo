@@ -8,11 +8,14 @@ import org.slf4j.LoggerFactory;
 import de.tudresden.sumo.cmd.Simulation;
 import it.polito.appeal.traci.SumoTraciConnection;
 import net.pk.stream.flink.job.E1DetectorValueStream;
+import net.pk.stream.flink.job.TLSValueStream;
 import net.pk.stream.format.E1DetectorValue;
+import net.pk.stream.format.TLSValue;
 import net.pk.traas.api.EnvironmentConfig;
 
 /**
- * Abstract class that is defining the TraCI lifecycle for the scenarios. Starts Sumo and the stream job(s).
+ * Abstract class that is defining the TraCI lifecycle for the scenarios. Starts
+ * Sumo and the stream job(s).
  * 
  * @author peter
  *
@@ -23,7 +26,7 @@ public abstract class TraasServer {
 	private static EnvironmentConfig config = EnvironmentConfig.getInstance();
 	private SumoTraciConnection connection;
 	private Logger log;
-	
+
 	/**
 	 * Constructor.
 	 * 
@@ -45,17 +48,35 @@ public abstract class TraasServer {
 	/**
 	 * Second lifecycle phase: start stream job(s).
 	 */
-	protected void startStreamJob() {
-		Thread streamThread = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				E1DetectorValueStream streamHandler = new E1DetectorValueStream(config.getStreamProcessingHost(),
-						config.getStreamProcessingPortBy(E1DetectorValue.class));
-				streamHandler.out();
-			}
-		});
+	protected void startStreamJobs() {
+		Thread streamThread = new Thread(new E1DetectorStreamRunnable());
 		streamThread.start();
+
+		int tlsPort = config.getStreamProcessingPortBy(TLSValue.class);
+		if (tlsPort > 0) {
+			Thread tlsStreamThread = new Thread(new TlsStreamRunnable());
+			tlsStreamThread.start();
+		}
+	}
+
+	private class E1DetectorStreamRunnable implements Runnable {
+
+		@Override
+		public void run() {
+			E1DetectorValueStream streamHandler = new E1DetectorValueStream(config.getStreamProcessingHost(),
+					config.getStreamProcessingPortBy(E1DetectorValue.class));
+			streamHandler.out();
+		}
+	}
+
+	private class TlsStreamRunnable implements Runnable {
+
+		@Override
+		public void run() {
+			TLSValueStream streamTls = new TLSValueStream(config.getStreamProcessingHost(),
+					config.getStreamProcessingPortBy(TLSValue.class));
+			streamTls.out();
+		}
 	}
 
 	/**
@@ -86,7 +107,7 @@ public abstract class TraasServer {
 		}
 
 		/*** SECOND: START FLINK JOB ***/
-		this.startStreamJob();
+		this.startStreamJobs();
 	}
 
 	/**
@@ -104,9 +125,9 @@ public abstract class TraasServer {
 		try {
 			doSimulation();
 
-		/*** FOURTH: LOG FINISHING TIME ***/
-		this.log.info("Finished at timestep " + connection.do_job_get(Simulation.getTime()));
-		
+			/*** FOURTH: LOG FINISHING TIME ***/
+			this.log.info("Finished at timestep " + connection.do_job_get(Simulation.getTime()));
+
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

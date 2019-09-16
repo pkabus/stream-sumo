@@ -1,5 +1,6 @@
 package net.pk.traas.server.tjunction;
 
+import net.pk.stream.format.E1DetectorValue;
 import net.pk.traas.server.AsyncServer;
 import net.pk.traas.server.start.StartupUtil;
 
@@ -19,9 +20,8 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		StartupUtil util = new StartupUtil();
-		util.ingestArgs(args);
 
-		Thread detectorThread = util.createE1DetectorValueSocketServer();
+		Thread detectorThread = util.createSocketServerForType(E1DetectorValue.class);
 		detectorThread.start();
 
 //		Thread tlsThread = util.createTLSValueSocketServer();

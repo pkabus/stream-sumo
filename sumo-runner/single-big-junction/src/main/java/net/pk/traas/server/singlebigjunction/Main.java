@@ -19,7 +19,6 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		StartupUtil util = new StartupUtil();
-		util.ingestArgs(args);
 
 //		Thread detectorThread = util.createE1DetectorValueSocketServer();
 //		detectorThread.start();

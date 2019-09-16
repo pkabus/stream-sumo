@@ -68,7 +68,7 @@ public class EnvironmentConfig {
 		this.streamHostE1DetectorValuePort = Integer
 				.parseInt(System.getProperty("stream.processing.port.e1detectorvalue", "9000"));
 		this.streamHostTLSValuePort = Integer
-				.parseInt(System.getProperty("stream.processing.port.e1detectorvalue", "9001"));
+				.parseInt(System.getProperty("stream.processing.port.tlsvalue"));
 		this.detectorIdSeparator = System.getProperty("sumo.detector.separator", "_");
 
 		Objects.requireNonNull(sumoBinFilepath);

@@ -488,4 +488,24 @@
 		<phase duration="42" state="rrGGGr" />
 	</tlLogic>
 
+	<timedEvent type="SaveTLSStates" source="A0" dest="localhost:9001"/> 
+	<timedEvent type="SaveTLSStates" source="A1" dest="localhost:9001"/> 
+	<timedEvent type="SaveTLSStates" source="A2" dest="localhost:9001"/> 
+	<timedEvent type="SaveTLSStates" source="A3" dest="localhost:9001"/> 
+	<timedEvent type="SaveTLSStates" source="A4" dest="localhost:9001"/> 
+	<timedEvent type="SaveTLSStates" source="B0" dest="localhost:9001"/> 
+	<timedEvent type="SaveTLSStates" source="B1" dest="localhost:9001"/> 
+	<timedEvent type="SaveTLSStates" source="B2" dest="localhost:9001"/> 
+	<timedEvent type="SaveTLSStates" source="B3" dest="localhost:9001"/> 
+	<timedEvent type="SaveTLSStates" source="B4" dest="localhost:9001"/> 
+	<timedEvent type="SaveTLSStates" source="C0" dest="localhost:9001"/> 
+	<timedEvent type="SaveTLSStates" source="C1" dest="localhost:9001"/> 
+	<timedEvent type="SaveTLSStates" source="C2" dest="localhost:9001"/> 
+	<timedEvent type="SaveTLSStates" source="C3" dest="localhost:9001"/> 
+	<timedEvent type="SaveTLSStates" source="C4" dest="localhost:9001"/> 
+	<timedEvent type="SaveTLSStates" source="D0" dest="localhost:9001"/> 
+	<timedEvent type="SaveTLSStates" source="D1" dest="localhost:9001"/> 
+	<timedEvent type="SaveTLSStates" source="D2" dest="localhost:9001"/> 
+	<timedEvent type="SaveTLSStates" source="D3" dest="localhost:9001"/> 
+	<timedEvent type="SaveTLSStates" source="D4" dest="localhost:9001"/> 
 </additionals>

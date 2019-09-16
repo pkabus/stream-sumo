@@ -50,5 +50,4 @@ public interface ValueFromXmlFactory<V extends AbstractValue> extends Factory<V>
 		}
 		return detValue;
 	}
-
 }

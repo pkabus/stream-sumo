@@ -19,7 +19,7 @@ import net.pk.db.cassandra.DbBuilder;
 import net.pk.db.cassandra.config.DbConfig;
 import net.pk.stream.api.file.ValueFilePaths;
 import net.pk.stream.api.query.Querying;
-import net.pk.stream.flink.converter.DetectorValueConverter;
+import net.pk.stream.flink.converter.PlainTextToStreamConverter;
 import net.pk.stream.format.AbstractValue;
 import net.pk.stream.format.E1DetectorValue;
 
@@ -84,7 +84,7 @@ public class E1DetectorValueStream extends WindowedStreamJob implements Querying
 		try {
 			getEnv().execute();
 		} catch (Exception e) {
-			log.error("Flink job failed", e);
+			log.error("Flink job " + this.getClass() + " failed", e);
 		}
 	}
 
@@ -96,7 +96,7 @@ public class E1DetectorValueStream extends WindowedStreamJob implements Querying
 	 */
 	protected Querying filterStream() {
 		DataStreamSource<String> streamSource = getEnv().socketTextStream(host, port);
-		DataStream<E1DetectorValue> detectorValuesAll = DetectorValueConverter.convert(streamSource);
+		DataStream<E1DetectorValue> detectorValuesAll = PlainTextToStreamConverter.convertXmlToE1DetectorValueStream(streamSource);
 		stream = detectorValuesAll //
 				.keyBy("id").reduce((v1, v2) -> v1.getBegin() > v2.getBegin() ? v1 : v2) //
 				/* .keyBy("begin") */.filter(v -> v.getOccupancy() > 0).timeWindowAll(getWindow()) //

@@ -328,4 +328,5 @@ public class E1DetectorValue implements AbstractValue {
 	public Number getTimestamp() {
 		return this.end;
 	}
+
 }
