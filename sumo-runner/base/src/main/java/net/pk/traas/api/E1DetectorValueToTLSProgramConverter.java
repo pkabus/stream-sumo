@@ -14,12 +14,20 @@ public class E1DetectorValueToTLSProgramConverter implements Function<E1Detector
 
 	@Override
 	public String apply(E1DetectorValue t) {
-		List<String> splitByUnderline = Arrays.asList(t.getId().split("_"));
-		if (splitByUnderline.size() < 2) {
-			throw new RuntimeException("Invalid string format " + t.getId()); 
+		String separator = EnvironmentConfig.getInstance().getSeparator();
+		List<String> splitByUnderline = Arrays.asList(t.getId().split(separator));
+
+		if (splitByUnderline.size() == 3) {
+			// e.g. e1det_A3A4_0
+			return splitByUnderline.get(1);
 		}
-		
-		return splitByUnderline.get(1) + "_" + splitByUnderline.get(2);
+
+		if (splitByUnderline.size() == 4) {
+			// e.g. e1det_n0_n1_0
+			return splitByUnderline.get(1) + separator + splitByUnderline.get(2);
+		}
+
+		throw new RuntimeException("Invalid id format " + t.getId());
 	}
 
 }

@@ -27,6 +27,7 @@ public class EnvironmentConfig {
 	private String streamProcessingHost;
 	private int streamHostE1DetectorValuePort;
 	private int streamHostTLSValuePort;
+	private String detectorIdSeparator;
 
 	/**
 	 * Get singleton.
@@ -68,12 +69,14 @@ public class EnvironmentConfig {
 				.parseInt(System.getProperty("stream.processing.port.e1detectorvalue", "9000"));
 		this.streamHostTLSValuePort = Integer
 				.parseInt(System.getProperty("stream.processing.port.e1detectorvalue", "9001"));
+		this.detectorIdSeparator = System.getProperty("sumo.detector.separator", "_");
 
 		Objects.requireNonNull(sumoBinFilepath);
 		Objects.requireNonNull(configFilepath);
 		Objects.requireNonNull(streamProcessingHost);
 		Objects.requireNonNull(streamHostE1DetectorValuePort);
 		Objects.requireNonNull(streamHostTLSValuePort);
+		Objects.requireNonNull(detectorIdSeparator);
 
 		File configFile = new File(this.configFilepath);
 
@@ -154,5 +157,12 @@ public class EnvironmentConfig {
 		}
 
 		throw new RuntimeException("No port defined for type " + ((type != null) ? type : "null"));
+	}
+
+	/** Returns the (detector) id separator character(s). Default separator is underline ("_").
+	 * @return separator
+	 */
+	public String getSeparator() {
+		return this.detectorIdSeparator;
 	}
 }
