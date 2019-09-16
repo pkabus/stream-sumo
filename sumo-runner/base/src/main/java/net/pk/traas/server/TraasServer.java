@@ -2,6 +2,10 @@ package net.pk.traas.server;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import de.tudresden.sumo.cmd.Simulation;
 import it.polito.appeal.traci.SumoTraciConnection;
 import net.pk.stream.flink.job.E1DetectorValueStream;
 import net.pk.stream.format.E1DetectorValue;
@@ -18,13 +22,15 @@ public abstract class TraasServer {
 	public static final double MIN_TLS_CYCLE = 9;
 	private static EnvironmentConfig config = EnvironmentConfig.getInstance();
 	private SumoTraciConnection connection;
-
+	private Logger log;
+	
 	/**
 	 * Constructor.
 	 * 
 	 */
 	public TraasServer() {
 		this.connection = new SumoTraciConnection(config.getSumoBinFile(), config.getConfigFile());
+		this.log = LoggerFactory.getLogger(getClass());
 	}
 
 	/**
@@ -71,6 +77,7 @@ public abstract class TraasServer {
 	public void startupComponents() {
 		/*** FIRST: START SUMO SERVER TO ATTACH SOCAT PORT ***/
 		getConnection().addOption("step-length", "0.1");
+		getConnection().addOption("start", "true");
 		// start Traci Server
 		try {
 			connection.runServer();
@@ -96,11 +103,15 @@ public abstract class TraasServer {
 		beforeSimulation();
 		try {
 			doSimulation();
+
+		/*** FOURTH: LOG FINISHING TIME ***/
+		this.log.info("Finished at timestep " + connection.do_job_get(Simulation.getTime()));
+		
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 
-		/*** FOURTH: CLOSE SUMO CONNECTION ***/
+		/*** FIFTH: CLOSE SUMO CONNECTION ***/
 		finish();
 	}
 

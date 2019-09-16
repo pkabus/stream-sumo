@@ -1,4 +1,6 @@
 <viewsettings>
+	<delay value="500"/>
+
     <scheme name="custom_1">
         <opengl dither="0" fps="0"/>
         <background backgroundColor="white" showGrid="0" gridXSize="100.00" gridYSize="100.00"/>
