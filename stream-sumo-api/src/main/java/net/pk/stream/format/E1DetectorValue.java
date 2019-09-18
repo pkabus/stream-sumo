@@ -11,7 +11,7 @@ import com.datastax.driver.mapping.annotations.Table;
  */
 @Table(keyspace = E1DetectorValue.CQL_KEYSPACE, name = E1DetectorValue.CQL_TABLENAME)
 public class E1DetectorValue implements AbstractValue {
-	public final static String CQL_KEYSPACE = "sumo";
+
 	public final static String CQL_TABLENAME = "e1detectorvalue";
 
 	public final static String SUFFIX = "/>";
@@ -98,6 +98,9 @@ public class E1DetectorValue implements AbstractValue {
 		}
 	}
 	
+	/**
+	 * Constructs new value with random uuid.
+	 */
 	public E1DetectorValue() {
 		this.pk = UUID.randomUUID();
 	}

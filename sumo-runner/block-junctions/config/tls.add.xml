@@ -84,12 +84,12 @@
 		<phase duration="57" state="rrrrGGGgrrrrGGGg" />
 	</tlLogic>
 
-<!-- 	<timedEvent type="SaveTLSStates" source="n1" -->
-<!-- 		dest="localhost:9001" /> -->
-<!-- 	<timedEvent type="SaveTLSStates" source="n2" -->
-<!-- 		dest="localhost:9001" /> -->
-<!-- 	<timedEvent type="SaveTLSStates" source="n3" -->
-<!-- 		dest="localhost:9001" /> -->
-<!-- 	<timedEvent type="SaveTLSStates" source="n4" -->
-<!-- 		dest="localhost:9001" /> -->
+	<timedEvent type="SaveTLSStates" source="n1"
+		dest="localhost:9001" />
+	<timedEvent type="SaveTLSStates" source="n2"
+		dest="localhost:9001" />
+	<timedEvent type="SaveTLSStates" source="n3"
+		dest="localhost:9001" />
+	<timedEvent type="SaveTLSStates" source="n4"
+		dest="localhost:9001" />
 </additional>

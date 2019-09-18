@@ -39,6 +39,7 @@ public class DbBuilderTest {
 		Session s = c.connect();
 		String drop = "DROP KEYSPACE IF EXISTS " + TEST_KEYSPACE + ";";
 		s.execute(drop);
+		c.close();
 	}
 
 	@Test

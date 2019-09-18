@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on Wed Sep  4 18:29:10 2019 by Eclipse SUMO duarouter Version v1_1_0+1526-08c2293b1a
+<!-- generated on Wed Sep 18 16:39:31 2019 by Eclipse SUMO duarouter Version v1_1_0+1526-08c2293b1a
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/duarouterConfiguration.xsd">
 
     <input>
-        <net-file value="/home/peter/master/sumo-runner/t-junction/config/tcross.net.xml"/>
-        <route-files value="/home/peter/master/sumo-runner/t-junction/config/trips.trips.xml"/>
+        <net-file value="/home/peter/master/modules/sumo-runner/t-junction/config/tcross.net.xml"/>
+        <route-files value="/home/peter/master/modules/sumo-runner/t-junction/config/trips.trips.xml"/>
     </input>
 
     <output>
-        <output-file value="/home/peter/master/sumo-runner/t-junction/config/trips.trips.xml.tmp"/>
+        <output-file value="/home/peter/master/modules/sumo-runner/t-junction/config/trips.trips.xml.tmp"/>
         <write-trips value="true"/>
     </output>
 

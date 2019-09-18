@@ -14,5 +14,5 @@
 		<phase duration="60" state="rrGrrGG" />
 		<phase duration="3" state="rryrryy" />
 	</tlLogic>
-<!-- 	<timedEvent type="SaveTLSStates" source="n2" dest="localhost:9001"/>  -->
+ 	<timedEvent type="SaveTLSStates" source="n2" dest="localhost:9001"/>
 </additional>

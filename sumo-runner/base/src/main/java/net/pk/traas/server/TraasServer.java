@@ -2,6 +2,7 @@ package net.pk.traas.server;
 
 import java.io.IOException;
 
+import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,8 +23,8 @@ import net.pk.traas.api.EnvironmentConfig;
  */
 public abstract class TraasServer {
 
+	private EnvironmentConfig config = EnvironmentConfig.getInstance();
 	public static final double MIN_TLS_CYCLE = 9;
-	private static EnvironmentConfig config = EnvironmentConfig.getInstance();
 	private SumoTraciConnection connection;
 	private Logger log;
 
@@ -49,33 +50,37 @@ public abstract class TraasServer {
 	 * Second lifecycle phase: start stream job(s).
 	 */
 	protected void startStreamJobs() {
-		Thread streamThread = new Thread(new E1DetectorStreamRunnable());
+		Thread streamThread = new Thread(new StreamRunner());
 		streamThread.start();
-
-		int tlsPort = config.getStreamProcessingPortBy(TLSValue.class);
-		if (tlsPort > 0) {
-			Thread tlsStreamThread = new Thread(new TlsStreamRunnable());
-			tlsStreamThread.start();
-		}
 	}
 
-	private class E1DetectorStreamRunnable implements Runnable {
+	private class StreamRunner implements Runnable {
 
 		@Override
 		public void run() {
-			E1DetectorValueStream streamHandler = new E1DetectorValueStream(config.getStreamProcessingHost(),
-					config.getStreamProcessingPortBy(E1DetectorValue.class));
-			streamHandler.out();
-		}
-	}
+			StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+			int tlsPort = config.getStreamProcessingPortBy(TLSValue.class);
+			int e1DetPort = config.getStreamProcessingPortBy(E1DetectorValue.class);
 
-	private class TlsStreamRunnable implements Runnable {
+			if (tlsPort > 0) {
+				TLSValueStream streamTls = new TLSValueStream(config.getStreamProcessingHost(),
+						config.getStreamProcessingPortBy(TLSValue.class), env);
+				streamTls.out();
+				TraasServer.this.log.info("ADD STREAM " + TLSValueStream.class + ".");
+			}
 
-		@Override
-		public void run() {
-			TLSValueStream streamTls = new TLSValueStream(config.getStreamProcessingHost(),
-					config.getStreamProcessingPortBy(TLSValue.class));
-			streamTls.out();
+			if (e1DetPort > 0) {
+				E1DetectorValueStream streamE1Detector = new E1DetectorValueStream(config.getStreamProcessingHost(),
+						config.getStreamProcessingPortBy(E1DetectorValue.class), env);
+				streamE1Detector.out();
+				TraasServer.this.log.info("ADD STREAM " + E1DetectorValueStream.class + ".");
+			}
+
+			try {
+				env.execute();
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
 	}
 

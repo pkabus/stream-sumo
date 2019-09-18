@@ -38,10 +38,9 @@ public interface ValueFromXmlFactory<V extends AbstractValue> extends Factory<V>
 		final V detValue = this.create();
 		Document document = null;
 		try {
-			document = new DocumentDelivery().convertDocument(str);
+			document = DocumentDelivery.convertDocument(str);
 		} catch (IllegalArgumentException | SAXException | IOException | ParserConfigurationException e) {
-			e.printStackTrace();
-			return null;
+			throw new RuntimeException(e);
 		}
 		Node node = document.getFirstChild();
 		NamedNodeMap attributes = node.getAttributes();

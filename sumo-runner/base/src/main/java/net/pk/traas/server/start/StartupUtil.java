@@ -8,7 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.pk.comm.socket.server.ForwardingSocketServer;
+import net.pk.db.cassandra.DbBuilder;
+import net.pk.db.cassandra.config.DbConfig;
 import net.pk.stream.format.AbstractValue;
+import net.pk.stream.format.E1DetectorValue;
+import net.pk.stream.format.TLSValue;
 import net.pk.traas.api.EnvironmentConfig;
 
 /**
@@ -23,10 +27,29 @@ import net.pk.traas.api.EnvironmentConfig;
 public final class StartupUtil {
 
 	private EnvironmentConfig env = EnvironmentConfig.getInstance();
+	private DbConfig dbConfig = DbConfig.getInstance();
 	private List<ForwardingSocketServer> socketServers = new LinkedList<ForwardingSocketServer>();
 	private Logger log = LoggerFactory.getLogger(getClass());
 
 
+	public void buildDatabase() {
+		if (dbConfig.getCassandraHost() == null) {
+			this.log.info("No database host set. Cannot build cassandra DB!");
+			return;
+		}
+		
+		DbBuilder b = new DbBuilder(AbstractValue.CQL_KEYSPACE);
+
+		// drop old keyspace!
+		b.dropKeyspace();
+
+		// create (keyspace and) new table
+		b.createTable(E1DetectorValue.CQL_TABLENAME);
+		b.createTable(TLSValue.CQL_TABLENAME);
+		b.close();
+	}
+	
+	
 	/**
 	 * Create socketServer {@link Thread} for the given type.
 	 * 
@@ -48,7 +71,7 @@ public final class StartupUtil {
 			@Override
 			public void run() {
 				try {
-					String waitBefore = (waitForServer) ? " and wait for it to start up." : "";
+					String waitBefore = (waitForServer) ? " and wait for the socket server to start up." : "";
 					StartupUtil.this.log.info("Use port " + port + " for values of " + type + waitBefore);
 					typeSpecificSocketServer.run();
 				} catch (SocketTimeoutException e) {

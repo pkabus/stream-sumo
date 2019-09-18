@@ -7,7 +7,7 @@
     <relativePath>../pom.xml/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>scenario-t-junction</artifactId>
+  <artifactId>scenario-single-big-junction</artifactId>
   <build>
     <plugins>
       <plugin>
@@ -37,7 +37,7 @@
               </filters>
               <transformers>
                 <transformer>
-                  <mainClass>net.pk.traas.server.tjunction.MainScenarioTJunction</mainClass>
+                  <mainClass>net.pk.traas.server.singlebigjunction.MainScenarioSingleBigJunction</mainClass>
                 </transformer>
                 <transformer>
                   <resource>reference.conf</resource>

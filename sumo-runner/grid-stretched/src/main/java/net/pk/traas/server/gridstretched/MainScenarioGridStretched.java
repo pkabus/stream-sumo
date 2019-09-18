@@ -12,12 +12,12 @@ import net.pk.traas.server.start.StartupUtil;
  * @author peter
  *
  */
-public class Main {
+public class MainScenarioGridStretched {
 
 	/**
 	 * Starting point.
 	 * 
-	 * @param args arguments for the communication (mandatory: --host, --port).
+	 * @param args no args expected
 	 */
 	public static void main(String[] args) {
 		StartupUtil util = new StartupUtil();

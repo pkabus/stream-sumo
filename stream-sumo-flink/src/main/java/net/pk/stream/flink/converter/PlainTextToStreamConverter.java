@@ -24,8 +24,8 @@ public class PlainTextToStreamConverter {
 	 */
 	public static DataStream<E1DetectorValue> convertXmlToE1DetectorValueStream(DataStream<String> plainStream) {
 		// only allow records like '<interval[...]/>'
-		SingleOutputStreamOperator<String> soso = convertByType(plainStream, "interval");
-		return soso.flatMap(new XmlToAbstractValueFunction<E1DetectorValue>(E1DetectorValue.class))
+		return convertByType(plainStream, "interval")
+				.flatMap(new XmlToAbstractValueFunction<E1DetectorValue>(E1DetectorValue.class))
 				.returns(E1DetectorValue.class);
 	}
 
@@ -37,11 +37,13 @@ public class PlainTextToStreamConverter {
 	 * @return object stream
 	 */
 	public static DataStream<TLSValue> convertXmlToTLSValueStream(DataStream<String> plainStream) {
-		return convertByType(plainStream, "tlsState").flatMap(new XmlToAbstractValueFunction<TLSValue>(TLSValue.class)).returns(TLSValue.class);
+		// only allow records like '<tlsState[...]/>'
+		return convertByType(plainStream, "tlsState").flatMap(new XmlToAbstractValueFunction<TLSValue>(TLSValue.class))
+				.returns(TLSValue.class);
 	}
 
 	private static SingleOutputStreamOperator<String> convertByType(DataStream<String> plainStream,
 			final String xmlTag) {
-		return plainStream.filter(s -> s.trim().startsWith("<" + xmlTag) && s.trim().endsWith("/>"));
+		return plainStream.filter(s -> s.trim().contains("<" + xmlTag) && s.trim().endsWith("/>"));
 	}
 }

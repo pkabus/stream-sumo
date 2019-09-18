@@ -24,10 +24,10 @@ public final class ValueFilePaths {
 
 	public static String getPathE1DetectorValue() {
 		return System.getProperty(E1DETECTOR_VALUE_KEY,
-				System.getProperty("user.dir") + File.separator + "e1detector-value.csv");
+				System.getProperty("user.dir") + File.separator + "e1detector-value.xml");
 	}
 
 	public static String getPathTLSValue() {
-		return System.getProperty(TLS_VALUE_KEY, System.getProperty("user.dir") + File.separator + "tls-value.csv");
+		return System.getProperty(TLS_VALUE_KEY, System.getProperty("user.dir") + File.separator + "tls-value.xml");
 	}
 }

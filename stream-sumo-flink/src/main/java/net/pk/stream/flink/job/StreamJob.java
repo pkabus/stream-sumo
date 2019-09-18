@@ -11,8 +11,15 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
  */
 public abstract class StreamJob {
 
-	private final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+	private final StreamExecutionEnvironment env;
 
+	/**
+	 * @param env
+	 */
+	public StreamJob(StreamExecutionEnvironment env) {
+		this.env = env;
+	}
+	
 	/**
 	 * Returns the execution environment.
 	 * 

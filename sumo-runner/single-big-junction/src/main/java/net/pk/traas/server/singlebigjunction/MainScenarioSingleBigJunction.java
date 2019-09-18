@@ -1,6 +1,7 @@
 package net.pk.traas.server.singlebigjunction;
 
-import net.pk.traas.server.AsyncServer;
+import net.pk.stream.format.E1DetectorValue;
+import net.pk.traas.server.StaticServer;
 import net.pk.traas.server.start.StartupUtil;
 
 /**
@@ -10,7 +11,7 @@ import net.pk.traas.server.start.StartupUtil;
  * @author peter
  *
  */
-public class Main {
+public class MainScenarioSingleBigJunction {
 
 	/**
 	 * Starting point.
@@ -20,13 +21,13 @@ public class Main {
 	public static void main(String[] args) {
 		StartupUtil util = new StartupUtil();
 
-//		Thread detectorThread = util.createE1DetectorValueSocketServer();
-//		detectorThread.start();
+		Thread detectorThread = util.createSocketServerForType(E1DetectorValue.class);
+		detectorThread.start();
 
-//		Thread tlsThread = util.createTLSValueSocketServer();
+//		Thread tlsThread = util.createSocketServerForType(TLSValue.class);
 //		tlsThread.start();
 
-		AsyncServer sumoServer = new AsyncServer();
+		StaticServer sumoServer = new StaticServer();
 		sumoServer.startupComponents();
 
 		while (!util.readyToStartSimulation()) {

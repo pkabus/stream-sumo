@@ -8,6 +8,8 @@ package net.pk.stream.format;
  */
 public interface AbstractValue extends Comparable<AbstractValue> {
 
+	public final static String CQL_KEYSPACE = "sumo";
+	
 	/**
 	 * Set given attribute with the given value.
 	 * 

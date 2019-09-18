@@ -6,20 +6,17 @@ import org.apache.flink.core.fs.FileSystem.WriteMode;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.datastream.KeyedStream;
+import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
-import org.apache.flink.streaming.connectors.cassandra.CassandraSink.CassandraPojoSinkBuilder;
-import org.apache.flink.streaming.connectors.cassandra.CassandraSink.CassandraSinkBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.datastax.driver.mapping.Mapper;
-
-import net.pk.db.cassandra.DbBuilder;
 import net.pk.db.cassandra.config.DbConfig;
 import net.pk.stream.api.file.ValueFilePaths;
 import net.pk.stream.api.query.Querying;
 import net.pk.stream.flink.converter.PlainTextToStreamConverter;
+import net.pk.stream.flink.to.db.CassandraCompatible;
 import net.pk.stream.format.AbstractValue;
 import net.pk.stream.format.E1DetectorValue;
 
@@ -35,7 +32,7 @@ import net.pk.stream.format.E1DetectorValue;
  * @author peter
  *
  */
-public class E1DetectorValueStream extends WindowedStreamJob implements Querying {
+public class E1DetectorValueStream extends WindowedStreamJob implements Querying, CassandraCompatible<E1DetectorValue> {
 
 	private Logger log;
 	private String host;
@@ -50,8 +47,8 @@ public class E1DetectorValueStream extends WindowedStreamJob implements Querying
 	 * @param host of socket connection
 	 * @param port of socket connection
 	 */
-	public E1DetectorValueStream(final String host, final int port) {
-		super();
+	public E1DetectorValueStream(final String host, final int port, final StreamExecutionEnvironment env) {
+		super(env);
 		this.host = host;
 		this.port = port;
 		this.useDb = DbConfig.getInstance().getCassandraHost() != null;
@@ -64,8 +61,8 @@ public class E1DetectorValueStream extends WindowedStreamJob implements Querying
 	 * @param host of socket connection
 	 * @param port of socket connection
 	 */
-	public E1DetectorValueStream(final String host, final int port, Time window) {
-		super(window);
+	public E1DetectorValueStream(final String host, final int port, final StreamExecutionEnvironment env, Time window) {
+		super(env, window);
 		this.host = host;
 		this.port = port;
 		this.useDb = DbConfig.getInstance().getCassandraHost() != null;
@@ -78,14 +75,9 @@ public class E1DetectorValueStream extends WindowedStreamJob implements Querying
 		stream.writeAsText(ValueFilePaths.getPathE1DetectorValue(), WriteMode.OVERWRITE).setParallelism(1);
 
 		if (useDb) {
-			setCassandraSink();
+			addCassandraSink();
 		}
 
-		try {
-			getEnv().execute();
-		} catch (Exception e) {
-			log.error("Flink job " + this.getClass() + " failed", e);
-		}
 	}
 
 	/**
@@ -96,31 +88,33 @@ public class E1DetectorValueStream extends WindowedStreamJob implements Querying
 	 */
 	protected Querying filterStream() {
 		DataStreamSource<String> streamSource = getEnv().socketTextStream(host, port);
-		DataStream<E1DetectorValue> detectorValuesAll = PlainTextToStreamConverter.convertXmlToE1DetectorValueStream(streamSource);
+		DataStream<E1DetectorValue> detectorValuesAll = PlainTextToStreamConverter
+				.convertXmlToE1DetectorValueStream(streamSource);
 		stream = detectorValuesAll //
-				.keyBy("id").reduce((v1, v2) -> v1.getBegin() > v2.getBegin() ? v1 : v2) //
-				/* .keyBy("begin") */.filter(v -> v.getOccupancy() > 0).timeWindowAll(getWindow()) //
+				.filter(v -> v.getOccupancy() > 0).keyBy("id")
+				.reduce((v1, v2) -> v1.getBegin() > v2.getBegin() ? v1 : v2).timeWindowAll(getWindow()) // //
 				.reduce((v1, v2) -> v1.getOccupancy() > v2.getOccupancy() ? v1 : v2);
 		return this;
 	}
 
-	protected void setCassandraSink() {
-		String cassandraHost = DbConfig.getInstance().getCassandraHost();
-		DbBuilder b = new DbBuilder(E1DetectorValue.CQL_KEYSPACE);
+	@Override
+	public DataStream<E1DetectorValue> getStream() {
+		return stream;
+	}
 
-		// drop old keyspace!
-		b.dropKeyspace();
+	@Override
+	public Logger getLog() {
+		return log;
+	}
 
-		// create (keyspace and) new table
-		b.createTableE1DetectorValue("e1detectorvalue");
-		CassandraSinkBuilder<E1DetectorValue> sinkBuilder = new CassandraPojoSinkBuilder<>(stream, stream.getType(),
-				stream.getType().createSerializer(stream.getExecutionEnvironment().getConfig()));
-		try {
-			sinkBuilder.setHost(cassandraHost)
-					.setMapperOptions(() -> new Mapper.Option[] { Mapper.Option.saveNullFields(true) }).build();
-		} catch (Exception e) {
-			log.error("Cassandra failed", e);
-		}
+	@Override
+	public String getKeyspace() {
+		return E1DetectorValue.CQL_KEYSPACE;
+	}
+
+	@Override
+	public String getTableName() {
+		return E1DetectorValue.CQL_TABLENAME;
 	}
 
 }

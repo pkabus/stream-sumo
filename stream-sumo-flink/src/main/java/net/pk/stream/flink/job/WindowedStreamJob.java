@@ -1,5 +1,6 @@
 package net.pk.stream.flink.job;
 
+import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.time.Time;
 
 /**
@@ -21,7 +22,8 @@ public abstract class WindowedStreamJob extends StreamJob {
 	/**
 	 * Uses the default time window (100 milliseconds) for this stream job.
 	 */
-	public WindowedStreamJob() {
+	public WindowedStreamJob(final StreamExecutionEnvironment env) {
+		super(env);
 		this.window = DEFAULT_TIME_WINDOW;
 	}
 
@@ -30,7 +32,8 @@ public abstract class WindowedStreamJob extends StreamJob {
 	 * 
 	 * @param window to use
 	 */
-	public WindowedStreamJob(final Time window) {
+	public WindowedStreamJob(final StreamExecutionEnvironment env, final Time window) {
+		super(env);
 		this.window = window;
 	}
 

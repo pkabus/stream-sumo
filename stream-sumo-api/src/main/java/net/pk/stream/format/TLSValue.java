@@ -1,10 +1,17 @@
 package net.pk.stream.format;
 
+import java.util.UUID;
+
+import com.datastax.driver.mapping.annotations.Column;
+import com.datastax.driver.mapping.annotations.Table;
+
 /**
  * @author peter
  *
  */
+@Table(keyspace = TLSValue.CQL_KEYSPACE, name = TLSValue.CQL_TABLENAME)
 public class TLSValue implements AbstractValue {
+	public static final String CQL_TABLENAME = "tlsvalue";
 
 	public final static String KEY_TIME = "time";
 	public final static String KEY_ID = "id";
@@ -12,10 +19,23 @@ public class TLSValue implements AbstractValue {
 	public final static String KEY_PHASE = "phase";
 	public final static String KEY_STATE = "state";
 
+
+	@Column(name = "uuid")
+	private UUID pk;
+
+	@Column(name = "time")
 	private float time;
+
+	@Column(name = "id")
 	private String id;
+
+	@Column(name = "programid")
 	private String programId;
+
+	@Column(name = "phase")
 	private int phase;
+
+	@Column(name = "state")
 	private String state;
 
 	@Override
@@ -42,6 +62,31 @@ public class TLSValue implements AbstractValue {
 	}
 
 	/**
+	 * Constructs new value with random uuid.
+	 */
+	public TLSValue() {
+		this.pk = UUID.randomUUID();
+	}
+
+	/**
+	 * Getter.
+	 * 
+	 * @return the pk
+	 */
+	public UUID getPk() {
+		return pk;
+	}
+
+	/**
+	 * Setter.
+	 * 
+	 * @param pk the pk to set
+	 */
+	public void setPk(final UUID pk) {
+		this.pk = pk;
+	}
+
+	/**
 	 * Getter.
 	 * 
 	 * @return the keyTime
@@ -60,11 +105,56 @@ public class TLSValue implements AbstractValue {
 	}
 
 	/**
+	 * Setter.
+	 * 
+	 * @param time the time to set
+	 */
+	public void setTime(float time) {
+		this.time = time;
+	}
+
+	/**
+	 * Setter.
+	 * 
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	/**
+	 * Setter.
+	 * 
+	 * @param programId the programId to set
+	 */
+	public void setProgramId(String programId) {
+		this.programId = programId;
+	}
+
+	/**
+	 * Setter.
+	 * 
+	 * @param phase the phase to set
+	 */
+	public void setPhase(int phase) {
+		this.phase = phase;
+	}
+
+	/**
+	 * Setter.
+	 * 
+	 * @param state the state to set
+	 */
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	/**
 	 * Getter.
 	 * 
 	 * @return the keyProgramid
 	 */
-	public String getProgramid() {
+	public String getProgramId() {
 		return programId;
 	}
 

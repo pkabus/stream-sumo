@@ -4,12 +4,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Properties;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import org.xml.sax.SAXException;
 
 import net.pk.stream.format.AbstractValue;
 import net.pk.stream.format.E1DetectorValue;
 import net.pk.stream.format.TLSValue;
+import net.pk.stream.xml.util.DocumentDelivery;
 
 /**
  * Singleton. Contains all necessary properties to run sumo and the stream
@@ -25,9 +32,10 @@ public class EnvironmentConfig {
 	private String sumoBinFilepath;
 	private String configFilepath;
 	private String streamProcessingHost;
-	private int streamHostE1DetectorValuePort;
-	private int streamHostTLSValuePort;
+	private int streamHostE1DetectorValuePort = -1;
+	private int streamHostTLSValuePort = -1;
 	private String detectorIdSeparator;
+	private String timestepDelay;
 
 	/**
 	 * Get singleton.
@@ -67,9 +75,11 @@ public class EnvironmentConfig {
 		this.streamProcessingHost = System.getProperty("stream.processing.host", "localhost");
 		this.streamHostE1DetectorValuePort = Integer
 				.parseInt(System.getProperty("stream.processing.port.e1detectorvalue", "9000"));
-		this.streamHostTLSValuePort = Integer
-				.parseInt(System.getProperty("stream.processing.port.tlsvalue"));
+
+		String tlsPort = System.getProperty("stream.processing.port.tlsvalue");
+		this.streamHostTLSValuePort = (tlsPort != null) ? Integer.parseInt(tlsPort) : -1;
 		this.detectorIdSeparator = System.getProperty("sumo.detector.separator", "_");
+		this.timestepDelay = System.getProperty("sumo.delay", "500");
 
 		Objects.requireNonNull(sumoBinFilepath);
 		Objects.requireNonNull(configFilepath);
@@ -77,6 +87,7 @@ public class EnvironmentConfig {
 		Objects.requireNonNull(streamHostE1DetectorValuePort);
 		Objects.requireNonNull(streamHostTLSValuePort);
 		Objects.requireNonNull(detectorIdSeparator);
+		Objects.requireNonNull(timestepDelay);
 
 		File configFile = new File(this.configFilepath);
 
@@ -85,6 +96,20 @@ public class EnvironmentConfig {
 					new FileNotFoundException("No config file found at " + configFile.getAbsolutePath()));
 		}
 
+		File settingsFile = Paths.get("config", "settings.xml").toFile();
+
+		if (!settingsFile.exists()) {
+			throw new RuntimeException(
+					new FileNotFoundException("No settings.xml file found at " + settingsFile.getAbsolutePath()));
+		} else {
+			// add (or edit) <delay value="'this.timestepDelay'" /> in settings.xml
+			try {
+				DocumentDelivery.editElementInDom(settingsFile, "viewsettings", "delay", "value", this.timestepDelay);
+			} catch (ParserConfigurationException | IOException | SAXException | TransformerException e) {
+				throw new RuntimeException(e);
+			}
+
+		}
 	}
 
 	/**
@@ -159,10 +184,20 @@ public class EnvironmentConfig {
 		throw new RuntimeException("No port defined for type " + ((type != null) ? type : "null"));
 	}
 
-	/** Returns the (detector) id separator character(s). Default separator is underline ("_").
+	/**
+	 * Returns the (detector) id separator character(s). Default separator is
+	 * underline ("_").
+	 * 
 	 * @return separator
 	 */
 	public String getSeparator() {
 		return this.detectorIdSeparator;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getTimestepDelay() {
+		return this.timestepDelay;
 	}
 }
