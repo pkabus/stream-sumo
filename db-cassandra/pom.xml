@@ -22,6 +22,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>net.pk</groupId>
+			<artifactId>stream-sumo-api</artifactId>
+			<version>${sumo-runner.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.datastax.oss</groupId>
 			<artifactId>java-driver-core</artifactId>
 			<version>4.0.0</version>
