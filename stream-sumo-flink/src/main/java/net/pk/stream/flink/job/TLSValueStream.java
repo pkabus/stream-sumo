@@ -7,28 +7,22 @@ import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.time.Time;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import net.pk.db.cassandra.config.DbConfig;
 import net.pk.stream.api.file.ValueFilePaths;
 import net.pk.stream.api.query.Querying;
 import net.pk.stream.flink.converter.PlainTextToStreamConverter;
-import net.pk.stream.flink.to.db.CassandraCompatible;
 import net.pk.stream.format.TLSValue;
 
 /**
  * @author peter
  *
  */
-public class TLSValueStream extends StreamJob implements Querying, CassandraCompatible<TLSValue> {
+public class TLSValueStream extends StreamJob implements Querying {
 
 	private String host;
 	private int port;
-	private boolean useDb;
 	@Nullable
 	private DataStream<TLSValue> stream;
-	private Logger log;
 
 	/**
 	 * @param host
@@ -38,8 +32,6 @@ public class TLSValueStream extends StreamJob implements Querying, CassandraComp
 		super(env);
 		this.host = host;
 		this.port = port;
-		this.useDb = DbConfig.getInstance().getCassandraHost() != null;
-		this.log = LoggerFactory.getLogger(this.getClass());
 	}
 
 	@Override
@@ -51,29 +43,6 @@ public class TLSValueStream extends StreamJob implements Querying, CassandraComp
 				.timeWindowAll(Time.seconds(2)).max("time");
 		this.stream.writeAsText(ValueFilePaths.getPathTLSValue(), WriteMode.OVERWRITE).setParallelism(1);
 
-		if (useDb) {
-			addCassandraSink();
-		}
-	}
-
-	@Override
-	public DataStream<TLSValue> getStream() {
-		return stream;
-	}
-
-	@Override
-	public Logger getLog() {
-		return log;
-	}
-
-	@Override
-	public String getKeyspace() {
-		return TLSValue.CQL_KEYSPACE;
-	}
-
-	@Override
-	public String getTableName() {
-		return TLSValue.CQL_TABLENAME;
 	}
 
 }

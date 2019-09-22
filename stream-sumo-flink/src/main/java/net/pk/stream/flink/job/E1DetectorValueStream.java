@@ -9,14 +9,10 @@ import org.apache.flink.streaming.api.datastream.KeyedStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import net.pk.db.cassandra.config.DbConfig;
 import net.pk.stream.api.file.ValueFilePaths;
 import net.pk.stream.api.query.Querying;
 import net.pk.stream.flink.converter.PlainTextToStreamConverter;
-import net.pk.stream.flink.to.db.CassandraCompatible;
 import net.pk.stream.format.AbstractValue;
 import net.pk.stream.format.E1DetectorValue;
 
@@ -32,12 +28,10 @@ import net.pk.stream.format.E1DetectorValue;
  * @author peter
  *
  */
-public class E1DetectorValueStream extends WindowedStreamJob implements Querying, CassandraCompatible<E1DetectorValue> {
+public class E1DetectorValueStream extends WindowedStreamJob implements Querying {
 
-	private Logger log;
 	private String host;
 	private int port;
-	private boolean useDb;
 	@Nullable
 	private DataStream<E1DetectorValue> stream;
 
@@ -51,8 +45,6 @@ public class E1DetectorValueStream extends WindowedStreamJob implements Querying
 		super(env);
 		this.host = host;
 		this.port = port;
-		this.useDb = DbConfig.getInstance().getCassandraHost() != null;
-		this.log = LoggerFactory.getLogger(this.getClass());
 	}
 
 	/**
@@ -65,18 +57,12 @@ public class E1DetectorValueStream extends WindowedStreamJob implements Querying
 		super(env, window);
 		this.host = host;
 		this.port = port;
-		this.useDb = DbConfig.getInstance().getCassandraHost() != null;
-		this.log = LoggerFactory.getLogger(this.getClass());
 	}
 
 	@Override
 	public void out() {
 		filterStream();
 		stream.writeAsText(ValueFilePaths.getPathE1DetectorValue(), WriteMode.OVERWRITE).setParallelism(1);
-
-		if (useDb) {
-			addCassandraSink();
-		}
 
 	}
 
@@ -96,25 +82,4 @@ public class E1DetectorValueStream extends WindowedStreamJob implements Querying
 				.reduce((v1, v2) -> v1.getOccupancy() > v2.getOccupancy() ? v1 : v2);
 		return this;
 	}
-
-	@Override
-	public DataStream<E1DetectorValue> getStream() {
-		return stream;
-	}
-
-	@Override
-	public Logger getLog() {
-		return log;
-	}
-
-	@Override
-	public String getKeyspace() {
-		return E1DetectorValue.CQL_KEYSPACE;
-	}
-
-	@Override
-	public String getTableName() {
-		return E1DetectorValue.CQL_TABLENAME;
-	}
-
 }
