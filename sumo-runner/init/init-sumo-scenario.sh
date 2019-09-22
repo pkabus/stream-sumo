@@ -5,10 +5,10 @@ INIT_HOME=$SUMO_RUNNER_HOME/init/
 
 create_dirs() {
 	cd $SUMO_RUNNER_HOME && mkdir $1 && cd $1 && mkdir config && cd config &&
-	touch $1.net.xml && touch tls-template.add.xml && touch e1detector-template.add.xml && touch $1.rou.xml &&
+	touch $1.net.xml && touch $1.rou.xml &&
 	cd $INIT_HOME &&
 	cp conf-tls.sh $SUMO_RUNNER_HOME/$1/config/conf-tls.sh &&
-	cp conf-detectors.sh $SUMO_RUNNER_HOME/$1/config/conf-detectors.sh &&
+	cp tls-template.add.xml $SUMO_RUNNER_HOME/$1/config/tls-template.add.xml &&
 	cp settings.xml $SUMO_RUNNER_HOME/$1/config/settings.xml &&
 	sed -e "s|\${scenario-name}|$1|g" $INIT_HOME/template.sumocfg  > $SUMO_RUNNER_HOME/$1/config/$1.sumocfg &&
 	sed -e "s|\${scenario-name}|$1|g" $INIT_HOME/generate.sh  > $SUMO_RUNNER_HOME/$1/config/generate.sh
