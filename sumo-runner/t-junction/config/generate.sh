@@ -1,1 +1,1 @@
-python $SUMO_HOME/tools/randomTrips.py -n /home/peter/master/modules/sumo-runner/t-junction/config/tcross.net.xml -e 500 -o /home/peter/master/modules/sumo-runner/t-junction/config/trips.trips.xml --validate --seed 42 --fringe-factor 1000
+python $SUMO_HOME/tools/randomTrips.py -n /home/peter/master/modules/sumo-runner/t-junction/config/t-junction.net.xml -e 500 -o /home/peter/master/modules/sumo-runner/t-junction/config/trips.trips.xml --validate --seed 42 --fringe-factor 1000
