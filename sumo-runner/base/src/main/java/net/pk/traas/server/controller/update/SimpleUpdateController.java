@@ -22,14 +22,14 @@ import net.pk.traas.api.utils.JobFinder;
  *
  * @param <V> generic value type
  */
-public class SimpleUpdateController<V extends AbstractValue> implements UpdateController {
+public class SimpleUpdateController<V extends AbstractValue> extends UpdateController {
 
 	private ConcurrentHashMap<String, V> mostRecentValues;
 
 	private Class<V> type;
 
 	private JobFinder jobFinder;
-
+	
 	/**
 	 * Constructs a update controller having the given generic type.
 	 * 

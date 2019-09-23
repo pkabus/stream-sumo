@@ -1,6 +1,7 @@
 package net.pk.traas.server;
 
 import java.io.IOException;
+import java.util.Observable;
 
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.slf4j.Logger;
@@ -21,10 +22,11 @@ import net.pk.traas.api.EnvironmentConfig;
  * @author peter
  *
  */
-public abstract class TraasServer {
+public abstract class TraasServer extends Observable {
 
 	private EnvironmentConfig config = EnvironmentConfig.getInstance();
 	public static final double MIN_TLS_CYCLE = 9;
+	public static final double YELLOW_PHASE = 3;
 	private SumoTraciConnection connection;
 	private Logger log;
 

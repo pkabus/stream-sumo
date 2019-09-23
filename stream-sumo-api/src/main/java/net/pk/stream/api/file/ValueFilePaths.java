@@ -2,6 +2,8 @@ package net.pk.stream.api.file;
 
 import java.io.File;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Helper class that provides system property keys for output files. Also
  * default values are set.
@@ -29,5 +31,13 @@ public final class ValueFilePaths {
 
 	public static String getPathTLSValue() {
 		return System.getProperty(TLS_VALUE_KEY, System.getProperty("user.dir") + File.separator + "tls-value.xml");
+	}
+
+	public static String getStreamDir() {
+		if (System.getProperty(E1DETECTOR_VALUE_KEY) != null) {
+			return StringUtils.substringBeforeLast(System.getProperty(E1DETECTOR_VALUE_KEY), File.separator);
+		}
+		
+		return System.getProperty("user.dir");
 	}
 }

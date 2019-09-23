@@ -36,7 +36,7 @@ public class TraasIntegrationTest {
 
 		connection = new SumoTraciConnection(System.getProperty("sumo.bin.file"),
 				System.getProperty("sumo.config.file"));
-		connection.addOption("start", "false"); 
+		connection.addOption("start", "true"); 
 
 		// start Traci Server
 		try {

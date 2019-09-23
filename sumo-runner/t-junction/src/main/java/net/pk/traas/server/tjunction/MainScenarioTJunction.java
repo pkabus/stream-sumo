@@ -28,7 +28,7 @@ public class MainScenarioTJunction {
 		Thread tlsThread = util.createSocketServerForType(TLSValue.class);
 		tlsThread.start();
 
-		AsyncServer sumoServer = new AsyncServer();
+		AsyncServer sumoServer = AsyncServer.createInstance();
 		sumoServer.startupComponents();
 
 		while (!util.readyToStartSimulation()) {

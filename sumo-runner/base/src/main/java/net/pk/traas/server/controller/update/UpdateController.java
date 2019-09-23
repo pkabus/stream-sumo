@@ -1,10 +1,12 @@
 package net.pk.traas.server.controller.update;
 
+import java.util.Observable;
+
 /** Takes care of data stream entries coming from the stream engine.
  * @author peter
  *
  */
-public interface UpdateController {
+public abstract class UpdateController extends Observable {
 
 	/**
 	 * This method handles the update process. It is responsible for reading new

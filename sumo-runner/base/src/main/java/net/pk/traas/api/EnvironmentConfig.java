@@ -8,9 +8,13 @@ import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Properties;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import org.apache.commons.lang3.StringUtils;
+import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import net.pk.stream.format.AbstractValue;
@@ -27,10 +31,13 @@ import net.pk.stream.xml.util.DocumentDelivery;
  */
 public class EnvironmentConfig {
 
+	public static final String ADD_TLS_FILE = "tls.add.xml";
+
 	private static EnvironmentConfig instance;
 
 	private String sumoBinFilepath;
 	private String configFilepath;
+	private String configFileDir;
 	private String streamProcessingHost;
 	private int streamHostE1DetectorValuePort = -1;
 	private int streamHostTLSValuePort = -1;
@@ -88,7 +95,10 @@ public class EnvironmentConfig {
 		Objects.requireNonNull(streamHostTLSValuePort);
 		Objects.requireNonNull(detectorIdSeparator);
 		Objects.requireNonNull(timestepDelay);
-
+		this.configFileDir = StringUtils.substringBeforeLast(configFilepath, File.separator);
+		Objects.requireNonNull(configFileDir);
+		
+		
 		File configFile = new File(this.configFilepath);
 
 		if (!configFile.exists()) {
@@ -199,5 +209,20 @@ public class EnvironmentConfig {
 	 */
 	public String getTimestepDelay() {
 		return this.timestepDelay;
+	}
+
+	/**
+	 * @param filename
+	 * @return
+	 */
+	public Document getAdditionalDom(final String filename) {
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		try {
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document document = db.parse(this.configFileDir + File.separator + filename);
+			return document;
+		} catch (SAXException | IOException | ParserConfigurationException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

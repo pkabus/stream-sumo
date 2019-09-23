@@ -56,7 +56,7 @@ public class ResponseToE1DetectorValue implements Function<E1DetectorValue, Sumo
 			return null;
 		}
 
-		String programID = new E1DetectorValueToTLSProgramConverter().apply(t);
+		String programID = new E1DetectorValueToEdgeConverter().apply(t);
 		return Trafficlight.setProgram(tlsID, programID);
 	}
 
