@@ -1,11 +1,9 @@
-package net.pk.traas.api.utils;
+package net.pk.traas.api.tracker.job;
 
 import javax.annotation.Nonnull;
 
 import net.pk.stream.format.AbstractValue;
 import net.pk.stream.format.E1DetectorValue;
-import net.pk.traas.api.tracker.job.AbstractJob;
-import net.pk.traas.api.tracker.job.ReaderJob;
 
 /**
  * Helper factory, that is able to create {@link AbstractJob}s dependent from a
@@ -16,15 +14,25 @@ import net.pk.traas.api.tracker.job.ReaderJob;
  */
 public final class JobFinder {
 	
-	private TrackerFinder trackerFinder;
+	private static JobFinder instance;
 	
 	/**
 	 * Constructor.
 	 */
-	public JobFinder() {
-		this.trackerFinder = new TrackerFinder();
+	private JobFinder() {
 	}
 
+	/** Get instance.
+	 * @return singleton instance
+	 */
+	public static JobFinder getInstance() {
+		if (instance == null) {
+			instance = new JobFinder();
+		}
+		
+		return instance;
+	}
+	
 	/**
 	 * Create reader job according to the given type.
 	 * 
@@ -34,7 +42,7 @@ public final class JobFinder {
 	 */
 	public <V extends AbstractValue> AbstractJob findJobByType(@Nonnull final Class<V> type) {
 		if (type.equals(E1DetectorValue.class)) {
-			return new ReaderJob<V>(trackerFinder.findByType(type));
+			return new ReaderJob<V>(type);
 		}
 
 		// add readerJob constructions

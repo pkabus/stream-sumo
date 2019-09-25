@@ -47,12 +47,12 @@ public abstract class UpdateFileIntegrationTest {
 	 * Copy the file with the given name to the file with the second argument. This
 	 * all happens in the folder 'target/test-classes'.
 	 * 
-	 * @param sourceName of file in target/test-classes
-	 * @param targetName of file in target/test-classes
+	 * @param relativeName of file in target/test-classes
+	 * @param absoluteTarget of file
 	 */
-	protected void copyFileForce(String sourceName, String targetName) {
-		File source = Paths.get("target", "test-classes", sourceName).toFile();
-		File target = Paths.get("target", "test-classes", targetName).toFile();
+	protected void copyFileForce(String relativeName, String absoluteTarget) {
+		File source = Paths.get("target", "test-classes", relativeName).toFile();
+		File target = Paths.get(absoluteTarget).toFile();
 
 		if (target.exists()) {
 			target.delete();

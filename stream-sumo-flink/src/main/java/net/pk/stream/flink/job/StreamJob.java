@@ -1,5 +1,6 @@
 package net.pk.stream.flink.job;
 
+import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
 /**
@@ -29,4 +30,8 @@ public abstract class StreamJob {
 		return env;
 	}
 
+	/**
+	 * @return
+	 */
+	protected abstract DataStream<?> getStream();
 }

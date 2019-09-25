@@ -8,6 +8,10 @@
     <gui-settings-file value="settings.xml"/>
     </input>
     
+    <output>
+    	<netstate-dump value="localhost:9002" />
+    </output>
+    
     <time-to-teleport value="-1"/>
 </configuration>
 

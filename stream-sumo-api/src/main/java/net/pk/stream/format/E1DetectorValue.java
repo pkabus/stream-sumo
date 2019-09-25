@@ -320,11 +320,11 @@ public class E1DetectorValue implements AbstractValue {
 	 */
 	@Override
 	public String toString() {
-		return "<interval " + KEY_BEGIN + "=\"" + this.getBegin() + "\" " + KEY_END + "=\"" + this.end + "\" " + KEY_ID
+		return PREFIX + " " + KEY_BEGIN + "=\"" + this.getBegin() + "\" " + KEY_END + "=\"" + this.end + "\" " + KEY_ID
 				+ "=\"" + this.id + "\" " + KEY_NVEHCONTRIB + "=\"" + this.nVehContrib + "\" " + KEY_FLOW + "=\""
 				+ this.flow + "\" " + KEY_OCCUPANCY + "=\"" + this.occupancy + "\" " + KEY_SPEED + "=\"" + this.speed
 				+ "\" " + KEY_HARMONICMEANSPEED + "=\"" + this.harmonicMeanSpeed + "\" " + KEY_LENGTH + "=\""
-				+ this.length + "\" " + KEY_NVEHENTERED + "=\"" + this.nVehEntered + "\" />";
+				+ this.length + "\" " + KEY_NVEHENTERED + "=\"" + this.nVehEntered + "\" " + SUFFIX;
 	}
 
 	@Override

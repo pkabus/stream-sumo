@@ -34,6 +34,10 @@ public interface AbstractValue extends Comparable<AbstractValue> {
 
 	@Override
 	public default int compareTo(final AbstractValue o) {
+		if (o == null) {
+			return 1;
+		}
+		
 		if (!this.getClass().equals(o.getClass())) {
 			throw new IllegalArgumentException("Cannot compare type " + o.getClass() + " with " + this.getClass());
 		}

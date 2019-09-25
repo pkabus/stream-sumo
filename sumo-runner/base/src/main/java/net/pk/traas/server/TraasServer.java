@@ -9,11 +9,13 @@ import org.slf4j.LoggerFactory;
 
 import de.tudresden.sumo.cmd.Simulation;
 import it.polito.appeal.traci.SumoTraciConnection;
+import net.pk.stream.api.environment.EnvironmentConfig;
 import net.pk.stream.flink.job.E1DetectorValueStream;
+import net.pk.stream.flink.job.LaneValueStream;
 import net.pk.stream.flink.job.TLSValueStream;
 import net.pk.stream.format.E1DetectorValue;
+import net.pk.stream.format.LaneValue;
 import net.pk.stream.format.TLSValue;
-import net.pk.traas.api.EnvironmentConfig;
 
 /**
  * Abstract class that is defining the TraCI lifecycle for the scenarios. Starts
@@ -63,6 +65,7 @@ public abstract class TraasServer extends Observable {
 			StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 			int tlsPort = config.getStreamProcessingPortBy(TLSValue.class);
 			int e1DetPort = config.getStreamProcessingPortBy(E1DetectorValue.class);
+			int lanePort = config.getStreamProcessingPortBy(LaneValue.class);
 
 			if (tlsPort > 0) {
 				TLSValueStream streamTls = new TLSValueStream(config.getStreamProcessingHost(),
@@ -76,6 +79,12 @@ public abstract class TraasServer extends Observable {
 						config.getStreamProcessingPortBy(E1DetectorValue.class), env);
 				streamE1Detector.out();
 				TraasServer.this.log.info("ADD STREAM " + E1DetectorValueStream.class + ".");
+			}
+			
+			if (lanePort > 0) {
+				LaneValueStream laneStream = new LaneValueStream(config.getStreamProcessingHost(), config.getStreamProcessingPortBy(LaneValue.class), env);
+				laneStream.out();
+				TraasServer.this.log.info("ADD STREAM " + LaneValueStream.class + ".");
 			}
 
 			try {

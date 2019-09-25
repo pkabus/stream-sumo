@@ -9,6 +9,7 @@ import de.tudresden.sumo.cmd.Trafficlight;
 import de.tudresden.sumo.util.SumoCommand;
 import de.tudresden.ws.container.SumoStringList;
 import it.polito.appeal.traci.SumoTraciConnection;
+import net.pk.stream.api.query.E1DetectorValueToEdgeConverter;
 import net.pk.stream.format.E1DetectorValue;
 
 /**

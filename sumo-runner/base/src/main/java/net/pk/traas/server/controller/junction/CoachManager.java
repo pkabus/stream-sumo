@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import net.pk.stream.api.environment.EnvironmentConfig;
 import net.pk.stream.format.E1DetectorValue;
-import net.pk.traas.api.EnvironmentConfig;
 
 /**
  * CoachManager registers and obtains all {@link TLSCoach} of the used sumo

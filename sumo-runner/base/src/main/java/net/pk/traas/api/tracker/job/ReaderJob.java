@@ -8,6 +8,7 @@ import java.util.concurrent.FutureTask;
 
 import net.pk.stream.format.AbstractValue;
 import net.pk.traas.api.tracker.AbstractTracker;
+import net.pk.traas.api.utils.TrackerFinder;
 
 /**
  * This abstract reader job runs a future task in a new thread.
@@ -19,17 +20,17 @@ import net.pk.traas.api.tracker.AbstractTracker;
 public class ReaderJob<V extends AbstractValue> implements AbstractJob {
 
 	private FutureTask<Collection<V>> task;
-	private AbstractTracker reader;
+	private AbstractTracker tracker;
 
 	/**
 	 * Constructor.
 	 * 
 	 * @param readFrom file path
-	 * @param reader   to use
+	 * @param tracker   to use
 	 */
-	public ReaderJob(final AbstractTracker reader) {
+	protected ReaderJob(final Class<V> type) {
 		this.task = new FutureTask<Collection<V>>(new ReaderCallable());
-		this.reader = reader;
+		this.tracker = TrackerFinder.getInstance().findByType(type);
 	}
 
 	/**
@@ -52,11 +53,11 @@ public class ReaderJob<V extends AbstractValue> implements AbstractJob {
 		@Override
 		public Collection<V> call() {
 			try {
-				reader.readRecentDataFromFile();
+				tracker.readRecentDataFromFile();
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
-			return reader.popAll();
+			return tracker.popAll();
 		}
 	}
 

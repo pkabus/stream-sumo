@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
 
 import net.pk.stream.format.AbstractValue;
 import net.pk.traas.api.tracker.job.AbstractJob;
-import net.pk.traas.api.utils.JobFinder;
+import net.pk.traas.api.tracker.job.JobFinder;
 
 /**
  * This generic update controller is updating and providing the most recent
@@ -22,11 +22,9 @@ import net.pk.traas.api.utils.JobFinder;
  *
  * @param <V> generic value type
  */
-public class SimpleUpdateController<V extends AbstractValue> extends UpdateController {
+public class SimpleInputController<V extends AbstractValue> extends InputController<V> {
 
 	private ConcurrentHashMap<String, V> mostRecentValues;
-
-	private Class<V> type;
 
 	private JobFinder jobFinder;
 	
@@ -35,15 +33,15 @@ public class SimpleUpdateController<V extends AbstractValue> extends UpdateContr
 	 * 
 	 * @param type of the update controller/process
 	 */
-	public SimpleUpdateController(final Class<V> type) {
+	public SimpleInputController(final Class<V> type) {
+		super(type);
 		this.mostRecentValues = new ConcurrentHashMap<String, V>();
-		this.type = type;
-		this.jobFinder = new JobFinder();
+		this.jobFinder = JobFinder.getInstance();
 	}
 
 	@Override
 	public void update() {
-		AbstractJob readerJob = jobFinder.findJobByType(type);
+		AbstractJob readerJob = jobFinder.findJobByType(getType());
 		Collection<V> data = null;
 		try {
 			data = readerJob.readFromFile();
@@ -65,7 +63,7 @@ public class SimpleUpdateController<V extends AbstractValue> extends UpdateContr
 		input.stream().forEach(val -> {
 			String id = val.getId();
 			V byIdInMap = mostRecentValues.get(id);
-			if (byIdInMap == null || val.greaterThan(byIdInMap)) {
+			if (val.greaterThan(byIdInMap)) {
 				mostRecentValues.put(id, val);
 			}
 		});
@@ -82,14 +80,6 @@ public class SimpleUpdateController<V extends AbstractValue> extends UpdateContr
 		return new LinkedList<>(((HashMap<String, V>) out).values());
 	}
 
-	/**
-	 * The type of the values that this controller is caring of.
-	 * 
-	 * @return type of values
-	 */
-	public Class<V> getType() {
-		return type;
-	}
 
 	/**
 	 * Removes the given object from the map of most recent values.
@@ -99,5 +89,4 @@ public class SimpleUpdateController<V extends AbstractValue> extends UpdateContr
 	public void remove(final V v) {
 		this.mostRecentValues.remove(v.getId());
 	}
-
 }

@@ -8,9 +8,9 @@ import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.time.Time;
 
-import net.pk.stream.api.file.ValueFilePaths;
+import net.pk.stream.api.environment.EnvironmentConfig;
 import net.pk.stream.api.query.Querying;
-import net.pk.stream.flink.converter.PlainTextToStreamConverter;
+import net.pk.stream.flink.converter.ConvertPlainText;
 import net.pk.stream.format.TLSValue;
 
 /**
@@ -37,12 +37,17 @@ public class TLSValueStream extends StreamJob implements Querying {
 	@Override
 	public void out() {
 		DataStreamSource<String> streamSource = getEnv().socketTextStream(host, port);
-		DataStream<TLSValue> s = PlainTextToStreamConverter.convertXmlToTLSValueStream(streamSource);
+		DataStream<TLSValue> s = ConvertPlainText.toTLSStream(streamSource);
 
 		this.stream = s.keyBy("id").reduce((v1, v2) -> v1.getTime() > v2.getTime() ? v1 : v2)
 				.timeWindowAll(Time.seconds(2)).max("time");
-		this.stream.writeAsText(ValueFilePaths.getPathTLSValue(), WriteMode.OVERWRITE).setParallelism(1);
+		this.stream.writeAsText(EnvironmentConfig.getInstance().getAbsoluteFilePathTLSValue(), WriteMode.OVERWRITE).setParallelism(1);
 
+	}
+
+	@Override
+	protected DataStream<?> getStream() {
+		return this.stream;
 	}
 
 }

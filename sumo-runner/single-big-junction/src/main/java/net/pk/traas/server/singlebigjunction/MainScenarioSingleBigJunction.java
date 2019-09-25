@@ -26,6 +26,9 @@ public class MainScenarioSingleBigJunction {
 
 //		Thread tlsThread = util.createSocketServerForType(TLSValue.class);
 //		tlsThread.start();
+		
+//		Thread laneThread = util.createSocketServerForType(LaneValue.class);
+//		laneThread.start();
 
 		StaticServer sumoServer = new StaticServer();
 		sumoServer.startupComponents();

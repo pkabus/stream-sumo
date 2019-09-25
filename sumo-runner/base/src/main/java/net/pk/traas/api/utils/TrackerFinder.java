@@ -3,7 +3,7 @@ package net.pk.traas.api.utils;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.pk.stream.api.file.ValueFilePaths;
+import net.pk.stream.api.environment.EnvironmentConfig;
 import net.pk.stream.format.AbstractValue;
 import net.pk.stream.format.E1DetectorValue;
 import net.pk.stream.format.E1DetectorValueFactory;
@@ -19,16 +19,31 @@ import net.pk.traas.api.tracker.ValueTracker;
  */
 public final class TrackerFinder {
 
+	private static TrackerFinder instance;
 	private Map<Class<? extends AbstractValue>, AbstractTracker> trackerStorage;
 
 	/**
-	 * Constructs new trackers according to the known {@link AbstractValue} types. Each tracker instance observes a file for changes.
+	 * Constructs new trackers according to the known {@link AbstractValue} types.
+	 * Each tracker instance observes a file for changes.
 	 */
-	public TrackerFinder() {
+	private TrackerFinder() {
 		this.trackerStorage = new HashMap<>();
 		trackerStorage.put(E1DetectorValue.class, new ValueTracker<E1DetectorValue>(new E1DetectorValueFactory(),
-				ValueFilePaths.getPathE1DetectorValue()));
+				EnvironmentConfig.getInstance().getAbsoluteFilePathE1DetectorValue()));
 		// add tracker instances
+	}
+
+	/**
+	 * Get (and create if necessary) singleton instance.
+	 * 
+	 * @return instance
+	 */
+	public static TrackerFinder getInstance() {
+		if (instance == null) {
+			instance = new TrackerFinder();
+		}
+
+		return instance;
 	}
 
 	/**

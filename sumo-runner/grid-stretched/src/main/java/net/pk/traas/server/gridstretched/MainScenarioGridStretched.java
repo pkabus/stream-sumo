@@ -1,13 +1,14 @@
 package net.pk.traas.server.gridstretched;
 
 import net.pk.stream.format.E1DetectorValue;
+import net.pk.stream.format.LaneValue;
 import net.pk.stream.format.TLSValue;
 import net.pk.traas.server.AsyncServer;
 import net.pk.traas.server.start.StartupUtil;
 
 /**
- * Start the sumo simulation scenario 'grid-stretched' supported by the intelligent
- * transportation system which is based on a streaming engine.
+ * Start the sumo simulation scenario 'grid-stretched' supported by the
+ * intelligent transportation system which is based on a streaming engine.
  * 
  * @author peter
  *
@@ -28,7 +29,11 @@ public class MainScenarioGridStretched {
 		Thread tlsThread = util.createSocketServerForType(TLSValue.class);
 		tlsThread.start();
 
-		AsyncServer sumoServer = new AsyncServer();
+
+		Thread laneThread = util.createSocketServerForType(LaneValue.class);
+		laneThread.start();
+		
+		AsyncServer sumoServer = AsyncServer.createInstance();
 		sumoServer.startupComponents();
 
 		while (!util.readyToStartSimulation()) {

@@ -107,7 +107,6 @@ public class TLSCoach implements Observer {
 		boolean eval = !StringUtils.equals(program, programId)
 				&& this.lastChangeTimestep + this.minChangeInterval < currentTimestep;
 		if (eval) {
-			this.log.info("TLS " + tlsId + " -> Program " + programId + " accepted");
 			this.nextProgram = programId;
 		}
 
@@ -182,7 +181,7 @@ public class TLSCoach implements Observer {
 			throw new RuntimeException(e);
 		}
 
-		this.log.info("Switched " + tlsId + " to " + this.nextProgram);
+		this.log.info("[" +nextProgramScheduledTimestep + "] Switched " + tlsId + " to " + this.nextProgram);
 		this.program = nextProgram;
 		this.lastChangeTimestep = c;
 		this.nextProgram = null;

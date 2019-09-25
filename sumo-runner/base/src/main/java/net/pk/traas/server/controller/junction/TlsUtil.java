@@ -9,7 +9,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import net.pk.traas.api.EnvironmentConfig;
+import net.pk.stream.api.environment.EnvironmentConfig;
 
 /**
  * @author peter
@@ -24,7 +24,7 @@ public class TlsUtil {
 	 * @return
 	 */
 	public static String getRedYellowGreenState(final String tlsId, final String programId, final int phase) {
-		Document tlsDocument = EnvironmentConfig.getInstance().getAdditionalDom(EnvironmentConfig.ADD_TLS_FILE);
+		Document tlsDocument = EnvironmentConfig.getInstance().getAdditionalDom(EnvironmentConfig.ADD_TLS_FILE_KEY);
 		XPath xPath = XPathFactory.newInstance().newXPath();
 		NodeList nodes;
 		try {

@@ -1,18 +1,24 @@
-package net.pk.traas.api;
+package net.pk.stream.api.query;
 
 import java.util.Arrays;
 import java.util.List;
 
+import net.pk.stream.api.environment.EnvironmentConfig;
 import net.pk.stream.format.E1DetectorValue;
 
 /**
+ * Converts the id of a {@link E1DetectorValue} to the id of an edge (in the
+ * running sumo network). Convention: id of {@link E1DetectorValue} contains a
+ * prefix, the id of an edge and the lane number. These parts are separated by a
+ * separator which is retrievable from {@link EnvironmentConfig#getSeparator()}.
+ * 
  * @author peter
  *
  */
-public class E1DetectorValueToEdgeConverter implements ToTlsConverter<E1DetectorValue> {
+public class E1DetectorValueToEdgeConverter implements ToEdgeConverter<E1DetectorValue> {
 
 	@Override
-	public String apply(E1DetectorValue v) {
+	public String apply(final E1DetectorValue v) {
 		String separator = EnvironmentConfig.getInstance().getSeparator();
 		List<String> splitByUnderline = Arrays.asList(v.getId().split(separator));
 

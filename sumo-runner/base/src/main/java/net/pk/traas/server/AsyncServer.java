@@ -1,24 +1,12 @@
 package net.pk.traas.server;
 
-import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardWatchEventKinds;
-import java.nio.file.WatchEvent;
-import java.nio.file.WatchKey;
-import java.nio.file.WatchService;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.tudresden.sumo.cmd.Simulation;
-import net.pk.stream.api.file.ValueFilePaths;
+import net.pk.stream.api.query.E1DetectorValueToEdgeConverter;
 import net.pk.stream.format.E1DetectorValue;
-import net.pk.traas.api.E1DetectorValueToEdgeConverter;
 import net.pk.traas.server.controller.junction.TLSCoach;
-import net.pk.traas.server.controller.update.SimpleUpdateController;
+import net.pk.traas.server.controller.update.SimpleInputController;
 
 /**
  * This server handles the tls switches and the timesteps in its main method
@@ -33,8 +21,7 @@ import net.pk.traas.server.controller.update.SimpleUpdateController;
 public class AsyncServer extends CoachedServer {
 
 	private static AsyncServer instance;
-	private SimpleUpdateController<E1DetectorValue> updater;
-	private Logger log;
+	private SimpleInputController<E1DetectorValue> updater;
 
 	/**
 	 * @return
@@ -63,8 +50,7 @@ public class AsyncServer extends CoachedServer {
 	 * 
 	 */
 	private AsyncServer() {
-		this.updater = new SimpleUpdateController<E1DetectorValue>(E1DetectorValue.class);
-		this.log = LoggerFactory.getLogger(getClass());
+		this.updater = new SimpleInputController<E1DetectorValue>(E1DetectorValue.class);
 	}
 
 	@Override
@@ -94,40 +80,7 @@ public class AsyncServer extends CoachedServer {
 	@Override
 	protected void beforeSimulation() {
 		super.beforeSimulation();
-
-		Thread updateThread = new Thread(new RunUpdate());
-		updateThread.start();
+		updater.start();
 	}
 
-	/**
-	 * The update job is done in this runnable class.
-	 * 
-	 * @author peter
-	 *
-	 */
-	private class RunUpdate implements Runnable {
-
-		@Override
-		public void run() {
-			final Path path = Paths.get(ValueFilePaths.getStreamDir());
-			try (final WatchService watchService = FileSystems.getDefault().newWatchService()) {
-				path.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
-				while (true) {
-					final WatchKey wk = watchService.take();
-					for (WatchEvent<?> event : wk.pollEvents()) {
-						// we only register "ENTRY_MODIFY" so the context is always a Path.
-						final Path changed = (Path) event.context();
-						if (ValueFilePaths.getPathE1DetectorValue().equals(changed.toAbsolutePath().toString())) {
-							updater.update();
-						}
-					}
-					// reset the key
-					wk.reset();
-				}
-			} catch (IOException | InterruptedException e) {
-				throw new RuntimeException(e);
-			}
-		}
-
-	}
 }
