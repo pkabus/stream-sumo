@@ -3,10 +3,8 @@ package net.pk.traas.server;
 import java.util.List;
 
 import de.tudresden.sumo.cmd.Simulation;
-import net.pk.stream.api.query.E1DetectorValueToEdgeConverter;
-import net.pk.stream.format.E1DetectorValue;
-import net.pk.traas.server.controller.junction.TLSCoach;
-import net.pk.traas.server.controller.update.SimpleInputController;
+import net.pk.stream.format.EdgeValue;
+import net.pk.traas.server.controller.update.EdgeValueController;
 
 /**
  * This server handles the tls switches and the timesteps in its main method
@@ -21,10 +19,13 @@ import net.pk.traas.server.controller.update.SimpleInputController;
 public class AsyncServer extends CoachedServer {
 
 	private static AsyncServer instance;
-	private SimpleInputController<E1DetectorValue> updater;
+	private EdgeValueController feedback;
 
 	/**
-	 * @return
+	 * If created, this method returns the only instance of this class. If no
+	 * instance exists, a {@link RuntimeException} is thrown.
+	 * 
+	 * @return instance
 	 */
 	public static AsyncServer getInstance() {
 		if (instance == null) {
@@ -34,7 +35,10 @@ public class AsyncServer extends CoachedServer {
 	}
 
 	/**
-	 * @return
+	 * Create instance. This is only once per application allowed. If this method is
+	 * called twice a {@link RuntimeException} is thrown.
+	 * 
+	 * @return instance
 	 */
 	public static AsyncServer createInstance() {
 		if (instance != null) {
@@ -50,7 +54,7 @@ public class AsyncServer extends CoachedServer {
 	 * 
 	 */
 	private AsyncServer() {
-		this.updater = new SimpleInputController<E1DetectorValue>(E1DetectorValue.class);
+		this.feedback = new EdgeValueController();
 	}
 
 	@Override
@@ -59,20 +63,20 @@ public class AsyncServer extends CoachedServer {
 			this.setChanged();
 			double currentTimestep = (double) getConnection().do_job_get(Simulation.getTime());
 
-			List<E1DetectorValue> values = updater.getValues();
+			List<EdgeValue> values = feedback.getValues();
 			for (int i = 0; i < values.size(); i++) {
-				E1DetectorValue current = values.get(i);
+				EdgeValue current = values.get(i);
 				TLSCoach coach = getCoachManager().getCoach(current);
-				if (coach.acceptNextProgram(new E1DetectorValueToEdgeConverter().apply(current), currentTimestep)) {
+				if (coach.acceptNextProgram(current.getId(), currentTimestep)) {
 					coach.greenToYellow();
-					updater.remove(current);
+					feedback.remove(current);
+//					break;
 				}
-
 			}
-
 			this.notifyObservers(currentTimestep);
-			getConnection().do_timestep();
 
+			// do timestep in simulation
+			getConnection().do_timestep();
 		}
 
 	}
@@ -80,7 +84,7 @@ public class AsyncServer extends CoachedServer {
 	@Override
 	protected void beforeSimulation() {
 		super.beforeSimulation();
-		updater.start();
+		feedback.start();
 	}
 
 }

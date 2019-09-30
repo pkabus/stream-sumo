@@ -1,4 +1,4 @@
-package net.pk.traas.server.controller.junction;
+package net.pk.traas.server;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;

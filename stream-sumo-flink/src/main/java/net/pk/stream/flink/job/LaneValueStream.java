@@ -4,14 +4,10 @@ import javax.annotation.Nullable;
 
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
-import org.apache.flink.streaming.api.datastream.KeyedStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.time.Time;
-import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 
-import net.pk.stream.api.query.Querying;
 import net.pk.stream.flink.converter.ConvertPlainText;
-import net.pk.stream.format.AbstractValue;
 import net.pk.stream.format.E1DetectorValue;
 import net.pk.stream.format.LaneValue;
 
@@ -27,7 +23,7 @@ import net.pk.stream.format.LaneValue;
  * @author peter
  *
  */
-public class LaneValueStream extends WindowedStreamJob implements Querying {
+public class LaneValueStream extends WindowedStreamJob {
 
 	public static final String DELIMITER = "</timestep>";
 
@@ -62,24 +58,12 @@ public class LaneValueStream extends WindowedStreamJob implements Querying {
 	}
 
 	@Override
-	public void out() {
-		filterStream();
-//		stream.writeAsText(EnvironmentConfig.getInstance().getAbsoluteFilePathLaneValue(), WriteMode.OVERWRITE)
-//				.setParallelism(1);
-	}
-
-	/**
-	 * Query the socket stream. First, the stream is separated by the
-	 * {@link AbstractValue#getId()}, then these streams are reduced so that only
-	 * the most occupied values of each {@link KeyedStream} in the defined
-	 * {@link TimeWindow} are returned.
-	 */
-	protected Querying filterStream() {
+	public void enable() {
 		DataStreamSource<String> streamSource = getEnv().socketTextStream(host, port, DELIMITER).setParallelism(1);
 		DataStream<LaneValue> laneValuesAll = ConvertPlainText.toLaneStream(streamSource, DELIMITER);
 		stream = laneValuesAll;
-		return this;
 	}
+
 
 	@Override
 	protected DataStream<?> getStream() {

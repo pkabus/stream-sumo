@@ -26,9 +26,9 @@ public class ReaderJob<V extends AbstractValue> implements AbstractJob {
 	 * Constructor.
 	 * 
 	 * @param readFrom file path
-	 * @param tracker   to use
+	 * @param tracker  to use
 	 */
-	protected ReaderJob(final Class<V> type) {
+	public ReaderJob(final Class<V> type) {
 		this.task = new FutureTask<Collection<V>>(new ReaderCallable());
 		this.tracker = TrackerFinder.getInstance().findByType(type);
 	}
@@ -42,7 +42,7 @@ public class ReaderJob<V extends AbstractValue> implements AbstractJob {
 	 * @throws ExecutionException   execution exception
 	 */
 	@SuppressWarnings("unchecked")
-	public Collection<V> readFromFile() throws IOException, InterruptedException, ExecutionException {
+	public Collection<V> start() throws IOException, InterruptedException, ExecutionException {
 		Thread t = new Thread(task, "FileReader-FutureTask");
 		t.start();
 		return task.get();

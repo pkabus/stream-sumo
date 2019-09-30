@@ -16,7 +16,7 @@ public interface AbstractJob {
 	 * @return
 	 * @throws Exception
 	 */
-	public <V extends AbstractValue> Collection<V> readFromFile()
+	public <V extends AbstractValue> Collection<V> start()
 			throws IOException, InterruptedException, ExecutionException;
 
 }

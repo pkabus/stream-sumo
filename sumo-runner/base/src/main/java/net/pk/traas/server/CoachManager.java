@@ -1,4 +1,4 @@
-package net.pk.traas.server.controller.junction;
+package net.pk.traas.server;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -6,8 +6,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import net.pk.stream.api.environment.EnvironmentConfig;
-import net.pk.stream.format.E1DetectorValue;
+import net.pk.stream.format.EdgeValue;
 
 /**
  * CoachManager registers and obtains all {@link TLSCoach} of the used sumo
@@ -58,7 +57,7 @@ public class CoachManager {
 	 * 
 	 * @param value detector value
 	 */
-	public TLSCoach getCoach(final E1DetectorValue value) {
+	public TLSCoach getCoach(final EdgeValue value) {
 		// look up cache
 		TLSCoach cachedCoach = cache.get(value.getId());
 		if (cachedCoach != null) {
@@ -67,22 +66,11 @@ public class CoachManager {
 
 		// if not cached, get delegate, put it to cache and return the delegate
 
-		// split id "detector_nx_ny_z" {x, y, z e N} by "_" and then look for last
-		// appearance of element containing an "n" to get the id of the junction
-		// List<String> nodes =
-		// Arrays.asList(value.getId().split("_")).stream().sequential().filter(s ->
-		// s.contains("n"))
-		// .collect(Collectors.toList());
 
-		// cut away prefix and suffix, e.g. e1det_N0A0_0 -> N0A0 or e1det_n0_n1_1 ->
-		// n0_n1
-		String separator = EnvironmentConfig.getInstance().getSeparator();
-		String edgeId = StringUtils.substringBeforeLast(StringUtils.substringAfter(value.getId(), separator),
-				separator);
-
-		TLSCoach coach = list.stream().filter(c -> StringUtils.endsWith(edgeId, c.getTlsId())).findFirst().orElseThrow(
-				() -> new RuntimeException("No TLSCoach registered that is responsible for the given detectorValue + "
-						+ value + ". The wanted delegate should have the tlsId = " + edgeId));
+		TLSCoach coach = list.stream().filter(c -> StringUtils.endsWith(value.getId(), c.getTlsId())).findFirst()
+				.orElseThrow(
+						() -> new RuntimeException("No TLSCoach registered that is responsible for the given edge + "
+								+ value + ". The wanted delegate should have the tlsId = " + value.getId()));
 
 		cache.put(value.getId(), coach);
 		return coach;

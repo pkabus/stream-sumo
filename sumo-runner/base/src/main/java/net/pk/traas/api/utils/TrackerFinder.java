@@ -7,6 +7,8 @@ import net.pk.stream.api.environment.EnvironmentConfig;
 import net.pk.stream.format.AbstractValue;
 import net.pk.stream.format.E1DetectorValue;
 import net.pk.stream.format.E1DetectorValueFactory;
+import net.pk.stream.format.EdgeValue;
+import net.pk.stream.format.EdgeValueFactory;
 import net.pk.traas.api.tracker.AbstractTracker;
 import net.pk.traas.api.tracker.ValueTracker;
 
@@ -27,9 +29,12 @@ public final class TrackerFinder {
 	 * Each tracker instance observes a file for changes.
 	 */
 	private TrackerFinder() {
+		EnvironmentConfig envConfig = EnvironmentConfig.getInstance();
 		this.trackerStorage = new HashMap<>();
 		trackerStorage.put(E1DetectorValue.class, new ValueTracker<E1DetectorValue>(new E1DetectorValueFactory(),
-				EnvironmentConfig.getInstance().getAbsoluteFilePathE1DetectorValue()));
+				envConfig.getAbsoluteFilePathE1DetectorValue()));
+		trackerStorage.put(EdgeValue.class,
+				new ValueTracker<EdgeValue>(new EdgeValueFactory(), envConfig.getAbsoluteFilePathEdgeValue()));
 		// add tracker instances
 	}
 

@@ -11,6 +11,7 @@ import de.tudresden.sumo.cmd.Simulation;
 import it.polito.appeal.traci.SumoTraciConnection;
 import net.pk.stream.api.environment.EnvironmentConfig;
 import net.pk.stream.flink.job.E1DetectorValueStream;
+import net.pk.stream.flink.job.Emitter;
 import net.pk.stream.flink.job.LaneValueStream;
 import net.pk.stream.flink.job.TLSValueStream;
 import net.pk.stream.format.E1DetectorValue;
@@ -53,7 +54,7 @@ public abstract class TraasServer extends Observable {
 	/**
 	 * Second lifecycle phase: start stream job(s).
 	 */
-	protected void startStreamJobs() {
+	private void startStreamJobs() {
 		Thread streamThread = new Thread(new StreamRunner());
 		streamThread.start();
 	}
@@ -67,25 +68,33 @@ public abstract class TraasServer extends Observable {
 			int e1DetPort = config.getStreamProcessingPortBy(E1DetectorValue.class);
 			int lanePort = config.getStreamProcessingPortBy(LaneValue.class);
 
+			TLSValueStream streamTls = null;
+			E1DetectorValueStream streamE1Detector = null;
+			LaneValueStream streamLane = null;
+
 			if (tlsPort > 0) {
-				TLSValueStream streamTls = new TLSValueStream(config.getStreamProcessingHost(),
+				streamTls = new TLSValueStream(config.getStreamProcessingHost(),
 						config.getStreamProcessingPortBy(TLSValue.class), env);
-				streamTls.out();
+				streamTls.enable();
 				TraasServer.this.log.info("ADD STREAM " + TLSValueStream.class + ".");
 			}
 
 			if (e1DetPort > 0) {
-				E1DetectorValueStream streamE1Detector = new E1DetectorValueStream(config.getStreamProcessingHost(),
+				streamE1Detector = new E1DetectorValueStream(config.getStreamProcessingHost(),
 						config.getStreamProcessingPortBy(E1DetectorValue.class), env);
-				streamE1Detector.out();
+				streamE1Detector.enable();
 				TraasServer.this.log.info("ADD STREAM " + E1DetectorValueStream.class + ".");
 			}
-			
+
 			if (lanePort > 0) {
-				LaneValueStream laneStream = new LaneValueStream(config.getStreamProcessingHost(), config.getStreamProcessingPortBy(LaneValue.class), env);
-				laneStream.out();
+				streamLane = new LaneValueStream(config.getStreamProcessingHost(),
+						config.getStreamProcessingPortBy(LaneValue.class), env);
+				streamLane.enable();
 				TraasServer.this.log.info("ADD STREAM " + LaneValueStream.class + ".");
 			}
+
+			Emitter emitter = new Emitter(streamE1Detector, streamLane);
+			emitter.toFile();
 
 			try {
 				env.execute();

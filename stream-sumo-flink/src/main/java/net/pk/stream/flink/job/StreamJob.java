@@ -20,7 +20,7 @@ public abstract class StreamJob {
 	public StreamJob(StreamExecutionEnvironment env) {
 		this.env = env;
 	}
-	
+
 	/**
 	 * Returns the execution environment.
 	 * 
@@ -31,7 +31,16 @@ public abstract class StreamJob {
 	}
 
 	/**
-	 * @return
+	 * In this method the querying of the stream is defined. Only if this method is
+	 * called, the {@link StreamExecutionEnvironment} will take this stream into
+	 * account.
+	 */
+	public abstract void enable();
+
+	/**
+	 * This objects stream.
+	 * 
+	 * @return stream
 	 */
 	protected abstract DataStream<?> getStream();
 }

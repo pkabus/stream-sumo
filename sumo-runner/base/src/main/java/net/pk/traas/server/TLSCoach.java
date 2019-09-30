@@ -1,4 +1,4 @@
-package net.pk.traas.server.controller.junction;
+package net.pk.traas.server;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -9,12 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import de.tudresden.sumo.cmd.Simulation;
 import de.tudresden.sumo.cmd.Trafficlight;
-import de.tudresden.sumo.util.SumoCommand;
 import it.polito.appeal.traci.SumoTraciConnection;
-import net.pk.stream.format.E1DetectorValue;
-import net.pk.traas.api.ResponseToE1DetectorValue;
-import net.pk.traas.server.AsyncServer;
-import net.pk.traas.server.TraasServer;
 
 /**
  * Instances of this class are responsible for a single TLS. This means they
@@ -26,7 +21,7 @@ import net.pk.traas.server.TraasServer;
 public class TLSCoach implements Observer {
 
 	private double lastChangeTimestep = -TraasServer.MIN_TLS_CYCLE;
-	private final String tlsId;
+	private final TLSKey tls;
 	private SumoTraciConnection connection;
 	private String program;
 	private String nextProgram;
@@ -39,12 +34,12 @@ public class TLSCoach implements Observer {
 	 * Constructor. Default {@code TraasServer#MIN_TLS_CYCLE} is used as minimum TLS
 	 * cycle time.
 	 * 
-	 * @param conn  sumo connection
-	 * @param tlsId id of tls that this object is responsible for
+	 * @param conn sumo connection
+	 * @param tls  id of tls that this object is responsible for
 	 */
-	public TLSCoach(final SumoTraciConnection conn, final String tlsId) {
+	public TLSCoach(final SumoTraciConnection conn, final TLSKey tls) {
 		this.connection = conn;
-		this.tlsId = tlsId;
+		this.tls = tls;
 		this.log = LoggerFactory.getLogger(getClass());
 	}
 
@@ -52,51 +47,22 @@ public class TLSCoach implements Observer {
 	 * Constructor.
 	 * 
 	 * @param conn              sumo connection
-	 * @param tlsId             id of tls that this object is responsible for
+	 * @param tls               id of tls that this object is responsible for
 	 * @param minChangeInterval minimum time steps before a next switch may occur
 	 */
-	public TLSCoach(final SumoTraciConnection conn, final String tlsId, final double minChangeInterval) {
+	public TLSCoach(final SumoTraciConnection conn, final TLSKey tls, final double minChangeInterval) {
 		this.connection = conn;
-		this.tlsId = tlsId;
+		this.tls = tls;
 		this.minChangeInterval = minChangeInterval;
 	}
 
 	/**
-	 * This method is the heart of the class. It must check if a tls switch is
-	 * allowed to the given timestep (check when this TLS has switched the last
-	 * time). Also the {@link ResponseToE1DetectorValue} function is used to
-	 * determine which program must be used to switch the TLS.
+	 * This method checks when the last program change has been made and if a new
+	 * one can already be set. If so, the new program id is registered and true is
+	 * returned. Otherwise nothing changes and false is returned.
 	 * 
-	 * @param value detectorValue object
-	 * @return true only if the coach commands the execution of a
-	 *         {@link SumoCommand}, false otherwise
-	 */
-	@Deprecated
-	public boolean substitute(final E1DetectorValue value) {
-		try {
-			double now = (double) connection.do_job_get(Simulation.getTime());
-			if (now - lastChangeTimestep > minChangeInterval) {
-				ResponseToE1DetectorValue responseFunction = new ResponseToE1DetectorValue(connection);
-				SumoCommand cmd = responseFunction.apply(value);
-				if (cmd != null) {
-					connection.do_job_set(cmd);
-					lastChangeTimestep = now;
-					// lastChangeCommand = cmd;
-					log.info(tlsId + " -> SWITCH at " + now);
-					return true;
-				}
-			}
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-			// System.err.println(e);
-		}
-
-		return false;
-	}
-
-	/**
-	 * @param programId
-	 * @return
+	 * @param programId id of new program
+	 * @return true if new program is accepted, false otherwise
 	 */
 	public boolean acceptNextProgram(final String programId, final double currentTimestep) {
 		if (!StringUtils.isEmpty(this.nextProgram)) {
@@ -114,8 +80,9 @@ public class TLSCoach implements Observer {
 	}
 
 	/**
-	 * @param program
-	 * @throws Exception
+	 * Current tls program ends by switching the green traffic lights to yellow that
+	 * are going to turn to red in the new program.
+	 * 
 	 */
 	public void greenToYellow() {
 		if (StringUtils.isEmpty(this.nextProgram)) {
@@ -125,11 +92,11 @@ public class TLSCoach implements Observer {
 
 		String state;
 		try {
-			state = (String) connection.do_job_get(Trafficlight.getRedYellowGreenState(tlsId));
+			state = (String) connection.do_job_get(Trafficlight.getRedYellowGreenState(tls.getId()));
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		String newState = TlsUtil.getRedYellowGreenState(this.tlsId, this.nextProgram, 0);
+		String newState = TlsUtil.getRedYellowGreenState(this.tls.getId(), this.nextProgram, 0);
 
 		if (state.length() != newState.length()) {
 			throw new RuntimeException("TlsState " + state + " and " + newState + " need to have the same length!");
@@ -146,7 +113,7 @@ public class TLSCoach implements Observer {
 		}
 
 		try {
-			connection.do_job_set(Trafficlight.setRedYellowGreenState(tlsId, new String(yellowState)));
+			connection.do_job_set(Trafficlight.setRedYellowGreenState(tls.getId(), new String(yellowState)));
 			this.nextProgramScheduledTimestep = ((double) connection.do_job_get(Simulation.getTime()))
 					+ TraasServer.YELLOW_PHASE;
 		} catch (Exception e) {
@@ -165,9 +132,12 @@ public class TLSCoach implements Observer {
 	}
 
 	/**
-	 * 
+	 * Switches the tls to the {@link #nextProgram}. If no any next program is set,
+	 * this method call ends in a {@link IllegalStateException}. After the new
+	 * program is set, this object is no longer observing the {@link AsyncServer}
+	 * instance.
 	 */
-	public void switchToNewProgram() {
+	protected void switchToNewProgram() {
 		if (StringUtils.isEmpty(this.nextProgram)) {
 			throw new RuntimeException(
 					new IllegalStateException("Method call not allowed as long as newProgram is not set."));
@@ -175,13 +145,13 @@ public class TLSCoach implements Observer {
 
 		double c = -1;
 		try {
-			this.connection.do_job_set(Trafficlight.setProgram(tlsId, nextProgram));
+			this.connection.do_job_set(Trafficlight.setProgram(tls.getId(), nextProgram));
 			c = (double) connection.do_job_get(Simulation.getTime());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 
-		this.log.info("[" +nextProgramScheduledTimestep + "] Switched " + tlsId + " to " + this.nextProgram);
+		this.log.info("[" + nextProgramScheduledTimestep + "] Switched " + tls + " to " + this.nextProgram);
 		this.program = nextProgram;
 		this.lastChangeTimestep = c;
 		this.nextProgram = null;
@@ -192,15 +162,15 @@ public class TLSCoach implements Observer {
 	/**
 	 * Getter.
 	 * 
-	 * @return the tlsId
+	 * @return the tls id
 	 */
 	public String getTlsId() {
-		return tlsId;
+		return tls.getId();
 	}
 
 	@Override
 	public String toString() {
-		return "Of TLS: " + tlsId;
+		return "Of TLS: " + tls;
 	}
 
 	@Override

@@ -3,8 +3,6 @@ package net.pk.traas.server;
 import java.util.List;
 
 import de.tudresden.sumo.cmd.Trafficlight;
-import net.pk.traas.server.controller.junction.CoachManager;
-import net.pk.traas.server.controller.junction.TLSCoach;
 
 /**
  * A traas server that is managed by a {@link CoachManager}. Therefore the
@@ -38,7 +36,9 @@ public abstract class CoachedServer extends TraasServer {
 			@SuppressWarnings("unchecked")
 			List<String> tlsIds = (List<String>) getConnection().do_job_get(Trafficlight.getIDList());
 			tlsIds.forEach(tlsId -> {
-				coachManager.register(new TLSCoach(getConnection(), tlsId));
+				TLSKey key = new TLSKey(tlsId);
+				TLSKey.add(key);
+				coachManager.register(new TLSCoach(getConnection(), key));
 			});
 		} catch (Exception e) {
 			throw new RuntimeException(e);

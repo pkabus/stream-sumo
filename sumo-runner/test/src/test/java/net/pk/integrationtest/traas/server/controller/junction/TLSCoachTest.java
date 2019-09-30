@@ -8,8 +8,10 @@ import org.junit.jupiter.api.Test;
 
 import net.pk.integrationtest.traas.TraasIntegrationTest;
 import net.pk.stream.format.E1DetectorValue;
-import net.pk.traas.server.controller.junction.CoachManager;
-import net.pk.traas.server.controller.junction.TLSCoach;
+import net.pk.stream.format.EdgeValue;
+import net.pk.traas.server.CoachManager;
+import net.pk.traas.server.TLSCoach;
+import net.pk.traas.server.TLSKey;
 
 /**
  * Tests the class {@link TLSCoach} and {@link CoachManager}.
@@ -19,7 +21,7 @@ import net.pk.traas.server.controller.junction.TLSCoach;
  */
 public class TLSCoachTest extends TraasIntegrationTest {
 
-	private static final String DETECTOR_ID = "e1det_n1_n2_1";
+	private static final String EDGE_ID = "n1_n2";
 
 	/**
 	 * Get {@link TLSCoach} by {@link E1DetectorValue}.
@@ -27,16 +29,17 @@ public class TLSCoachTest extends TraasIntegrationTest {
 	@Test
 	void testGetCoach() {
 		CoachManager manager = new CoachManager();
-		TLSCoach coach1 = new TLSCoach(getTraciConnection(), "n2");
-		TLSCoach coachDuplicate = new TLSCoach(getTraciConnection(), "n2");
+		TLSKey tls = new TLSKey("n2");
+		TLSCoach coach1 = new TLSCoach(getTraciConnection(), tls);
+		TLSCoach coachDuplicate = new TLSCoach(getTraciConnection(), tls);
 
 		manager.register(coach1);
 		manager.register(coachDuplicate);
 
-		E1DetectorValue detVal = new E1DetectorValue();
-		detVal.set(E1DetectorValue.KEY_ID, DETECTOR_ID);
+		EdgeValue val = new EdgeValue();
+		val.set(EdgeValue.KEY_ID, EDGE_ID);
 
-		TLSCoach coach = manager.getCoach(detVal);
+		TLSCoach coach = manager.getCoach(val);
 
 		assertEquals(coach1, coach);
 		assertNotEquals(coachDuplicate, coach);
@@ -49,18 +52,19 @@ public class TLSCoachTest extends TraasIntegrationTest {
 	@Test
 	void testRegisterUnregisterCoach() {
 		CoachManager manager = new CoachManager();
-		TLSCoach coach1 = new TLSCoach(getTraciConnection(), "n2");
+		TLSKey tls = new TLSKey("n2");
+		TLSCoach coach1 = new TLSCoach(getTraciConnection(), tls);
 		manager.register(coach1);
 
-		E1DetectorValue detVal = new E1DetectorValue();
-		detVal.set(E1DetectorValue.KEY_ID, DETECTOR_ID);
+		EdgeValue val = new EdgeValue();
+		val.set(EdgeValue.KEY_ID, EDGE_ID);
 
-		TLSCoach coach = manager.getCoach(detVal);
+		TLSCoach coach = manager.getCoach(val);
 
 		assertEquals(coach1, coach);
 
 		manager.unregister(coach1);
-		assertThrows(RuntimeException.class, () -> manager.getCoach(detVal));
+		assertThrows(RuntimeException.class, () -> manager.getCoach(val));
 	}
 
 	/**
@@ -69,16 +73,17 @@ public class TLSCoachTest extends TraasIntegrationTest {
 	@Test
 	void testRegisterUnregisterDuplicate() {
 		CoachManager manager = new CoachManager();
-		TLSCoach coach1 = new TLSCoach(getTraciConnection(), "n2");
-		TLSCoach coachDuplicate = new TLSCoach(getTraciConnection(), "n2");
+		TLSKey tls = new TLSKey("n2");
+		TLSCoach coach1 = new TLSCoach(getTraciConnection(), tls);
+		TLSCoach coachDuplicate = new TLSCoach(getTraciConnection(), tls);
 
 		manager.register(coach1);
 		manager.register(coachDuplicate);
 		manager.unregister(coachDuplicate);
 
-		E1DetectorValue detVal = new E1DetectorValue();
-		detVal.set(E1DetectorValue.KEY_ID, DETECTOR_ID);
-		TLSCoach coach = manager.getCoach(detVal);
+		EdgeValue val = new EdgeValue();
+		val.set(EdgeValue.KEY_ID, EDGE_ID);
+		TLSCoach coach = manager.getCoach(val);
 		assertEquals(coach1, coach);
 	}
 

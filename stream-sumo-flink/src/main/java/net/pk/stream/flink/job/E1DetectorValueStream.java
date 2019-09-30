@@ -2,18 +2,12 @@ package net.pk.stream.flink.job;
 
 import javax.annotation.Nullable;
 
-import org.apache.flink.core.fs.FileSystem.WriteMode;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
-import org.apache.flink.streaming.api.datastream.KeyedStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.time.Time;
-import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 
-import net.pk.stream.api.environment.EnvironmentConfig;
-import net.pk.stream.api.query.Querying;
 import net.pk.stream.flink.converter.ConvertPlainText;
-import net.pk.stream.format.AbstractValue;
 import net.pk.stream.format.E1DetectorValue;
 
 /**
@@ -28,7 +22,7 @@ import net.pk.stream.format.E1DetectorValue;
  * @author peter
  *
  */
-public class E1DetectorValueStream extends WindowedStreamJob implements Querying {
+public class E1DetectorValueStream extends WindowedStreamJob {
 
 	private String host;
 	private int port;
@@ -61,19 +55,7 @@ public class E1DetectorValueStream extends WindowedStreamJob implements Querying
 	}
 
 	@Override
-	public void out() {
-		filterStream();
-		stream.writeAsText(EnvironmentConfig.getInstance().getAbsoluteFilePathE1DetectorValue(), WriteMode.OVERWRITE)
-				.setParallelism(1);
-	}
-
-	/**
-	 * Query the socket stream. First, the stream is separated by the
-	 * {@link AbstractValue#getId()}, then these streams are reduced so that only
-	 * the most occupied values of each {@link KeyedStream} in the defined
-	 * {@link TimeWindow} are returned.
-	 */
-	protected Querying filterStream() {
+	public void enable() {
 		DataStreamSource<String> streamSource = getEnv().socketTextStream(host, port);
 		DataStream<E1DetectorValue> detectorValuesAll = ConvertPlainText.toE1DetectorStream(streamSource);
 		stream = detectorValuesAll //
@@ -81,7 +63,6 @@ public class E1DetectorValueStream extends WindowedStreamJob implements Querying
 				.reduce((v1, v2) -> v1.getBegin() > v2.getBegin() ? v1 : v2).timeWindowAll(getWindow(), getSlide()) // //
 				.reduce((v1, v2) -> v1.getOccupancy() > v2.getOccupancy() ? v1
 						: (v2.getOccupancy() > v1.getOccupancy()) ? v2 : v1.getFlow() < v2.getFlow() ? v1 : v2);
-		return this;
 	}
 
 	@Override

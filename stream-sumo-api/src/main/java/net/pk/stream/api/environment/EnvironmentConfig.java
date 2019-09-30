@@ -19,6 +19,7 @@ import org.xml.sax.SAXException;
 
 import net.pk.stream.format.AbstractValue;
 import net.pk.stream.format.E1DetectorValue;
+import net.pk.stream.format.EdgeValue;
 import net.pk.stream.format.LaneValue;
 import net.pk.stream.format.TLSValue;
 import net.pk.stream.xml.util.DocumentDelivery;
@@ -359,6 +360,27 @@ public class EnvironmentConfig {
 	 */
 	public boolean runHeadless() {
 		return this.sumoBinFilepath.endsWith("sumo");
+	}
+
+	/**
+	 * @param type
+	 * @return
+	 */
+	public String getAbsoluteFilePathByType(Class<?> type) {
+		if (E1DetectorValue.class.equals(type)) {
+			return this.getAbsoluteFilePathE1DetectorValue();
+		}
+		if (LaneValue.class.equals(type)) {
+			return this.getAbsoluteFilePathLaneValue();
+		}
+		if (EdgeValue.class.equals(type)) {
+			return this.getAbsoluteFilePathEdgeValue();
+		}
+		if (TLSValue.class.equals(type)) {
+			return this.getAbsoluteFilePathTLSValue();
+		}
+
+		throw new RuntimeException("Unknown type " + type);
 	}
 
 }

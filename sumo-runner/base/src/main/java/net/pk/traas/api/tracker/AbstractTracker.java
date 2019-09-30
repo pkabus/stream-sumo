@@ -6,7 +6,8 @@ import java.util.List;
 import net.pk.stream.format.AbstractValue;
 
 /**
- * Abstraction layer for reader implementations.
+ * Abstraction layer for tracker implementations. A tracker reads from a file
+ * and can hand out values.
  * 
  * @author peter
  *

@@ -9,7 +9,6 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.time.Time;
 
 import net.pk.stream.api.environment.EnvironmentConfig;
-import net.pk.stream.api.query.Querying;
 import net.pk.stream.flink.converter.ConvertPlainText;
 import net.pk.stream.format.TLSValue;
 
@@ -17,7 +16,7 @@ import net.pk.stream.format.TLSValue;
  * @author peter
  *
  */
-public class TLSValueStream extends StreamJob implements Querying {
+public class TLSValueStream extends StreamJob {
 
 	private String host;
 	private int port;
@@ -35,7 +34,7 @@ public class TLSValueStream extends StreamJob implements Querying {
 	}
 
 	@Override
-	public void out() {
+	public void enable() {
 		DataStreamSource<String> streamSource = getEnv().socketTextStream(host, port);
 		DataStream<TLSValue> s = ConvertPlainText.toTLSStream(streamSource);
 
