@@ -7,4 +7,5 @@ target/
 *.out.xml
 detector-value.csv
 testfile
+*-value.xml
 *.uxf
