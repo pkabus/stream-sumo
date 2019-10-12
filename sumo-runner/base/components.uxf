@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>568</x>
+      <y>248</y>
+      <w>96</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=[v]-()
+m2=provide ports
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>560</x>
+      <y>312</y>
+      <w>104</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>lt=)-[v]
+m1=require ports
+</panel_attributes>
+    <additional_attributes>20.0;20.0;20.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>264</x>
+      <y>352</y>
+      <w>280</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=[&lt;]-()
+m2=provide file
+</panel_attributes>
+    <additional_attributes>330.0;120.0;10.0;120.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>256</x>
+      <y>264</y>
+      <w>88</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=)-[^]
+m1=require file
+</panel_attributes>
+    <additional_attributes>20.0;100.0;20.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>48</y>
+      <w>232</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>lt=[^]-()
+m2=provide ports
+</panel_attributes>
+    <additional_attributes>270.0;140.0;270.0;20.0;10.0;20.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>352</x>
+      <y>88</y>
+      <w>104</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>lt=[v]-(
+m1=require ports
+</panel_attributes>
+    <additional_attributes>20.0;60.0;20.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>184</x>
+      <y>136</y>
+      <w>224</w>
+      <h>136</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+SimulationRunner
+--
+Responsibilities
+-- Configure SUMO
+-- Configure SUMO Logging
+-- Run SUMO
+-- Read (recent changes) from File
+-- Make TraCI changes</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>512</x>
+      <y>160</y>
+      <w>192</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+ServerSocket
+--
+Responsibilities
+-- Opens ports
+-- Redirects communication</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>528</x>
+      <y>392</y>
+      <w>192</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+StreamEngine
+--
+Responsibilities
+-- Listen on port
+-- Windowing
+-- Querying
+-- Write to file</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

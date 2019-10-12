@@ -7,4 +7,3 @@ target/
 *.out.xml
 *value.csv
 testfile
-*.uxf
