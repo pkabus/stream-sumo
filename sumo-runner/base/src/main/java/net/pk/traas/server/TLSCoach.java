@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import de.tudresden.sumo.cmd.Simulation;
 import de.tudresden.sumo.cmd.Trafficlight;
 import it.polito.appeal.traci.SumoTraciConnection;
+import net.pk.stream.api.conversion.function.EdgeValueToProgramIdFunction;
+import net.pk.stream.format.EdgeValue;
 import net.pk.stream.xml.util.JunctionUtil;
 import net.pk.stream.xml.util.TLS;
 
@@ -21,7 +23,7 @@ import net.pk.stream.xml.util.TLS;
  *
  */
 public class TLSCoach implements Observer, TLS {
-
+	private static final EdgeValueToProgramIdFunction EDGE_PROGRAM_FUNCTION = new EdgeValueToProgramIdFunction();
 	private double lastChangeTimestep = -TraasServer.MIN_TLS_CYCLE;
 	private final TLSKey tls;
 	private SumoTraciConnection connection;
@@ -66,12 +68,13 @@ public class TLSCoach implements Observer, TLS {
 	 * @param programId id of new program
 	 * @return true if new program is accepted, false otherwise
 	 */
-	public boolean acceptNextProgram(final String programId, final double currentTimestep) {
+	public boolean acceptNextProgram(final EdgeValue edgeValue, final double currentTimestep) {
 		if (!StringUtils.isEmpty(this.nextProgram)) {
 			this.log.debug("Program has already been set.");
 			return false;
 		}
 
+		String programId = EDGE_PROGRAM_FUNCTION.apply(edgeValue);
 		boolean eval = !StringUtils.equals(program, programId)
 				&& this.lastChangeTimestep + this.minChangeInterval < currentTimestep;
 		if (eval) {
