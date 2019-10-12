@@ -66,11 +66,10 @@ public class AsyncServer extends CoachedServer {
 			List<EdgeValue> values = feedback.getValues();
 			for (int i = 0; i < values.size(); i++) {
 				EdgeValue current = values.get(i);
-				TLSCoach coach = getCoachManager().getCoach(current);
+				TLSCoach coach = (TLSCoach) getCoachManager().getTLS(current);
 				if (coach.acceptNextProgram(current.getId(), currentTimestep)) {
 					coach.greenToYellow();
 					feedback.remove(current);
-//					break;
 				}
 			}
 			this.notifyObservers(currentTimestep);

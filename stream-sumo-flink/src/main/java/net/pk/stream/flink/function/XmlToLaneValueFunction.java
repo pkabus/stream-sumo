@@ -28,7 +28,7 @@ public class XmlToLaneValueFunction implements FlatMapFunction<String, LaneValue
 	 * 
 	 * @param appendix end tag
 	 */
-	public XmlToLaneValueFunction(String appendix) {
+	public XmlToLaneValueFunction(final String appendix) {
 		this.appendix = appendix;
 	}
 

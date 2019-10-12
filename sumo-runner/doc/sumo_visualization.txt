@@ -2,3 +2,7 @@ SUMO GUI
 
 Visualisierung:
 https://sumo.dlr.de/wiki/SUMO-GUI#Changing_the_appearance.2Fvisualisation_of_the_simulation
+
+
+OpenStreetMap Network Generation
+python <SUMO_HOME>/tools/osmWebWizard.py

@@ -1,10 +1,13 @@
 package net.pk.stream.format;
 
+import net.pk.stream.xml.util.TLS;
+import net.pk.stream.xml.util.TLSManager;
+
 /**
  * @author peter
  *
  */
-public class EdgeValue implements AbstractValue {
+public class EdgeValue implements AbstractValue, TLSAssociated {
 
 	public final static String PREFIX = "<edge";
 	public final static String SUFFIX = "/>";
@@ -14,6 +17,7 @@ public class EdgeValue implements AbstractValue {
 
 	private String id;
 	private double timestamp;
+	private String tls;
 //	private int numVehicles;
 
 	@Override
@@ -21,6 +25,8 @@ public class EdgeValue implements AbstractValue {
 		switch (key) {
 		case KEY_ID:
 			this.id = value;
+			TLS s = TLSManager.getInstance().getTLS(this);
+			this.tls = (s != null) ? s.getTlsId() : null;
 			break;
 		case KEY_TIMESTAMP:
 			this.timestamp = Double.parseDouble(value);
@@ -57,5 +63,11 @@ public class EdgeValue implements AbstractValue {
 		return PREFIX + " " + KEY_ID + "=\"" + this.id + "\" " + KEY_TIMESTAMP + "=\"" + this.timestamp + "\" "
 				+ /* KEY_NUM_VEHICLES + "=\"" + this.numVehicles + "\" " + */ SUFFIX;
 	}
+
+	@Override
+	public String getTLS() {
+		return tls;
+	}
+
 
 }

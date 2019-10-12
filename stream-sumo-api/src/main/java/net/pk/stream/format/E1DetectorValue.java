@@ -2,15 +2,15 @@ package net.pk.stream.format;
 
 import java.util.UUID;
 
-import com.datastax.driver.mapping.annotations.Column;
-import com.datastax.driver.mapping.annotations.Table;
+import net.pk.stream.xml.util.TLS;
+import net.pk.stream.xml.util.TLSManager;
 
 /**
  * @author peter
  *
  */
-@Table(keyspace = E1DetectorValue.CQL_KEYSPACE, name = E1DetectorValue.CQL_TABLENAME)
-public class E1DetectorValue implements AbstractValue {
+//@Table(keyspace = E1DetectorValue.CQL_KEYSPACE, name = E1DetectorValue.CQL_TABLENAME)
+public class E1DetectorValue implements AbstractValue, TLSAssociated {
 
 	public final static String CQL_TABLENAME = "e1detectorvalue";
 
@@ -27,38 +27,40 @@ public class E1DetectorValue implements AbstractValue {
 	public final static String KEY_LENGTH = "length";
 	public final static String KEY_NVEHENTERED = "nVehEntered";
 
-	@Column(name = "pk")
+//	@Column(name = "pk")
 	private UUID pk;
-	
-	@Column(name = "start")
+
+//	@Column(name = "start")
 	private float begin;
 
-	@Column(name = "end")
+//	@Column(name = "end")
 	private float end;
 
-	@Column(name = "id")
+//	@Column(name = "id")
 	private String id;
 
-	@Column(name = "nvehcontrib")
+//	@Column(name = "nvehcontrib")
 	private int nVehContrib;
 
-	@Column(name = "flow")
+//	@Column(name = "flow")
 	private float flow;
 
-	@Column(name = "occupancy")
+//	@Column(name = "occupancy")
 	private float occupancy;
 
-	@Column(name = "speed")
+//	@Column(name = "speed")
 	private float speed;
 
-	@Column(name = "harmonicmeanspeed")
+//	@Column(name = "harmonicmeanspeed")
 	private float harmonicMeanSpeed;
 
-	@Column(name = "length")
+//	@Column(name = "length")
 	private float length;
 
-	@Column(name = "nvehentered")
+//	@Column(name = "nvehentered")
 	private int nVehEntered;
+
+	private String tls;
 
 	@Override
 	public void set(String key, String value) {
@@ -71,6 +73,8 @@ public class E1DetectorValue implements AbstractValue {
 			break;
 		case KEY_ID:
 			this.id = value;
+			TLS s = TLSManager.getInstance().getTLS(this);
+			this.tls = (s != null) ? s.getTlsId() : null;
 			break;
 		case KEY_NVEHCONTRIB:
 			this.nVehContrib = Integer.parseInt(value);
@@ -97,28 +101,31 @@ public class E1DetectorValue implements AbstractValue {
 			throw new RuntimeException("Unknown key '" + key + "'");
 		}
 	}
-	
+
 	/**
 	 * Constructs new value with random uuid.
 	 */
 	public E1DetectorValue() {
 		this.pk = UUID.randomUUID();
 	}
-	
-	/** Getter.
+
+	/**
+	 * Getter.
+	 * 
 	 * @return the pk
 	 */
 	public UUID getPk() {
 		return pk;
 	}
-	
-	/** Setter.
+
+	/**
+	 * Setter.
+	 * 
 	 * @param pk the pk to set
 	 */
 	public void setPk(final UUID pk) {
 		this.pk = pk;
 	}
-	
 
 	/**
 	 * Getter.
@@ -299,6 +306,11 @@ public class E1DetectorValue implements AbstractValue {
 	 */
 	public void setNVehEntered(int nVehEntered) {
 		this.nVehEntered = nVehEntered;
+	}
+
+	@Override
+	public String getTLS() {
+		return tls;
 	}
 
 	@Override

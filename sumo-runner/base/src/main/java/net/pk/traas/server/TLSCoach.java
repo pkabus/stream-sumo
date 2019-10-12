@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import de.tudresden.sumo.cmd.Simulation;
 import de.tudresden.sumo.cmd.Trafficlight;
 import it.polito.appeal.traci.SumoTraciConnection;
+import net.pk.stream.xml.util.JunctionUtil;
+import net.pk.stream.xml.util.TLS;
 
 /**
  * Instances of this class are responsible for a single TLS. This means they
@@ -18,7 +20,7 @@ import it.polito.appeal.traci.SumoTraciConnection;
  * @author peter
  *
  */
-public class TLSCoach implements Observer {
+public class TLSCoach implements Observer, TLS {
 
 	private double lastChangeTimestep = -TraasServer.MIN_TLS_CYCLE;
 	private final TLSKey tls;
@@ -96,7 +98,7 @@ public class TLSCoach implements Observer {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		String newState = TlsUtil.getRedYellowGreenState(this.tls.getId(), this.nextProgram, 0);
+		String newState = JunctionUtil.getRedYellowGreenState(this.tls.getId(), this.nextProgram, 0);
 
 		if (state.length() != newState.length()) {
 			throw new RuntimeException("TlsState " + state + " and " + newState + " need to have the same length!");
@@ -164,6 +166,7 @@ public class TLSCoach implements Observer {
 	 * 
 	 * @return the tls id
 	 */
+	@Override
 	public String getTlsId() {
 		return tls.getId();
 	}

@@ -2,6 +2,7 @@ package net.pk.stream.flink.job;
 
 import javax.annotation.Nullable;
 
+import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -9,6 +10,7 @@ import org.apache.flink.streaming.api.windowing.time.Time;
 
 import net.pk.stream.flink.converter.ConvertPlainText;
 import net.pk.stream.format.E1DetectorValue;
+import net.pk.stream.format.LaneValue;
 
 /**
  * This stream encapsulation is a set of flink stream jobs. It defines the
@@ -59,8 +61,13 @@ public class E1DetectorValueStream extends WindowedStreamJob {
 		DataStreamSource<String> streamSource = getEnv().socketTextStream(host, port);
 		DataStream<E1DetectorValue> detectorValuesAll = ConvertPlainText.toE1DetectorStream(streamSource);
 		stream = detectorValuesAll //
-				.filter(v -> v.getOccupancy() > 0).keyBy("id")
-				.reduce((v1, v2) -> v1.getBegin() > v2.getBegin() ? v1 : v2).timeWindowAll(getWindow(), getSlide()) // //
+				.filter(v -> v.getOccupancy() > 0) //
+				.keyBy(new KeySelector<E1DetectorValue, String>() {
+					public String getKey(E1DetectorValue v) {
+						return v.getTLS();
+					}
+				}) //
+				.timeWindow(Time.seconds(4), Time.milliseconds(500)) //
 				.reduce((v1, v2) -> v1.getOccupancy() > v2.getOccupancy() ? v1
 						: (v2.getOccupancy() > v1.getOccupancy()) ? v2 : v1.getFlow() < v2.getFlow() ? v1 : v2);
 	}

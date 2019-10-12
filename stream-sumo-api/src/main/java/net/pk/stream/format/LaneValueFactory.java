@@ -10,6 +10,10 @@ import javax.annotation.Nullable;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +22,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import net.pk.stream.xml.util.LaneCache;
 
 public class LaneValueFactory implements ValueListFromXmlFactory<LaneValue> {
 
@@ -67,17 +73,31 @@ public class LaneValueFactory implements ValueListFromXmlFactory<LaneValue> {
 
 		// separate lane elements from each other
 		NodeList lanes = document.getElementsByTagName("lane");
-
+		
+		// to retrieve further information about the lanes
+		LaneCache laneCache = LaneCache.getInstance();
+		
 		for (int i = 0; i < lanes.getLength(); i++) {
 			Element lane = (Element) lanes.item(i);
 			String id = lane.getAttribute("id");
 			NodeList vehicleList = lane.getElementsByTagName("vehicle");
+			int numVehicles = vehicleList.getLength();
+			float posDistrib = 0f;
+
+			XPath xPath = XPathFactory.newInstance().newXPath();
+			try {
+				Number posSum = (Number) xPath.evaluate("sum(.//vehicle/@pos)", lane, XPathConstants.NUMBER);
+				posDistrib = (posSum != null) ? posSum.floatValue() / laneCache.findBy(id).getLength() : 0f;
+			} catch (XPathExpressionException e) {
+				throw new RuntimeException(e);
+			}
 
 			// create LaneValue and set all attributes
 			final LaneValue laneValue = this.create();
 			laneValue.set(LaneValue.KEY_ID, id);
-			laneValue.set(LaneValue.KEY_NUM_VEHICLES, "" + vehicleList.getLength());
+			laneValue.set(LaneValue.KEY_NUM_VEHICLES, "" + numVehicles);
 			laneValue.set(LaneValue.KEY_TIMESTAMP, timestep);
+			laneValue.set(LaneValue.KEY_POS_DISTRIB, "" + posDistrib);
 			list.add(laneValue);
 		}
 

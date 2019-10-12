@@ -8,13 +8,12 @@ import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Properties;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import net.pk.stream.format.AbstractValue;
@@ -46,7 +45,7 @@ public class EnvironmentConfig {
 	public static final String E1DETECTOR_VALUE_KEY = "e1detectorvalue.filename";
 	public static final String TLS_VALUE_KEY = "tlsvalue.filename";
 	public static final String LANE_VALUE_KEY = "lanevalue.filename";
-	private static final String EDGE_VALUE_KEY = "edgevalue.filename";
+	public static final String EDGE_VALUE_KEY = "edgevalue.filename";
 
 	private static EnvironmentConfig instance;
 
@@ -65,6 +64,7 @@ public class EnvironmentConfig {
 	private String tlsValueFile;
 	private String laneValueFile;
 	private String edgeValueFile;
+	private String networkFile;
 
 	/**
 	 * Get singleton.
@@ -270,21 +270,6 @@ public class EnvironmentConfig {
 	}
 
 	/**
-	 * @param filename
-	 * @return
-	 */
-	public Document getAdditionalDom(final String filename) {
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		try {
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document document = db.parse(this.configFileDir + File.separator + filename);
-			return document;
-		} catch (SAXException | IOException | ParserConfigurationException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	/**
 	 * Get the absolute path of the file that the stream engine writes to.
 	 * 
 	 * @return file path for {@link E1DetectorValue}
@@ -381,6 +366,22 @@ public class EnvironmentConfig {
 		}
 
 		throw new RuntimeException("Unknown type " + type);
+	}
+
+	public String getNetworkFile() {
+		if (networkFile == null) {
+			Document configDom = DocumentDelivery.getDocument(new File(this.configFilepath));
+			networkFile = ((Element) configDom.getElementsByTagName("net-file").item(0)).getAttribute("value");
+		}
+		
+		return networkFile;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getConfigFileDir() {
+		return configFileDir;
 	}
 
 }

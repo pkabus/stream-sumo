@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test;
 import net.pk.integrationtest.traas.TraasIntegrationTest;
 import net.pk.stream.format.E1DetectorValue;
 import net.pk.stream.format.EdgeValue;
-import net.pk.traas.server.CoachManager;
+import net.pk.stream.xml.util.TLSManager;
 import net.pk.traas.server.TLSCoach;
 import net.pk.traas.server.TLSKey;
 
 /**
- * Tests the class {@link TLSCoach} and {@link CoachManager}.
+ * Tests the class {@link TLSCoach} and {@link TLSManager}.
  * 
  * @author peter
  *
@@ -28,7 +28,7 @@ public class TLSCoachTest extends TraasIntegrationTest {
 	 */
 	@Test
 	void testGetCoach() {
-		CoachManager manager = new CoachManager();
+		TLSManager manager = TLSManager.getInstance();
 		TLSKey tls = new TLSKey("n2");
 		TLSCoach coach1 = new TLSCoach(getTraciConnection(), tls);
 		TLSCoach coachDuplicate = new TLSCoach(getTraciConnection(), tls);
@@ -39,7 +39,7 @@ public class TLSCoachTest extends TraasIntegrationTest {
 		EdgeValue val = new EdgeValue();
 		val.set(EdgeValue.KEY_ID, EDGE_ID);
 
-		TLSCoach coach = manager.getCoach(val);
+		TLSCoach coach = (TLSCoach) manager.getTLS(val);
 
 		assertEquals(coach1, coach);
 		assertNotEquals(coachDuplicate, coach);
@@ -51,7 +51,7 @@ public class TLSCoachTest extends TraasIntegrationTest {
 	 */
 	@Test
 	void testRegisterUnregisterCoach() {
-		CoachManager manager = new CoachManager();
+		TLSManager manager = TLSManager.getInstance();
 		TLSKey tls = new TLSKey("n2");
 		TLSCoach coach1 = new TLSCoach(getTraciConnection(), tls);
 		manager.register(coach1);
@@ -59,12 +59,12 @@ public class TLSCoachTest extends TraasIntegrationTest {
 		EdgeValue val = new EdgeValue();
 		val.set(EdgeValue.KEY_ID, EDGE_ID);
 
-		TLSCoach coach = manager.getCoach(val);
+		TLSCoach coach = (TLSCoach) manager.getTLS(val);
 
 		assertEquals(coach1, coach);
 
 		manager.unregister(coach1);
-		assertThrows(RuntimeException.class, () -> manager.getCoach(val));
+		assertThrows(RuntimeException.class, () -> manager.getTLS(val));
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class TLSCoachTest extends TraasIntegrationTest {
 	 */
 	@Test
 	void testRegisterUnregisterDuplicate() {
-		CoachManager manager = new CoachManager();
+		TLSManager manager = TLSManager.getInstance();
 		TLSKey tls = new TLSKey("n2");
 		TLSCoach coach1 = new TLSCoach(getTraciConnection(), tls);
 		TLSCoach coachDuplicate = new TLSCoach(getTraciConnection(), tls);
@@ -83,7 +83,7 @@ public class TLSCoachTest extends TraasIntegrationTest {
 
 		EdgeValue val = new EdgeValue();
 		val.set(EdgeValue.KEY_ID, EDGE_ID);
-		TLSCoach coach = manager.getCoach(val);
+		TLSCoach coach = (TLSCoach) manager.getTLS(val);
 		assertEquals(coach1, coach);
 	}
 

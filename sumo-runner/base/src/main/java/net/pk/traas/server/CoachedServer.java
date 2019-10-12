@@ -3,9 +3,10 @@ package net.pk.traas.server;
 import java.util.List;
 
 import de.tudresden.sumo.cmd.Trafficlight;
+import net.pk.stream.xml.util.TLSManager;
 
 /**
- * A traas server that is managed by a {@link CoachManager}. Therefore the
+ * A traas server that is managed by a {@link TLSManager}. Therefore the
  * registration of all TLS is necessary before the simulation starts. This is
  * done in {@link #beforeSimulation()}. For each junction an
  * {@link TLSCoach} is created. Each changeMaker is responsible for the
@@ -16,14 +17,14 @@ import de.tudresden.sumo.cmd.Trafficlight;
  */
 public abstract class CoachedServer extends TraasServer {
 
-	private CoachManager coachManager;
+	private TLSManager coachManager;
 
 	/**
 	 * Constructor.
 	 * 
 	 */
 	public CoachedServer() {
-		coachManager = new CoachManager();
+		coachManager = TLSManager.getInstance();
 	}
 
 	@Override
@@ -50,7 +51,7 @@ public abstract class CoachedServer extends TraasServer {
 	 * 
 	 * @return junction manager
 	 */
-	protected CoachManager getCoachManager() {
+	protected TLSManager getCoachManager() {
 		return coachManager;
 	}
 }

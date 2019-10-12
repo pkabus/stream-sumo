@@ -3,6 +3,7 @@ package net.pk.stream.xml.util;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.nio.file.Path;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -27,7 +28,6 @@ import org.xml.sax.SAXException;
  */
 public class DocumentDelivery {
 
-
 	/**
 	 * Converts the given string to a document and returns it.
 	 * 
@@ -49,16 +49,10 @@ public class DocumentDelivery {
 		return doc;
 	}
 
-	public static void editElementInDom(final File file, final String parentTag, final String tag, final String attribute, final String value)
+	public static void editElementInDom(final File file, final String parentTag, final String tag,
+			final String attribute, final String value)
 			throws ParserConfigurationException, IOException, SAXException, TransformerException {
-		// Make an instance of the DocumentBuilderFactory
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		// use the factory to take an instance of the document builder
-		DocumentBuilder db = dbf.newDocumentBuilder();
-
-		// parse using the builder to get the DOM mapping of the
-		// XML file
-		Document document = db.parse(file);
+		Document document = getDocument(file);
 
 		Element parent = (Element) document.getElementsByTagName(parentTag).item(0);
 		NodeList delayNodeList = document.getElementsByTagName(tag);
@@ -71,15 +65,41 @@ public class DocumentDelivery {
 		}
 
 		item.setAttribute(attribute, value);
-		
-		
-		 // create the xml file
-        //transform the DOM Object to an XML File
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
-        DOMSource domSource = new DOMSource(document);
-        StreamResult streamResult = new StreamResult(file);
-        transformer.transform(domSource, streamResult);
+
+		// create the xml file
+		// transform the DOM Object to an XML File
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = transformerFactory.newTransformer();
+		DOMSource domSource = new DOMSource(document);
+		StreamResult streamResult = new StreamResult(file);
+		transformer.transform(domSource, streamResult);
+	}
+
+	/**
+	 * @param file
+	 * @return
+	 */
+	public static Document getDocument(final File file) {
+		// Make an instance of the DocumentBuilderFactory
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		try {
+			// use the factory to take an instance of the document builder
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			// parse using the builder to get the DOM mapping of the
+			// XML file
+			return db.parse(file);
+		} catch (SAXException | IOException | ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * @param path
+	 * @return
+	 */
+	public static Document getDocument(Path path) {
+		return getDocument(path.toFile());
 	}
 
 }
