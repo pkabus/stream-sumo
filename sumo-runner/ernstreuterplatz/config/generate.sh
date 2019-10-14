@@ -1,0 +1,1 @@
+python $SUMO_HOME/tools/randomTrips.py -n /home/peter/master/modules/sumo-runner/ernstreuterplatz/config/ernstreuterplatz.net.xml -e 500 -o /home/peter/master/modules/sumo-runner/ernstreuterplatz/config/trips.trips.xml --validate --seed 42 --fringe-factor 1000

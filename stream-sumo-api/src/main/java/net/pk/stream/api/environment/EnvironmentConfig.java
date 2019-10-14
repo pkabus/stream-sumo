@@ -38,6 +38,7 @@ public class EnvironmentConfig {
 	public static final String STREAM_PROCESSING_PORT_E1DETECTORVALUE_KEY = "stream.processing.port.e1detectorvalue";
 	public static final String STREAM_PROCESSING_PORT_LANEVALUE_KEY = "stream.processing.port.lanevalue";
 	public static final String STREAM_PROCESSING_HOST_KEY = "stream.processing.host";
+	public static final String ENGINE_MODE = "engine.mode";
 	public static final String SUMO_CONFIG_FILE_KEY = "sumo.config.file";
 	public static final String SUMO_BIN_FILE_KEY = "sumo.bin.file";
 	public static final String ADD_TLS_FILE_KEY = "tls.add.xml";
@@ -58,6 +59,7 @@ public class EnvironmentConfig {
 	private int streamHostLaneValuePort = -1;
 	private String detectorIdSeparator;
 	private int timestepDelay;
+	private EngineMode engineMode;
 
 	private String streamFileDir;
 	private String e1DetectorValueFile;
@@ -101,6 +103,7 @@ public class EnvironmentConfig {
 	private void validate() {
 		this.sumoBinFilepath = System.getProperty(SUMO_BIN_FILE_KEY);
 		this.configFilepath = System.getProperty(SUMO_CONFIG_FILE_KEY);
+		this.engineMode = EngineMode.valueOf(System.getProperty(ENGINE_MODE, EngineMode.LANE_BASED.toString()));
 
 		this.streamFileDir = System.getProperty(STREAM_FILE_DIR_KEY, System.getProperty("user.dir"));
 		this.e1DetectorValueFile = System.getProperty(E1DETECTOR_VALUE_KEY, "e1detector-value.xml");
@@ -124,6 +127,7 @@ public class EnvironmentConfig {
 		this.timestepDelay = Integer.parseInt(System.getProperty(SUMO_DELAY_KEY, "500"));
 
 		Objects.requireNonNull(sumoBinFilepath);
+		Objects.requireNonNull(engineMode);
 		Objects.requireNonNull(configFilepath);
 		Objects.requireNonNull(streamProcessingHost);
 		Objects.requireNonNull(streamHostE1DetectorValuePort);
@@ -373,7 +377,7 @@ public class EnvironmentConfig {
 			Document configDom = DocumentDelivery.getDocument(new File(this.configFilepath));
 			networkFile = ((Element) configDom.getElementsByTagName("net-file").item(0)).getAttribute("value");
 		}
-		
+
 		return networkFile;
 	}
 
@@ -382,6 +386,13 @@ public class EnvironmentConfig {
 	 */
 	public String getConfigFileDir() {
 		return configFileDir;
+	}
+	
+	/**
+	 * @return
+	 */
+	public EngineMode getEngineMode() {
+		return engineMode;
 	}
 
 }

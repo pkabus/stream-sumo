@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on Di 03 Sep 2019 10:27:49 CEST by Eclipse SUMO netedit Version v1_1_0+1526-08c2293b1a
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <output>
+        <output-file value="/home/peter/master/sumo-runner/single-big-junction/config/single-big-junction.net.xml"/>
+    </output>
+
+    <processing>
+        <offset.disable-normalization value="true"/>
+    </processing>
+
+    <junctions>
+        <no-turnarounds value="true"/>
+    </junctions>
+
+</configuration>
+-->
+
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+    <tlLogic id="n4" type="static" programID="n1_n4" offset="0">
+        <phase duration="33" state="GGGgrrrrGGGgrrrr"/>
+    </tlLogic>
+    <tlLogic id="n4" type="static" programID="n3_n4" offset="0">
+        <phase duration="33" state="GGGgrrrrGGGgrrrr"/>
+    </tlLogic>
+    <tlLogic id="n4" type="static" programID="n2_n4" offset="0">
+        <phase duration="33" state="rrrrGGGgrrrrGGGg"/>
+    </tlLogic>
+    <tlLogic id="n4" type="static" programID="n0_n4" offset="0">
+        <phase duration="33" state="rrrrGGGgrrrrGGGg"/>
+    </tlLogic>
+    
+    <timedEvent type="SaveTLSStates" source="n4" dest="localhost:9001"/>
+</additional>

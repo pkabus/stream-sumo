@@ -2,17 +2,11 @@
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
     <input>
-        <net-file value="single-big-junction.net.xml"/>
-        <route-files value="single-big-junction.rou.xml"/>
-	<additional-files value="tls.add.xml,e1detector.add.xml"/>
+        <net-file value="ernstreuterplatz.net.xml"/>
+        <route-files value="trips.trips.xml"/>
+	<!-- <additional-files value="tls.add.xml,e1detector.add.xml"/> -->
     <gui-settings-file value="settings.xml"/>
     </input>
-    
-           
-    <output>
-    	<netstate-dump value="localhost:9002" />
-    </output>
-
     
     <time-to-teleport value="-1"/>
 </configuration>

@@ -7,3 +7,4 @@ target/
 *.out.xml
 *value.csv
 testfile
+dependency-reduced-pom.xml

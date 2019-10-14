@@ -32,6 +32,7 @@ public final class StartupUtil {
 	private Logger log = LoggerFactory.getLogger(getClass());
 
 
+	@Deprecated
 	public void buildDatabase() {
 		if (dbConfig.getCassandraHost() == null) {
 			this.log.info("No database host set. Cannot build cassandra DB!");
