@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.3.0">
-  <zoom_level>4</zoom_level>
+  <zoom_level>5</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>472</x>
-      <y>408</y>
-      <w>108</w>
-      <h>64</h>
+      <x>335</x>
+      <y>340</y>
+      <w>135</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>/FileInputController&lt;VALUETYPE&gt;/
 --
@@ -23,10 +23,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>624</x>
-      <y>420</y>
-      <w>184</w>
-      <h>48</h>
+      <x>525</x>
+      <y>355</y>
+      <w>230</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>EdgeValueController
 --
@@ -41,10 +41,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>576</x>
-      <y>440</y>
-      <w>56</w>
-      <h>12</h>
+      <x>465</x>
+      <y>380</y>
+      <w>70</w>
+      <h>15</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;120.0;10.0</additional_attributes>
@@ -52,10 +52,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>636</x>
-      <y>584</y>
-      <w>160</w>
-      <h>52</h>
+      <x>540</x>
+      <y>560</y>
+      <w>200</w>
+      <h>65</h>
     </coordinates>
     <panel_attributes>ValueTracker&lt;VALUETYPE&gt;
 --
@@ -73,10 +73,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>640</x>
-      <y>500</y>
-      <w>136</w>
-      <h>48</h>
+      <x>545</x>
+      <y>455</y>
+      <w>170</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>ReaderJob&lt;EdgeValue&gt;
 --
@@ -91,10 +91,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>708</x>
-      <y>544</y>
-      <w>16</w>
-      <h>48</h>
+      <x>630</x>
+      <y>510</y>
+      <w>20</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=1
@@ -104,10 +104,10 @@ m2=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>472</x>
-      <y>672</y>
-      <w>132</w>
-      <h>44</h>
+      <x>335</x>
+      <y>670</y>
+      <w>165</w>
+      <h>55</h>
     </coordinates>
     <panel_attributes>/ValueFactory&lt;VALUETYPE&gt;/
 --
@@ -119,10 +119,10 @@ m2=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>704</x>
-      <y>632</y>
-      <w>12</w>
-      <h>48</h>
+      <x>625</x>
+      <y>620</y>
+      <w>15</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
@@ -130,10 +130,10 @@ m2=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>632</x>
-      <y>320</y>
-      <w>140</w>
-      <h>48</h>
+      <x>535</x>
+      <y>230</y>
+      <w>175</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>AsyncServer
 --
@@ -148,10 +148,10 @@ _-instance: AsyncServer_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>708</x>
-      <y>364</y>
-      <w>32</w>
-      <h>64</h>
+      <x>630</x>
+      <y>285</y>
+      <w>40</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 used by</panel_attributes>
@@ -160,10 +160,10 @@ used by</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>712</x>
-      <y>464</y>
-      <w>24</w>
-      <h>44</h>
+      <x>635</x>
+      <y>410</y>
+      <w>30</w>
+      <h>55</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=1
@@ -173,10 +173,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>804</x>
-      <y>692</y>
-      <w>116</w>
-      <h>44</h>
+      <x>750</x>
+      <y>695</y>
+      <w>145</w>
+      <h>55</h>
     </coordinates>
     <panel_attributes>E1DetectorValueFactory
 --
@@ -188,10 +188,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>600</x>
-      <y>692</y>
-      <w>44</w>
-      <h>12</h>
+      <x>495</x>
+      <y>695</y>
+      <w>55</w>
+      <h>15</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;90.0;10.0</additional_attributes>
@@ -199,10 +199,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>636</x>
-      <y>672</y>
-      <w>132</w>
-      <h>44</h>
+      <x>540</x>
+      <y>670</y>
+      <w>165</w>
+      <h>55</h>
     </coordinates>
     <panel_attributes>/ValueFromXmlFactory&lt;VALUETYPE&gt;/
 --
@@ -214,10 +214,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>764</x>
-      <y>692</y>
-      <w>48</w>
-      <h>28</h>
+      <x>700</x>
+      <y>695</y>
+      <w>60</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;50.0;10.0;50.0;50.0;100.0;50.0</additional_attributes>
@@ -225,10 +225,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>460</x>
-      <y>516</y>
-      <w>136</w>
-      <h>20</h>
+      <x>320</x>
+      <y>475</y>
+      <w>170</w>
+      <h>25</h>
     </coordinates>
     <panel_attributes>/AbstractJob/
 --
@@ -240,10 +240,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>592</x>
-      <y>520</y>
-      <w>56</w>
-      <h>12</h>
+      <x>485</x>
+      <y>480</y>
+      <w>70</w>
+      <h>15</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;120.0;10.0</additional_attributes>
@@ -251,10 +251,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>456</x>
-      <y>584</y>
-      <w>148</w>
-      <h>52</h>
+      <x>315</x>
+      <y>560</y>
+      <w>185</w>
+      <h>65</h>
     </coordinates>
     <panel_attributes>/AbstractTracker/
 --
@@ -267,10 +267,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>600</x>
-      <y>608</y>
-      <w>44</w>
-      <h>12</h>
+      <x>495</x>
+      <y>590</y>
+      <w>55</w>
+      <h>15</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;90.0;10.0</additional_attributes>
@@ -278,10 +278,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>804</x>
-      <y>640</y>
-      <w>116</w>
-      <h>44</h>
+      <x>750</x>
+      <y>630</y>
+      <w>145</w>
+      <h>55</h>
     </coordinates>
     <panel_attributes>EdgeValueFactory
 --
@@ -293,10 +293,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>580</x>
-      <y>756</y>
-      <w>116</w>
-      <h>44</h>
+      <x>470</x>
+      <y>775</y>
+      <w>145</w>
+      <h>55</h>
     </coordinates>
     <panel_attributes>LaneValueFactory
 --
@@ -308,10 +308,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>748</x>
-      <y>712</y>
-      <w>72</w>
-      <h>72</h>
+      <x>680</x>
+      <y>720</y>
+      <w>90</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;160.0;160.0;160.0</additional_attributes>
@@ -319,10 +319,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>752</x>
-      <y>656</y>
-      <w>60</w>
-      <h>24</h>
+      <x>685</x>
+      <y>650</y>
+      <w>75</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;40.0;10.0;10.0;130.0;10.0</additional_attributes>
@@ -330,10 +330,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>812</x>
-      <y>756</y>
-      <w>116</w>
-      <h>44</h>
+      <x>760</x>
+      <y>775</y>
+      <w>145</w>
+      <h>55</h>
     </coordinates>
     <panel_attributes>TLSValueFactory
 --
@@ -345,10 +345,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>692</x>
-      <y>712</y>
-      <w>36</w>
-      <h>72</h>
+      <x>610</x>
+      <y>720</y>
+      <w>45</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>70.0;10.0;70.0;160.0;10.0;160.0</additional_attributes>
@@ -356,10 +356,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>452</x>
-      <y>320</y>
-      <w>140</w>
-      <h>48</h>
+      <x>310</x>
+      <y>230</y>
+      <w>175</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>/CoachedServer/
 --
@@ -373,10 +373,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>588</x>
-      <y>344</y>
-      <w>52</w>
-      <h>12</h>
+      <x>480</x>
+      <y>260</y>
+      <w>65</w>
+      <h>15</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;110.0;10.0</additional_attributes>
@@ -384,10 +384,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>276</x>
-      <y>308</y>
-      <w>140</w>
-      <h>68</h>
+      <x>90</x>
+      <y>215</y>
+      <w>175</w>
+      <h>85</h>
     </coordinates>
     <panel_attributes>/TraasServer/
 --
@@ -404,10 +404,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>412</x>
-      <y>344</y>
-      <w>48</w>
-      <h>12</h>
+      <x>260</x>
+      <y>260</y>
+      <w>60</w>
+      <h>15</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;100.0;10.0</additional_attributes>
@@ -415,10 +415,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>204</x>
-      <y>136</y>
-      <w>244</w>
-      <h>124</h>
+      <x>0</x>
+      <y>0</y>
+      <w>305</w>
+      <h>155</h>
     </coordinates>
     <panel_attributes>lt=.
 
@@ -437,10 +437,10 @@ Stream interface
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>344</x>
-      <y>256</y>
-      <w>12</w>
-      <h>60</h>
+      <x>175</x>
+      <y>150</y>
+      <w>15</w>
+      <h>75</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
