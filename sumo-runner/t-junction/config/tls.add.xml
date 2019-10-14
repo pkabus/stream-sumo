@@ -1,18 +1,12 @@
 <additional>
 	<tlLogic id="n2" type="static" programID="n3_n2" offset="0">
-<!-- 		<phase duration="3" state="rryyyyy" /> -->
-		<phase duration="60" state="GGGGrrr" />
-<!-- 		<phase duration="3" state="yyyyrrr" /> -->
+		<phase duration="60" state="GGGrrr" />
 	</tlLogic>
 	<tlLogic id="n2" type="static" programID="n1_n2" offset="0">
-<!-- 		<phase duration="3" state="yyrrryy" /> -->
-		<phase duration="60" state="rrGGGrr" />
-<!-- 		<phase duration="3" state="rryyyrr" /> -->
+		<phase duration="60" state="rrGGrr" />
 	</tlLogic>
 	<tlLogic id="n2" type="static" programID="n20_n2" offset="0">
-<!-- 		<phase duration="3" state="yyyyyrr" /> -->
-		<phase duration="60" state="rrGrrGG" />
-<!-- 		<phase duration="3" state="rryrryy" /> -->
+		<phase duration="60" state="rrrrGG" />
 	</tlLogic>
- 	<timedEvent type="SaveTLSStates" source="n2" dest="localhost:9001"/>
+ 	<timedEvent type="SaveTLSStates" source="n2" dest="localhost:9001"/> 
 </additional>
