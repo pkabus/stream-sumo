@@ -2,7 +2,6 @@ package net.pk.traas.server.controller.update;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -51,8 +50,7 @@ public class EdgeValueController extends FileInputController<EdgeValue> {
 	 * @return collection of most recent values
 	 */
 	public List<EdgeValue> getValues() {
-		HashMap<TLSKey, EdgeValue> out = new HashMap<TLSKey, EdgeValue>(this.mostRecentValues);
-		return new LinkedList<>(out.values());
+		return new LinkedList<>(mostRecentValues.values());
 	}
 
 	/**
