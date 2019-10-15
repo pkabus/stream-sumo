@@ -2,7 +2,6 @@ package net.pk.stream.flink.job;
 
 import javax.annotation.Nullable;
 
-import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -63,11 +62,7 @@ public class LaneValueStream extends WindowedStreamJob {
 		DataStreamSource<String> streamSource = getEnv().socketTextStream(host, port, DELIMITER).setParallelism(1);
 		DataStream<LaneValue> laneValuesAll = ConvertPlainText.toLaneStream(streamSource, DELIMITER);
 		stream = laneValuesAll.filter(v -> v.getTLS() != null) //
-				.keyBy(new KeySelector<LaneValue, String>() {
-					public String getKey(LaneValue v) {
-						return v.getTLS();
-					}
-				}) //
+				.keyBy(new TLSSelector<LaneValue>())
 				.timeWindow(Time.seconds(4), Time.milliseconds(500)) //
 				.reduce((v1, v2) -> v1.getPosDistrib() > v2.getPosDistrib() + LaneValue.EPSILON ? v1 : v2);
 		stream.print();
