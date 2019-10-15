@@ -39,7 +39,7 @@ public class BuilderStart {
 		}
 		
 		try {
-			EdgeBasedBuilder builder = EdgeBasedBuilder.createEdgeBasedBuilder(EnvironmentConfig.getInstance().getAbsolutePathNetworkFile());
+			EdgeBasedBuilder builder = TwoWayPrioritizedBuilder.createTwoWayPrioritizedBuilder(EnvironmentConfig.getInstance().getAbsolutePathNetworkFile());
 			builder.buildAll();
 		} catch (SAXException | IOException | ParserConfigurationException e) {
 			throw new RuntimeException(e);
