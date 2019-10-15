@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on Mi 02 Okt 2019 15:48:52 CEST by Eclipse SUMO netedit Version v1_1_0+1526-08c2293b1a
+<!-- generated on Di 15 Okt 2019 08:32:15 CEST by Eclipse SUMO netedit Version v1_1_0+1526-08c2293b1a
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
-        <sumo-net-file value="osm.net.xml"/>
+        <sumo-net-file value="ernstreuterplatz.net.xml"/>
     </input>
 
     <output>
-        <output-file value="/home/peter/2019-10-02-15-14-23/edge_from_to.net.xml"/>
+        <output-file value="ernstreuterplatz.net.xml"/>
         <output.street-names value="true"/>
     </output>
 
@@ -1667,7 +1667,6 @@
         </lane>
         <param key="origFrom" value="4912579007"/>
     </edge>
-
 
     <tlLogic id="cluster_1910176242_251106770_26938227_4911322574_654381302" type="actuated" programID="0" offset="0">
         <phase duration="42" state="ggrrrGGGGGGG" minDur="5" maxDur="50"/>
