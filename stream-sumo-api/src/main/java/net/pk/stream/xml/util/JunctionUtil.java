@@ -27,7 +27,7 @@ public class JunctionUtil {
 	 */
 	public static String getRedYellowGreenState(final String tlsId, final String programId, final int phase) {
 		EnvironmentConfig conf = EnvironmentConfig.getInstance();
-		Document tlsDocument = DocumentDelivery.getDocument(Paths.get(conf.getConfigFileDir(), EnvironmentConfig.ADD_TLS_FILE_KEY));
+		Document tlsDocument = DocumentDelivery.getDocument(Paths.get(conf.getConfigFileDir(), EnvironmentConfig.ADD_TLS_FILE));
 		XPath xPath = XPathFactory.newInstance().newXPath();
 		NodeList nodes;
 		try {
@@ -51,7 +51,7 @@ public class JunctionUtil {
 	 */
 	public static String getTLSByEdge(final String edgeId) {
 		EnvironmentConfig conf = EnvironmentConfig.getInstance();
-		Document tlsDocument = DocumentDelivery.getDocument(Paths.get(conf.getConfigFileDir(), EnvironmentConfig.ADD_TLS_FILE_KEY));
+		Document tlsDocument = DocumentDelivery.getDocument(Paths.get(conf.getConfigFileDir(), EnvironmentConfig.ADD_TLS_FILE));
 		XPath xPath = XPathFactory.newInstance().newXPath();
 		NodeList nodes;
 		try {

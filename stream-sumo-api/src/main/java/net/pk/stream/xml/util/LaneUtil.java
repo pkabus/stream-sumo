@@ -26,7 +26,7 @@ public class LaneUtil {
 	 */
 	public static LaneInformation by(final String id) {
 		EnvironmentConfig conf = EnvironmentConfig.getInstance();
-		Document netDocument = DocumentDelivery.getDocument(Paths.get(conf.getConfigFileDir(), conf.getNetworkFile()));
+		Document netDocument = DocumentDelivery.getDocument(Paths.get(conf.getAbsolutePathNetworkFile()));
 		XPath xPath = XPathFactory.newInstance().newXPath();
 		NodeList nodes;
 		try {

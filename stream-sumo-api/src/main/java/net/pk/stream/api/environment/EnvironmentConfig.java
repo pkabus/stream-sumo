@@ -41,12 +41,13 @@ public class EnvironmentConfig {
 	public static final String ENGINE_MODE = "engine.mode";
 	public static final String SUMO_CONFIG_FILE_KEY = "sumo.config.file";
 	public static final String SUMO_BIN_FILE_KEY = "sumo.bin.file";
-	public static final String ADD_TLS_FILE_KEY = "tls.add.xml";
+	public static final String ADD_TLS_FILE = "tls.add.xml";
 	public static final String STREAM_FILE_DIR_KEY = "stream.file.dir";
 	public static final String E1DETECTOR_VALUE_KEY = "e1detectorvalue.filename";
 	public static final String TLS_VALUE_KEY = "tlsvalue.filename";
 	public static final String LANE_VALUE_KEY = "lanevalue.filename";
 	public static final String EDGE_VALUE_KEY = "edgevalue.filename";
+	private static final String SUMO_NODE_SEPARATOR_KEY = "sumo.node.separator";
 
 	private static EnvironmentConfig instance;
 
@@ -58,6 +59,7 @@ public class EnvironmentConfig {
 	private int streamHostTLSValuePort = -1;
 	private int streamHostLaneValuePort = -1;
 	private String detectorIdSeparator;
+	private String nodeSeparator;
 	private int timestepDelay;
 	private EngineMode engineMode;
 
@@ -124,6 +126,7 @@ public class EnvironmentConfig {
 
 		// separator char used in the ids of the detectors
 		this.detectorIdSeparator = System.getProperty(SUMO_DETECTOR_SEPARATOR_KEY, "_");
+		this.nodeSeparator = System.getProperty(SUMO_NODE_SEPARATOR_KEY, "_");
 		this.timestepDelay = Integer.parseInt(System.getProperty(SUMO_DELAY_KEY, "500"));
 
 		Objects.requireNonNull(sumoBinFilepath);
@@ -372,13 +375,13 @@ public class EnvironmentConfig {
 		throw new RuntimeException("Unknown type " + type);
 	}
 
-	public String getNetworkFile() {
+	public String getAbsolutePathNetworkFile() {
 		if (networkFile == null) {
 			Document configDom = DocumentDelivery.getDocument(new File(this.configFilepath));
 			networkFile = ((Element) configDom.getElementsByTagName("net-file").item(0)).getAttribute("value");
 		}
 
-		return networkFile;
+		return this.configFileDir + File.separator + networkFile;
 	}
 
 	/**
@@ -387,12 +390,16 @@ public class EnvironmentConfig {
 	public String getConfigFileDir() {
 		return configFileDir;
 	}
-	
+
 	/**
 	 * @return
 	 */
 	public EngineMode getEngineMode() {
 		return engineMode;
+	}
+
+	public String getNodeSeparator() {
+		return this.nodeSeparator;
 	}
 
 }

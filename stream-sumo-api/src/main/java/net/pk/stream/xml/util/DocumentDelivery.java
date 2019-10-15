@@ -1,6 +1,7 @@
 package net.pk.stream.xml.util;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Path;
@@ -8,6 +9,7 @@ import java.nio.file.Path;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -66,12 +68,19 @@ public class DocumentDelivery {
 
 		item.setAttribute(attribute, value);
 
+		writeDomToFile(file, document);
+	}
+
+	public static void writeDomToFile(final File file, final Document dom) throws TransformerException, IOException {
 		// create the xml file
 		// transform the DOM Object to an XML File
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer transformer = transformerFactory.newTransformer();
-		DOMSource domSource = new DOMSource(document);
-		StreamResult streamResult = new StreamResult(file);
+		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+		transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+		FileWriter writer = new FileWriter(file);
+		DOMSource domSource = new DOMSource(dom);
+		StreamResult streamResult = new StreamResult(writer);
 		transformer.transform(domSource, streamResult);
 	}
 
@@ -89,7 +98,24 @@ public class DocumentDelivery {
 			// XML file
 			return db.parse(file);
 		} catch (SAXException | IOException | ParserConfigurationException e) {
-			// TODO Auto-generated catch block
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * @param file
+	 * @return
+	 */
+	public static Document createDocument() {
+		// Make an instance of the DocumentBuilderFactory
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		try {
+			// use the factory to take an instance of the document builder
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			// parse using the builder to get the DOM mapping of the
+			// XML file
+			return db.newDocument();
+		} catch (ParserConfigurationException e) {
 			throw new RuntimeException(e);
 		}
 	}
