@@ -2,14 +2,10 @@ package net.pk.stream.format;
 
 import java.util.UUID;
 
-import com.datastax.driver.mapping.annotations.Column;
-import com.datastax.driver.mapping.annotations.Table;
-
 /**
  * @author peter
  *
  */
-@Table(keyspace = TLSValue.CQL_KEYSPACE, name = TLSValue.CQL_TABLENAME)
 public class TLSValue implements AbstractValue {
 	public static final String CQL_TABLENAME = "tlsvalue";
 
@@ -20,22 +16,16 @@ public class TLSValue implements AbstractValue {
 	public final static String KEY_STATE = "state";
 
 
-	@Column(name = "uuid")
 	private UUID pk;
 
-	@Column(name = "time")
 	private float time;
 
-	@Column(name = "id")
 	private String id;
 
-	@Column(name = "programid")
 	private String programId;
 
-	@Column(name = "phase")
 	private int phase;
 
-	@Column(name = "state")
 	private String state;
 
 	@Override

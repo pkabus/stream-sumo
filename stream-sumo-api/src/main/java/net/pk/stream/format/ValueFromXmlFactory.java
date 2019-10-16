@@ -35,7 +35,7 @@ public interface ValueFromXmlFactory<V extends AbstractValue> extends Factory<V>
 			return null;
 		}
 
-		final V detValue = this.create();
+		final V value = this.create();
 		Document document = null;
 		try {
 			document = DocumentDelivery.convertDocument(str);
@@ -45,8 +45,8 @@ public interface ValueFromXmlFactory<V extends AbstractValue> extends Factory<V>
 		Node node = document.getFirstChild();
 		NamedNodeMap attributes = node.getAttributes();
 		for (int i = 0; i < attributes.getLength(); i++) {
-			detValue.set(attributes.item(i).getNodeName(), attributes.item(i).getNodeValue());
+			value.set(attributes.item(i).getNodeName(), attributes.item(i).getNodeValue());
 		}
-		return detValue;
+		return value;
 	}
 }

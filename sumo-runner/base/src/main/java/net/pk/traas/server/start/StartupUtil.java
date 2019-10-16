@@ -7,7 +7,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.pk.comm.socket.server.ForwardingSocketServer;
+import net.pk.comm.socket.server.ForwardingServerSocket;
 import net.pk.db.cassandra.DbBuilder;
 import net.pk.db.cassandra.config.DbConfig;
 import net.pk.stream.api.environment.EnvironmentConfig;
@@ -28,7 +28,7 @@ public final class StartupUtil {
 
 	private EnvironmentConfig env = EnvironmentConfig.getInstance();
 	private DbConfig dbConfig = DbConfig.getInstance();
-	private List<ForwardingSocketServer> socketServers = new LinkedList<ForwardingSocketServer>();
+	private List<ForwardingServerSocket> serverSockets = new LinkedList<ForwardingServerSocket>();
 	private Logger log = LoggerFactory.getLogger(getClass());
 
 
@@ -59,12 +59,12 @@ public final class StartupUtil {
 	 * @param waitForServer if true, this 
 	 * @return new thread
 	 */
-	public <V extends AbstractValue> Thread createSocketServerForType(final Class<V> type, boolean waitForServer) {
+	public <V extends AbstractValue> Thread createServerSocketForType(final Class<V> type, boolean waitForServer) {
 		int port = env.getStreamProcessingPortBy(type);
-		final ForwardingSocketServer typeSpecificSocketServer = new ForwardingSocketServer(port);
+		final ForwardingServerSocket typeSpecificSocketServer = new ForwardingServerSocket(port);
 
 		if (waitForServer) {
-			socketServers.add(typeSpecificSocketServer);
+			serverSockets.add(typeSpecificSocketServer);
 		}
 
 		return new Thread(new Runnable() {
@@ -76,7 +76,7 @@ public final class StartupUtil {
 					StartupUtil.this.log.info("Use port " + port + " for values of " + type + waitBefore);
 					typeSpecificSocketServer.run();
 				} catch (SocketTimeoutException e) {
-					e.printStackTrace();
+					StartupUtil.this.log.error("Shutdown. Exception: ", e);
 					System.exit(1);
 				}
 			}
@@ -90,16 +90,16 @@ public final class StartupUtil {
 	 * @param type class of type {@link AbstractValue}
 	 * @return new thread
 	 */
-	public <V extends AbstractValue> Thread createSocketServerForType(final Class<V> type) {
-		return this.createSocketServerForType(type, true);
+	public <V extends AbstractValue> Thread createServerSocketForType(final Class<V> type) {
+		return this.createServerSocketForType(type, true);
 	}
 
 	/**
-	 * Checks the status of the stored instances of {@link ForwardingSocketServer}.
+	 * Checks the status of the stored instances of {@link ForwardingServerSocket}.
 	 * 
 	 * @return true if all socketServers are running, false otherwise
 	 */
 	public boolean readyToStartSimulation() {
-		return socketServers.stream().filter(server -> !server.isReady()).count() == 0;
+		return serverSockets.stream().filter(server -> !server.isReady()).count() == 0;
 	}
 }

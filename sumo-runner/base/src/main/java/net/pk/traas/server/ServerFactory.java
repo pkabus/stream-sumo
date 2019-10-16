@@ -8,7 +8,13 @@ import net.pk.stream.api.environment.EnvironmentConfig;
  */
 public final class ServerFactory {
 
-	public static TraasServer getServerByEngineMode() {
+	/**
+	 * This producer method creates a {@link TraasServer} dependent from the chosen
+	 * {@link EngineMode}.
+	 * 
+	 * @return sumo server
+	 */
+	public static TraasServer createServer() {
 		switch (EnvironmentConfig.getInstance().getEngineMode()) {
 		case STATIC:
 			return new StaticServer();

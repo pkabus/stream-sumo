@@ -10,7 +10,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-import net.pk.comm.socket.server.ForwardingSocketServer;
+import net.pk.comm.socket.server.ForwardingServerSocket;
 
 /**
  * Run socket server that forwards input from the first connecting client to the
@@ -47,7 +47,7 @@ public class Main {
 		String port = cmd.getOptionValue("port");
 		int portNumber = Integer.parseInt(port);
 
-		new ForwardingSocketServer(portNumber);
+		new ForwardingServerSocket(portNumber);
 	}
 
 }

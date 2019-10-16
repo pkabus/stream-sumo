@@ -16,7 +16,7 @@ import java.net.SocketTimeoutException;
  * @author peter
  *
  */
-public class ForwardingSocketServer {
+public class ForwardingServerSocket {
 
 	private int portNumber;
 	private boolean status;
@@ -24,7 +24,7 @@ public class ForwardingSocketServer {
 	/**
 	 * Construct new server.
 	 */
-	public ForwardingSocketServer(final int portNumber) {
+	public ForwardingServerSocket(final int portNumber) {
 		this.portNumber = portNumber;
 	}
 
@@ -34,7 +34,7 @@ public class ForwardingSocketServer {
 	 * @throws IOException
 	 */
 	public void run() throws SocketTimeoutException {
-		try (ServerSocket serverSocket = ForwardingSocketServer.createServerSocket(portNumber);
+		try (ServerSocket serverSocket = ForwardingServerSocket.createSocketServer(portNumber);
 				Socket emitterSocket = serverSocket.accept();
 				Socket receiverSocket = serverSocket.accept();
 				PrintWriter out = new PrintWriter(receiverSocket.getOutputStream(), true);
@@ -53,7 +53,7 @@ public class ForwardingSocketServer {
 		}
 	}
 
-	private static ServerSocket createServerSocket(final int port) throws IOException {
+	private static ServerSocket createSocketServer(final int port) throws IOException {
 		ServerSocket s = new ServerSocket(port);
 		s.setSoTimeout(30000);
 		return s;

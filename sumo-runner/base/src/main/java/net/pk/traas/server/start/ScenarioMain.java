@@ -57,16 +57,16 @@ public class ScenarioMain {
 
 		StartupUtil util = new StartupUtil();
 
-		Thread detectorThread = util.createSocketServerForType(E1DetectorValue.class);
+		Thread detectorThread = util.createServerSocketForType(E1DetectorValue.class);
 		detectorThread.start();
 
-		Thread tlsThread = util.createSocketServerForType(TLSValue.class);
+		Thread tlsThread = util.createServerSocketForType(TLSValue.class);
 		tlsThread.start();
 
-		Thread laneThread = util.createSocketServerForType(LaneValue.class);
+		Thread laneThread = util.createServerSocketForType(LaneValue.class);
 		laneThread.start();
 
-		TraasServer sumoServer = ServerFactory.getServerByEngineMode();
+		TraasServer sumoServer = ServerFactory.createServer();
 		sumoServer.startupComponents();
 
 		while (!util.readyToStartSimulation()) {
