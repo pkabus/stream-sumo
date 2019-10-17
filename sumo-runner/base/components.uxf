@@ -5,7 +5,7 @@
     <id>Relation</id>
     <coordinates>
       <x>568</x>
-      <y>248</y>
+      <y>344</y>
       <w>96</w>
       <h>80</h>
     </coordinates>
@@ -18,72 +18,72 @@ m2=provide ports
     <id>Relation</id>
     <coordinates>
       <x>560</x>
-      <y>312</y>
+      <y>408</y>
       <w>104</w>
-      <h>96</h>
+      <h>88</h>
     </coordinates>
     <panel_attributes>lt=)-[v]
 m1=require ports
 </panel_attributes>
-    <additional_attributes>20.0;20.0;20.0;100.0</additional_attributes>
+    <additional_attributes>20.0;20.0;20.0;90.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>264</x>
-      <y>352</y>
-      <w>280</w>
+      <y>448</y>
+      <w>264</w>
       <h>112</h>
     </coordinates>
     <panel_attributes>lt=[&lt;]-()
 m2=provide file
 </panel_attributes>
-    <additional_attributes>330.0;120.0;10.0;120.0;10.0;10.0</additional_attributes>
+    <additional_attributes>310.0;120.0;10.0;120.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>256</x>
-      <y>264</y>
+      <y>384</y>
       <w>88</w>
-      <h>104</h>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=)-[^]
 m1=require file
 </panel_attributes>
-    <additional_attributes>20.0;100.0;20.0;10.0</additional_attributes>
+    <additional_attributes>20.0;70.0;20.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>360</x>
-      <y>48</y>
-      <w>232</w>
-      <h>128</h>
+      <x>464</x>
+      <y>200</y>
+      <w>128</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=[^]-()
 m2=provide ports
 </panel_attributes>
-    <additional_attributes>270.0;140.0;270.0;20.0;10.0;20.0;10.0;50.0</additional_attributes>
+    <additional_attributes>140.0;70.0;140.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>352</x>
-      <y>88</y>
-      <w>104</w>
-      <h>64</h>
+      <y>192</y>
+      <w>128</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=[v]-(
 m1=require ports
 </panel_attributes>
-    <additional_attributes>20.0;60.0;20.0;20.0</additional_attributes>
+    <additional_attributes>10.0;80.0;10.0;20.0;130.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
       <x>184</x>
-      <y>136</y>
+      <y>256</y>
       <w>224</w>
       <h>136</h>
     </coordinates>
@@ -102,7 +102,7 @@ Responsibilities
     <id>UMLGeneric</id>
     <coordinates>
       <x>512</x>
-      <y>160</y>
+      <y>256</y>
       <w>192</w>
       <h>96</h>
     </coordinates>
@@ -111,14 +111,14 @@ ServerSocket
 --
 Responsibilities
 -- Opens ports
--- Redirects communication</panel_attributes>
+-- Forwards communication</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>528</x>
-      <y>392</y>
+      <x>512</x>
+      <y>480</y>
       <w>192</w>
       <h>104</h>
     </coordinates>
