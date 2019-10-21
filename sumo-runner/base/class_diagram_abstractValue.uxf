@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.3.0">
-  <zoom_level>10</zoom_level>
+  <zoom_level>6</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>310</x>
-      <y>90</y>
-      <w>310</w>
-      <h>110</h>
+      <x>204</x>
+      <y>0</y>
+      <w>186</w>
+      <h>78</h>
     </coordinates>
     <panel_attributes>/AbstractValue/
 --
 +set(key: String, value: String): void
 +getId(): String
 +getTimestamp(): Number
-#compareTo(o: AbstractValue): int</panel_attributes>
+#compareTo(o: AbstractValue): int
+#greaterThan(o: AbstractValue): boolean
+#lessThan(o: AbstractValue): boolean</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>740</x>
-      <y>300</y>
-      <w>180</w>
-      <h>110</h>
+      <x>462</x>
+      <y>138</y>
+      <w>108</w>
+      <h>66</h>
     </coordinates>
     <panel_attributes>LaneValue
 --
@@ -37,10 +39,10 @@ tls: String</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>20</x>
-      <y>300</y>
-      <w>180</w>
-      <h>80</h>
+      <x>30</x>
+      <y>138</y>
+      <w>108</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>EdgeValue
 --
@@ -52,10 +54,10 @@ tls: String</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>260</x>
-      <y>300</y>
-      <w>180</w>
-      <h>110</h>
+      <x>174</x>
+      <y>138</y>
+      <w>108</w>
+      <h>66</h>
     </coordinates>
     <panel_attributes>TLSValue
 --
@@ -69,10 +71,10 @@ state: String</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>500</x>
-      <y>300</y>
-      <w>200</w>
-      <h>210</h>
+      <x>318</x>
+      <y>138</y>
+      <w>120</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>E1DetectorValue
 --
@@ -92,10 +94,10 @@ tls: String</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
-      <y>190</y>
-      <w>410</w>
-      <h>130</h>
+      <x>288</x>
+      <y>72</y>
+      <w>246</w>
+      <h>78</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;60.0;390.0;60.0;390.0;110.0</additional_attributes>
@@ -103,10 +105,10 @@ tls: String</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
-      <y>190</y>
-      <w>170</w>
-      <h>130</h>
+      <x>288</x>
+      <y>72</y>
+      <w>102</w>
+      <h>78</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;60.0;150.0;60.0;150.0;110.0</additional_attributes>
@@ -114,10 +116,10 @@ tls: String</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>320</x>
-      <y>190</y>
-      <w>160</w>
-      <h>130</h>
+      <x>210</x>
+      <y>72</y>
+      <w>96</w>
+      <h>78</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>140.0;10.0;140.0;60.0;10.0;60.0;10.0;110.0</additional_attributes>
@@ -125,10 +127,10 @@ tls: String</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>100</x>
-      <y>190</y>
-      <w>380</w>
-      <h>130</h>
+      <x>78</x>
+      <y>72</y>
+      <w>228</w>
+      <h>78</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>360.0;10.0;360.0;60.0;10.0;60.0;10.0;110.0</additional_attributes>
