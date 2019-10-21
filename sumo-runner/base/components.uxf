@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.3.0">
+  <help_text>imulation
+bg=red</help_text>
   <zoom_level>8</zoom_level>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>568</x>
-      <y>344</y>
+      <x>488</x>
+      <y>264</y>
       <w>96</w>
       <h>80</h>
     </coordinates>
@@ -17,8 +19,8 @@ m2=provide ports
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>560</x>
-      <y>408</y>
+      <x>480</x>
+      <y>328</y>
       <w>104</w>
       <h>88</h>
     </coordinates>
@@ -30,8 +32,8 @@ m1=require ports
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>264</x>
-      <y>448</y>
+      <x>184</x>
+      <y>368</y>
       <w>264</w>
       <h>112</h>
     </coordinates>
@@ -43,8 +45,8 @@ m2=provide file
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>256</x>
-      <y>384</y>
+      <x>176</x>
+      <y>304</y>
       <w>88</w>
       <h>80</h>
     </coordinates>
@@ -56,8 +58,8 @@ m1=require file
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>464</x>
-      <y>200</y>
+      <x>384</x>
+      <y>120</y>
       <w>128</w>
       <h>72</h>
     </coordinates>
@@ -69,8 +71,8 @@ m2=provide ports
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>352</x>
-      <y>192</y>
+      <x>272</x>
+      <y>112</y>
       <w>128</w>
       <h>80</h>
     </coordinates>
@@ -82,32 +84,32 @@ m1=require ports
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>184</x>
-      <y>256</y>
+      <x>104</x>
+      <y>176</y>
       <w>224</w>
       <h>136</h>
     </coordinates>
     <panel_attributes>symbol=component
-SimulationRunner
+Sumo Runner
 --
 Responsibilities
 -- Configure SUMO
 -- Configure SUMO Logging
 -- Run SUMO
--- Read (recent changes) from File
+-- Read from file
 -- Make TraCI changes</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>512</x>
-      <y>256</y>
+      <x>432</x>
+      <y>176</y>
       <w>192</w>
       <h>96</h>
     </coordinates>
     <panel_attributes>symbol=component
-ServerSocket
+Communication
 --
 Responsibilities
 -- Opens ports
@@ -117,13 +119,13 @@ Responsibilities
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>512</x>
-      <y>480</y>
+      <x>432</x>
+      <y>400</y>
       <w>192</w>
       <h>104</h>
     </coordinates>
     <panel_attributes>symbol=component
-StreamEngine
+Stream Processing Unit
 --
 Responsibilities
 -- Listen on port

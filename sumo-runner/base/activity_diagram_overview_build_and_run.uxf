@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.3.0">
-  <help_text>doSimulation
+  <help_text>imulation
 bg=red</help_text>
   <zoom_level>10</zoom_level>
   <element>
@@ -391,7 +391,7 @@ ports accepted</panel_attributes>
       <w>140</w>
       <h>40</h>
     </coordinates>
-    <panel_attributes>doSimulation
+    <panel_attributes>run simulation
 bg=red</panel_attributes>
     <additional_attributes/>
   </element>
