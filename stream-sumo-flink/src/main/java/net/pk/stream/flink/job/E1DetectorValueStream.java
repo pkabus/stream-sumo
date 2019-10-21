@@ -62,8 +62,8 @@ public class E1DetectorValueStream extends WindowedStreamJob {
 				.filter(v -> v.getOccupancy() > 0) //
 				.keyBy(new TLSSelector<E1DetectorValue>()) //
 				.timeWindow(Time.seconds(4), Time.milliseconds(500)) //
-				.reduce((v1, v2) -> v1.getOccupancy() > v2.getOccupancy() ? v1
-						: (v2.getOccupancy() > v1.getOccupancy()) ? v2 : v1.getFlow() < v2.getFlow() ? v1 : v2);
+				.reduce((v1, v2) -> v1.getOccupancy() == v2.getOccupancy() ? (v1.getFlow() > v2.getFlow() ? v1 : v2)
+						: v2.getOccupancy() > v1.getOccupancy() ? v2 : v1);
 	}
 
 	@Override
