@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.pk.stream.format.AbstractValue;
 import net.pk.stream.format.EdgeValue;
 import net.pk.traas.api.tracker.job.AbstractJob;
@@ -21,6 +24,7 @@ import net.pk.traas.server.TLSKey;
  */
 public class EdgeValueController extends FileInputController<EdgeValue> {
 
+	private Logger log;
 	private ConcurrentHashMap<TLSKey, EdgeValue> mostRecentValues;
 
 	/**
@@ -29,6 +33,7 @@ public class EdgeValueController extends FileInputController<EdgeValue> {
 	public EdgeValueController() {
 		super(EdgeValue.class);
 		this.mostRecentValues = new ConcurrentHashMap<TLSKey, EdgeValue>();
+		this.log = LoggerFactory.getLogger(getClass());
 	}
 
 	@Override
@@ -40,7 +45,7 @@ public class EdgeValueController extends FileInputController<EdgeValue> {
 					.filter(eVal -> eVal.greaterThan(mostRecentValues.get(TLSKey.findByEdgeId(eVal.getId())))) //
 					.forEach(eVal -> mostRecentValues.put(TLSKey.findByEdgeId(eVal.getId()), eVal));
 		} catch (IOException | InterruptedException | ExecutionException e) {
-			throw new RuntimeException(e);
+			this.log.error("ERR in update()", e);
 		}
 	}
 
