@@ -17,31 +17,31 @@ public abstract class UpdateFileIntegrationTest {
 	/**
 	 * 
 	 */
-	public static final String TEST_FILE_FULL = "detector-value-test-input.csv";
+	public static final String TEST_FILE_FULL = "detector-value-test-input.xml";
 	/**
 	 * 
 	 */
-	public static final String TEST_FILE_PART_0 = "detector-value-test-input-part0.csv";
+	public static final String TEST_FILE_PART_0 = "detector-value-test-input-part0.xml";
 	/**
 	 * 
 	 */
-	public static final String TEST_FILE_PART_1 = "detector-value-test-input-part1.csv";
+	public static final String TEST_FILE_PART_1 = "detector-value-test-input-part1.xml";
 	/**
 	 * 
 	 */
-	public static final String TEST_FILE_PART_2 = "detector-value-test-input-part2.csv";
+	public static final String TEST_FILE_PART_2 = "detector-value-test-input-part2.xml";
 	/**
 	 * 
 	 */
-	public static final String TEST_FILE_PART_3 = "detector-value-test-input-part3.csv";
+	public static final String TEST_FILE_PART_3 = "detector-value-test-input-part3.xml";
 	/**
 	 * 
 	 */
-	public static final String TEST_FILE_PART_4 = "detector-value-test-input-part4.csv";
+	public static final String TEST_FILE_PART_4 = "detector-value-test-input-part4.xml";
 	/**
 	 * 
 	 */
-	public static final String TEST_FILE_IMAGINARY = "detector-value-test-input-i.csv";
+	public static final String TEST_FILE_IMAGINARY = "detector-value-test-input-i.xml";
 
 	/**
 	 * Copy the file with the given name to the file with the second argument. This

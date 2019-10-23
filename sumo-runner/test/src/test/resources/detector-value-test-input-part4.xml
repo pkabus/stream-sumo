@@ -435,4 +435,3 @@
 <interval begin="357.0" end="358.0" id="e1Detector-n2_1_n2-0" nVehContrib="0" flow="0.0" occupancy="100.0" speed="-1.0" harmonicMeanSpeed="-1.0" length="-1.0" nVehEntered="0" />
 <interval begin="358.0" end="359.0" id="e1Detector-n2_1_n2-0" nVehContrib="0" flow="0.0" occupancy="100.0" speed="-1.0" harmonicMeanSpeed="-1.0" length="-1.0" nVehEntered="0" />
 <interval begin="359.0" end="360.0" id="e1Detector-n3_0_n3-0" nVehContrib="0" flow="0.0" occupancy="100.0" speed="-1.0" harmonicMeanSpeed="-1.0" length="-1.0" nVehEntered="0" />
-<interval begin="359.0" end="360.0" id="e1Detector-n2_1_n2-0" nVehContrib="0" flow="0.0" occupancy="100.0" speed="-1.0" harmonicMeanSpeed="-1.0" length="-1.0" nVehEntered="0" />

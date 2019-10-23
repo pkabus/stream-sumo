@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import net.pk.integrationtest.traas.api.UpdateFileIntegrationTest;
@@ -18,6 +19,7 @@ import net.pk.traas.api.tracker.ValueTracker;
  * @author peter
  *
  */
+@Disabled
 public class ValueTrackerTest extends UpdateFileIntegrationTest {
 
 	/**

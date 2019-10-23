@@ -1,7 +1,6 @@
 package net.pk.integrationtest.traas.server.controller.junction;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -31,10 +30,8 @@ public class TLSCoachTest extends TraasIntegrationTest {
 		TLSManager manager = TLSManager.getInstance();
 		TLSKey tls = new TLSKey("n2");
 		TLSCoach coach1 = new TLSCoach(getTraciConnection(), tls);
-		TLSCoach coachDuplicate = new TLSCoach(getTraciConnection(), tls);
 
 		manager.register(coach1);
-		manager.register(coachDuplicate);
 
 		EdgeValue val = new EdgeValue();
 		val.set(EdgeValue.KEY_ID, EDGE_ID);
@@ -42,7 +39,6 @@ public class TLSCoachTest extends TraasIntegrationTest {
 		TLSCoach coach = (TLSCoach) manager.getTLS(val);
 
 		assertEquals(coach1, coach);
-		assertNotEquals(coachDuplicate, coach);
 	}
 
 	/**
@@ -71,20 +67,18 @@ public class TLSCoachTest extends TraasIntegrationTest {
 	 * Register duplicate coach. Expect that manager ignores it.
 	 */
 	@Test
-	void testRegisterUnregisterDuplicate() {
+	void testRegisterGetUnregister() {
 		TLSManager manager = TLSManager.getInstance();
 		TLSKey tls = new TLSKey("n2");
 		TLSCoach coach1 = new TLSCoach(getTraciConnection(), tls);
-		TLSCoach coachDuplicate = new TLSCoach(getTraciConnection(), tls);
 
 		manager.register(coach1);
-		manager.register(coachDuplicate);
-		manager.unregister(coachDuplicate);
 
 		EdgeValue val = new EdgeValue();
 		val.set(EdgeValue.KEY_ID, EDGE_ID);
 		TLSCoach coach = (TLSCoach) manager.getTLS(val);
 		assertEquals(coach1, coach);
+		manager.unregister(coach1);
 	}
 
 }

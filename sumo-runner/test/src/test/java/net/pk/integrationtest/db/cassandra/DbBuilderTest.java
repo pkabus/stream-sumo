@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.datastax.driver.core.Cluster;
@@ -19,6 +20,7 @@ import net.pk.db.cassandra.config.DbConfig;
  * @author peter
  *
  */
+@Disabled
 public class DbBuilderTest {
 	public final static String TEST_KEYSPACE = "junit5_testcase";
 	public final static String TEST_TABLE_E1DETECTORVALUE = "e1detectorvalue";

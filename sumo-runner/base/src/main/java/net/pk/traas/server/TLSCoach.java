@@ -197,4 +197,9 @@ public class TLSCoach implements Observer, TLS {
 	public boolean equals(Object o) {
 		return (o instanceof TLSCoach) ? ((TLSCoach) o).tls.equals(this.tls) : false;
 	}
+	
+	@Override 
+	public int hashCode() {
+	  return this.tls.hashCode();
+	}
 }
