@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>70</x>
+      <y>70</y>
+      <w>280</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>TLSManager
+--
+_-instance: TLSManager_
+-set: Set&lt;TLS&gt;
+-cache: Map&lt;String, TLS&gt;
+--
+_#getInstance(): TLSManager_
+#register(tls: TLS): void
+#unregister(tls: TLS): void
+#getTLS(value: AbstractValue): TLS</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>380</x>
+      <y>280</y>
+      <w>280</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>TLSCoach</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>380</x>
+      <y>70</y>
+      <w>280</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>EdgeValue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>190</x>
+      <y>340</y>
+      <w>210</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;190.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLInterface</id>
+    <coordinates>
+      <x>140</x>
+      <y>330</y>
+      <w>100</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>TLS
+--
+Operation1
+Operation2</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
