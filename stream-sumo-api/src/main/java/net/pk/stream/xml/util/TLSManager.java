@@ -1,8 +1,8 @@
 package net.pk.stream.xml.util;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.annotation.Nullable;
 
@@ -25,14 +25,14 @@ public class TLSManager {
 
 	private static TLSManager instance;
 
-	private List<TLS> list;
+	private Set<TLS> set;
 	private HashMap<String, TLS> cache;
 
 	/**
 	 * Constructor.
 	 */
 	private TLSManager() {
-		list = new LinkedList<>();
+		set = new HashSet<>();
 		this.cache = new HashMap<>();
 	}
 
@@ -50,9 +50,7 @@ public class TLSManager {
 	 * @param coach to register
 	 */
 	public void register(final TLS coach) {
-		if (!list.contains(coach)) {
-			list.add(coach);
-		}
+		set.add(coach);
 	}
 
 	/**
@@ -62,7 +60,7 @@ public class TLSManager {
 	 */
 	public void unregister(final TLS coach) {
 		if (coach != null) {
-			list.remove(coach);
+			set.remove(coach);
 			cache.clear();
 		}
 	}
@@ -81,7 +79,7 @@ public class TLSManager {
 
 		// if not cached, get delegate, put it to cache and return the delegate
 
-		TLS coach = list.stream().filter(c -> StringUtils.endsWith(value.getId(), c.getTlsId())).findFirst()
+		TLS coach = set.stream().filter(c -> StringUtils.endsWith(value.getId(), c.getTlsId())).findFirst()
 				.orElseThrow(() -> new RuntimeException("No TLS registered that is responsible for the given value + "
 						+ value + ". The wanted delegate should be associated with the id = " + value.getId()));
 
@@ -104,7 +102,7 @@ public class TLSManager {
 
 		// if not cached, get delegate, put it to cache and return the delegate
 
-		TLS coach = list.stream()
+		TLS coach = set.stream()
 				.filter(c -> StringUtils.endsWith(StringUtils.substringBeforeLast(value.getId(), "_"), c.getTlsId()))
 				.findFirst().orElseGet(() -> null);
 
@@ -127,7 +125,7 @@ public class TLSManager {
 
 		// if not cached, get delegate, put it to cache and return the delegate
 
-		TLS coach = list.stream()
+		TLS coach = set.stream()
 				.filter(c -> StringUtils.endsWith(new E1DetectorValueToEdgeConverter().apply(value), c.getTlsId()))
 				.findFirst()
 				.orElseThrow(() -> new RuntimeException("No TLS registered that is responsible for the given value + "
@@ -136,5 +134,5 @@ public class TLSManager {
 		cache.put(value.getId(), coach);
 		return coach;
 	}
-	
+
 }

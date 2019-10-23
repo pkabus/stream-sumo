@@ -192,4 +192,9 @@ public class TLSCoach implements Observer, TLS {
 		throw new RuntimeException("Unexpected observable " + o + " and/or argument " + arg);
 
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		return (o instanceof TLSCoach) ? ((TLSCoach) o).tls.equals(this.tls) : false;
+	}
 }
