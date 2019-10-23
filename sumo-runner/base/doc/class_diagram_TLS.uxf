@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.3.0">
+  <help_text>lt=&lt;-
+[reject program]</help_text>
   <zoom_level>10</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>70</x>
-      <y>70</y>
+      <x>160</x>
+      <y>120</y>
       <w>280</w>
       <h>160</h>
     </coordinates>
@@ -24,8 +26,8 @@ _#getInstance(): TLSManager_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>380</x>
-      <y>280</y>
+      <x>470</x>
+      <y>330</y>
       <w>280</w>
       <h>150</h>
     </coordinates>
@@ -35,8 +37,8 @@ _#getInstance(): TLSManager_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>380</x>
-      <y>70</y>
+      <x>470</x>
+      <y>120</y>
       <w>280</w>
       <h>160</h>
     </coordinates>
@@ -46,8 +48,8 @@ _#getInstance(): TLSManager_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>190</x>
-      <y>340</y>
+      <x>280</x>
+      <y>390</y>
       <w>210</w>
       <h>30</h>
     </coordinates>
@@ -57,8 +59,8 @@ _#getInstance(): TLSManager_
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>140</x>
-      <y>330</y>
+      <x>230</x>
+      <y>380</y>
       <w>100</w>
       <h>100</h>
     </coordinates>
