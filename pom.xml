@@ -1,0 +1,24 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.pk</groupId>
+	<artifactId>sumo-runner-all</artifactId>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>net.pk</groupId>
+		<artifactId>sumo-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<modules>
+		<module>communication/socket-server</module>
+		<module>stream-sumo-api</module>
+		<module>stream-sumo-flink</module>
+		<module>sumo-runner/parent</module>
+		<module>sumo-runner/base</module>
+		<module>sumo-runner/test</module>
+		<module>sumo-runner/traffic-light-builder</module>
+	</modules>
+</project>
