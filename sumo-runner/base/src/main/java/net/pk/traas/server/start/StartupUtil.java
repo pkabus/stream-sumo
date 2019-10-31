@@ -8,12 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.pk.comm.socket.server.ForwardingServerSocket;
-import net.pk.db.cassandra.DbBuilder;
-import net.pk.db.cassandra.config.DbConfig;
+import net.pk.data.type.AbstractValue;
 import net.pk.stream.api.environment.EnvironmentConfig;
-import net.pk.stream.format.AbstractValue;
-import net.pk.stream.format.E1DetectorValue;
-import net.pk.stream.format.TLSValue;
 
 /**
  * Startup helper class that takes care of the program arguments and feeds the
@@ -27,30 +23,10 @@ import net.pk.stream.format.TLSValue;
 public final class StartupUtil {
 
 	private EnvironmentConfig env = EnvironmentConfig.getInstance();
-	private DbConfig dbConfig = DbConfig.getInstance();
 	private List<ForwardingServerSocket> serverSockets = new LinkedList<ForwardingServerSocket>();
 	private Logger log = LoggerFactory.getLogger(getClass());
 
 
-	@Deprecated
-	public void buildDatabase() {
-		if (dbConfig.getCassandraHost() == null) {
-			this.log.info("No database host set. Cannot build cassandra DB!");
-			return;
-		}
-		
-		DbBuilder b = new DbBuilder(AbstractValue.CQL_KEYSPACE);
-
-		// drop old keyspace!
-		b.dropKeyspace();
-
-		// create (keyspace and) new table
-		b.createTable(E1DetectorValue.CQL_TABLENAME);
-		b.createTable(TLSValue.CQL_TABLENAME);
-		b.close();
-	}
-	
-	
 	/**
 	 * Create socketServer {@link Thread} for the given type.
 	 * 
@@ -76,7 +52,7 @@ public final class StartupUtil {
 					StartupUtil.this.log.info("Use port " + port + " for values of " + type + waitBefore);
 					typeSpecificSocketServer.run();
 				} catch (SocketTimeoutException e) {
-					StartupUtil.this.log.error("Shutdown. Exception: ", e);
+					StartupUtil.this.log.error("Shutdown. Exception for " + type, e);
 					System.exit(1);
 				}
 			}
