@@ -14,8 +14,21 @@ import org.xml.sax.SAXException;
 
 import net.pk.stream.api.environment.EnvironmentConfig;
 
+/**
+ * Entry point of the traffic-light-builder application. The only required
+ * program argument "--sumocfg" or "-s" which is used to specify the sumocfg
+ * file path.
+ * 
+ * @author peter
+ *
+ */
 public class BuilderStart {
 
+	/**
+	 * Entry point.
+	 * 
+	 * @param args "-s" or "--sumocfg": sumocfg file path
+	 */
 	public static void main(String[] args) {
 		Options options = new Options();
 
@@ -37,9 +50,10 @@ public class BuilderStart {
 		if (cmd.hasOption("s")) {
 			System.setProperty(EnvironmentConfig.SUMO_CONFIG_FILE_KEY, cmd.getOptionValue("s"));
 		}
-		
+
 		try {
-			EdgeBasedBuilder builder = TwoWayPrioritizedBuilder.createTwoWayPrioritizedBuilder(EnvironmentConfig.getInstance().getAbsolutePathNetworkFile());
+			EdgeBasedBuilder builder = EdgeBasedBuilder
+					.create(EnvironmentConfig.getInstance().getAbsolutePathNetworkFile());
 			builder.buildAll();
 		} catch (SAXException | IOException | ParserConfigurationException e) {
 			throw new RuntimeException(e);

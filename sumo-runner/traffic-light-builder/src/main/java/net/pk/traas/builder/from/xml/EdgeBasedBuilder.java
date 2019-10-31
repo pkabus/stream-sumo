@@ -1,11 +1,15 @@
 package net.pk.traas.builder.from.xml;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
@@ -14,15 +18,46 @@ import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
+ * Builder class, that can create TLS programs for an entire network.
+ * 
  * @author peter
  *
  */
-public abstract class EdgeBasedBuilder extends TrafficLightBuilder {
+public class EdgeBasedBuilder extends TrafficLightBuilder {
 
-	protected EdgeBasedBuilder(Document doc) {
+	private EdgeBasedBuilder(Document doc) {
 		super(doc);
+	}
+
+	/**
+	 * Construct method. The given file path must point to a network file.
+	 * 
+	 * @param netFilePath network file path
+	 * @return
+	 * @throws SAXException
+	 * @throws IOException
+	 * @throws ParserConfigurationException
+	 */
+	public static EdgeBasedBuilder create(final String netFilePath)
+			throws SAXException, IOException, ParserConfigurationException {
+		return create(new File(netFilePath));
+	}
+
+	/**
+	 * Construct method. The given file must be a network file.
+	 * 
+	 * @param netFile network file
+	 * @return
+	 * @throws SAXException
+	 * @throws IOException
+	 * @throws ParserConfigurationException
+	 */
+	public static EdgeBasedBuilder create(final File netFile)
+			throws SAXException, IOException, ParserConfigurationException {
+		return new EdgeBasedBuilder(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(netFile));
 	}
 
 	@Override
@@ -32,7 +67,7 @@ public abstract class EdgeBasedBuilder extends TrafficLightBuilder {
 		XPath xPath = XPathFactory.newInstance().newXPath();
 		NodeList trafficLightIds;
 		try {
-			trafficLightIds = (NodeList) xPath.evaluate("//junction[@type='traffic_light']/@id", this.getSourceDoc(),
+			trafficLightIds = (NodeList) xPath.evaluate("//tlLogic/@id", this.getSourceDoc(),
 					XPathConstants.NODESET);
 		} catch (XPathExpressionException e) {
 			throw new RuntimeException("XPath evaluation failed: ", e);
@@ -69,8 +104,11 @@ public abstract class EdgeBasedBuilder extends TrafficLightBuilder {
 
 		for (TLSConnection conn : connections) {
 			if (!programsForSingleTls.containsKey(conn.getFromId())) {
-				String phase = produceTLSPhase(connections, conn.getFromId());
-				programsForSingleTls.put(conn.getFromId(), phase);
+				TLSProgramProducer programProducer = TLSProgramProducerFactory.create(connections, conn);
+				if (programProducer != null) {
+					String phase = programProducer.produceTLSPhase();
+					programsForSingleTls.put(conn.getFromId(), phase);
+				}
 			}
 		}
 
@@ -78,7 +116,14 @@ public abstract class EdgeBasedBuilder extends TrafficLightBuilder {
 
 	}
 
-	protected List<TLSConnection> createTLSConnectionsForTLS(NodeList nodes, final String tlsId) {
+	/**
+	 * Factory method which creates {@link TLSConnection} objects of a given TLS.
+	 * 
+	 * @param nodes input nodes
+	 * @param tlsId corresponding tls id to the returned list of objects
+	 * @return list of {@link TLSConnection} of the given tls id
+	 */
+	private static List<TLSConnection> createTLSConnectionsForTLS(NodeList nodes, final String tlsId) {
 		ArrayList<TLSConnection> connections = new ArrayList<>();
 		for (int i = 0; i < nodes.getLength(); i++) {
 			Element e = (Element) nodes.item(i);
@@ -90,36 +135,5 @@ public abstract class EdgeBasedBuilder extends TrafficLightBuilder {
 			connections.add(conn);
 		}
 		return connections;
-	}
-
-	/**
-	 * @param nodes
-	 * @param fromId
-	 * @return
-	 */
-	protected abstract String produceTLSPhase(final List<TLSConnection> connectionsOfTls, final String fromId);
-
-	/**
-	 * @param nodes
-	 * @param phase
-	 * @param fromId
-	 * @return
-	 */
-	protected char[] addOtherGreenPhases(final List<TLSConnection> connections, final char[] phase,
-			final String fromId) {
-		char[] additionalGreenPhases = phase;
-		String complementary = REVERSE_EDGE_FUNCTION.apply(fromId);
-		if (complementary == null) {
-			return phase;
-		}
-		for (int j = 0; j < connections.size(); j++) {
-			TLSConnection e = connections.get(j);
-			int index = e.getLinkIndex();
-			if (complementary.equals(e.getToId()) && "s".equals(e.getDir())) {
-				additionalGreenPhases[index] = 'G';
-			}
-		}
-
-		return additionalGreenPhases;
 	}
 }

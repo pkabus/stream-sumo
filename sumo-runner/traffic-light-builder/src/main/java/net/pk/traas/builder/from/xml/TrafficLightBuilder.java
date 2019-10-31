@@ -9,14 +9,17 @@ import java.util.Set;
 
 import javax.xml.transform.TransformerException;
 
-import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import net.pk.data.type.SumoEdge;
+import net.pk.data.type.TLSKey;
+import net.pk.data.type.TLSValue;
 import net.pk.stream.api.conversion.function.ReverseEdgeFunction;
 import net.pk.stream.api.environment.EnvironmentConfig;
-import net.pk.stream.format.TLSValue;
 import net.pk.stream.xml.util.DocumentDelivery;
+import net.pk.stream.xml.util.EdgeFinder;
+import net.pk.stream.xml.util.TLSFinder;
 
 /**
  * @author peter
@@ -26,12 +29,16 @@ public abstract class TrafficLightBuilder {
 
 	public static final ReverseEdgeFunction REVERSE_EDGE_FUNCTION = new ReverseEdgeFunction();
 	private Document sourceDoc;
-	private Set<String> tlsIds;
+	private Set<TLSKey> tls;
 	private Set<HashMap<String, String>> resultSet;
+	private EdgeFinder edgeFinder;
+	private TLSFinder tlsFinder;
 
 	protected TrafficLightBuilder(final Document doc) {
 		this.sourceDoc = doc;
-		this.tlsIds = new HashSet<>();
+		this.tls = new HashSet<>();
+		this.edgeFinder = EdgeFinder.getInstance();
+		this.tlsFinder = TLSFinder.getInstance();
 	}
 
 	/**
@@ -49,7 +56,7 @@ public abstract class TrafficLightBuilder {
 	 * 
 	 */
 	public void buildAll() {
-		if (tlsIds.isEmpty() || this.resultSet == null) {
+		if (tls.isEmpty() || this.resultSet == null) {
 			createAll();
 		}
 
@@ -61,22 +68,22 @@ public abstract class TrafficLightBuilder {
 		document.appendChild(root);
 
 		for (HashMap<String, String> map : this.resultSet) {
-			String tlsId = tlsIds.stream()
-					.filter(id -> id.equals(StringUtils.substringAfter(
-							map.keySet().stream().findAny().orElseThrow(() -> new RuntimeException("No key in map")),
-							conf.getNodeSeparator())))
-					.findFirst().orElseThrow(() -> new RuntimeException("Missing tls id in " + tlsIds));
-			for (String s : map.keySet()) {
+			// take any key (which is an edge id) and find the corresponding tls to it
+			String anyEdgeKey = map.keySet().iterator().next();
+			SumoEdge edge = edgeFinder.byId(anyEdgeKey);
+			String tlsId = tlsFinder.bySumoEdge(edge).getId();
+
+			for (String incomingEdge : map.keySet()) {
 				Element tlLogic = document.createElement("tlLogic");
 				tlLogic.setAttribute("id", tlsId);
 				tlLogic.setAttribute("type", "static");
-				tlLogic.setAttribute("programID", s);
+				tlLogic.setAttribute("programID", incomingEdge);
 				tlLogic.setAttribute("offset", "0");
 				root.appendChild(tlLogic);
 
 				Element phase = document.createElement("phase");
 				phase.setAttribute("duration", "60");
-				phase.setAttribute("state", map.get(s));
+				phase.setAttribute("state", map.get(incomingEdge));
 				tlLogic.appendChild(phase);
 			}
 
@@ -100,11 +107,11 @@ public abstract class TrafficLightBuilder {
 	}
 
 	protected void addTlsId(final String tlsId) {
-		this.tlsIds.add(tlsId);
+		this.tls.add(new TLSKey(tlsId));
 	}
 
-	protected Set<String> getTlsIds() {
-		return tlsIds;
+	protected Set<TLSKey> getTlsKeys() {
+		return tls;
 	}
 
 	protected void setResultSet(final Set<HashMap<String, String>> set) {
