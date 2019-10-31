@@ -310,11 +310,11 @@ m2=0..n</panel_attributes>
     <coordinates>
       <x>1224</x>
       <y>1296</y>
-      <w>162</w>
+      <w>144</w>
       <h>162</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;160.0;160.0;160.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;160.0;140.0;160.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -330,7 +330,7 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1368</x>
+      <x>1350</x>
       <y>1395</y>
       <w>261</w>
       <h>99</h>
