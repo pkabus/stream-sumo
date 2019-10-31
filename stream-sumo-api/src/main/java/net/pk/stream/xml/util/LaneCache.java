@@ -5,6 +5,8 @@ import java.util.HashMap;
 import net.pk.data.type.LaneInformation;
 
 /**
+ * Cache that stores {@link LaneInformation} objects associated to their id.
+ * 
  * @author peter
  *
  */
@@ -19,7 +21,9 @@ public class LaneCache {
 	}
 
 	/**
-	 * @return
+	 * Returns singleton instance.
+	 * 
+	 * @return instance
 	 */
 	public static LaneCache getInstance() {
 		if (instance == null) {
@@ -30,8 +34,10 @@ public class LaneCache {
 	}
 
 	/**
-	 * @param id
-	 * @return
+	 * Finds an objects using the given id.
+	 * 
+	 * @param id of information object
+	 * @return object
 	 */
 	public LaneInformation findBy(final String id) {
 		if (cache.containsKey(id)) {

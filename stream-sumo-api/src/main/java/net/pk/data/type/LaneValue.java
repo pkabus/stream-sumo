@@ -4,6 +4,9 @@ import net.pk.stream.xml.util.TLS;
 import net.pk.stream.xml.util.TLSManager;
 
 /**
+ * Lane representation used in the data-flow driven world. Each lane is a part
+ * of an edge in Sumo.
+ * 
  * @author peter
  *
  */

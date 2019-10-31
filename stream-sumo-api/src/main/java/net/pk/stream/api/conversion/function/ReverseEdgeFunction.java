@@ -9,6 +9,9 @@ import net.pk.data.type.SumoEdge;
 import net.pk.stream.xml.util.EdgeFinder;
 
 /**
+ * Function: String -> String. Uses the {@link EdgeFinder} to get the id of the
+ * reverse edge of the edge with the input id.
+ * 
  * @author peter
  *
  */
@@ -16,7 +19,7 @@ public class ReverseEdgeFunction implements Function<String, String> {
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 	private EdgeFinder edgeFinder = EdgeFinder.getInstance();
-	
+
 	@Override
 	public String apply(String edgeId) {
 		SumoEdge origin = edgeFinder.byId(edgeId);

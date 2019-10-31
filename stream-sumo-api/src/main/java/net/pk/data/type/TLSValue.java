@@ -3,6 +3,8 @@ package net.pk.data.type;
 import java.util.UUID;
 
 /**
+ * TLS representation in the data-flow driven world.
+ * 
  * @author peter
  *
  */
@@ -14,7 +16,6 @@ public class TLSValue implements AbstractValue {
 	public final static String KEY_PROGRAMID = "programID";
 	public final static String KEY_PHASE = "phase";
 	public final static String KEY_STATE = "state";
-
 
 	private UUID pk;
 

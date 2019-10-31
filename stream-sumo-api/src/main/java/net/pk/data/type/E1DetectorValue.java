@@ -1,15 +1,15 @@
 package net.pk.data.type;
 
-import java.util.UUID;
-
 import net.pk.stream.xml.util.TLS;
 import net.pk.stream.xml.util.TLSManager;
 
 /**
+ * E1Detector (induction loop detector) representation in the data-flow driven
+ * world.
+ * 
  * @author peter
  *
  */
-//@Table(keyspace = E1DetectorValue.CQL_KEYSPACE, name = E1DetectorValue.CQL_TABLENAME)
 public class E1DetectorValue implements AbstractValue, TLSAssociated {
 
 	public final static String CQL_TABLENAME = "e1detectorvalue";
@@ -27,37 +27,24 @@ public class E1DetectorValue implements AbstractValue, TLSAssociated {
 	public final static String KEY_LENGTH = "length";
 	public final static String KEY_NVEHENTERED = "nVehEntered";
 
-//	@Column(name = "pk")
-	private UUID pk;
-
-//	@Column(name = "start")
 	private float begin;
 
-//	@Column(name = "end")
 	private float end;
 
-//	@Column(name = "id")
 	private String id;
 
-//	@Column(name = "nvehcontrib")
 	private int nVehContrib;
 
-//	@Column(name = "flow")
 	private float flow;
 
-//	@Column(name = "occupancy")
 	private float occupancy;
 
-//	@Column(name = "speed")
 	private float speed;
 
-//	@Column(name = "harmonicmeanspeed")
 	private float harmonicMeanSpeed;
 
-//	@Column(name = "length")
 	private float length;
 
-//	@Column(name = "nvehentered")
 	private int nVehEntered;
 
 	private String tls;
@@ -100,31 +87,6 @@ public class E1DetectorValue implements AbstractValue, TLSAssociated {
 		default:
 			throw new RuntimeException("Unknown key '" + key + "'");
 		}
-	}
-
-	/**
-	 * Constructs new value with random uuid.
-	 */
-	public E1DetectorValue() {
-		this.pk = UUID.randomUUID();
-	}
-
-	/**
-	 * Getter.
-	 * 
-	 * @return the pk
-	 */
-	public UUID getPk() {
-		return pk;
-	}
-
-	/**
-	 * Setter.
-	 * 
-	 * @param pk the pk to set
-	 */
-	public void setPk(final UUID pk) {
-		this.pk = pk;
 	}
 
 	/**

@@ -1,6 +1,8 @@
 package net.pk.data.type;
 
 /**
+ * This class delivers additional information to a {@link LaneValue}.
+ * 
  * @author peter
  *
  */
@@ -12,10 +14,12 @@ public class LaneInformation {
 	private float length;
 
 	/**
-	 * @param id
-	 * @param index
-	 * @param speed
-	 * @param length
+	 * Constructor.
+	 * 
+	 * @param id     must be equal to a {@link LaneValue} id
+	 * @param index  of lane
+	 * @param speed  allowed max speed of lane
+	 * @param length of lane
 	 */
 	public LaneInformation(final String id, final int index, final float speed, final float length) {
 		this.id = id;
@@ -25,10 +29,12 @@ public class LaneInformation {
 	}
 
 	/**
-	 * @param id
-	 * @param index
-	 * @param speed
-	 * @param length
+	 * Constructor.
+	 * 
+	 * @param id     must be equal to a {@link LaneValue} id
+	 * @param index  of lane
+	 * @param speed  allowed max speed of lane
+	 * @param length of lane
 	 */
 	public LaneInformation(String id, String index, String speed, String length) {
 		this.id = id;
