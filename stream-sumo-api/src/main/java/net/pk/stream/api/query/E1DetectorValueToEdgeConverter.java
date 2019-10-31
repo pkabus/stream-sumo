@@ -1,10 +1,11 @@
 package net.pk.stream.api.query;
 
-import java.util.Arrays;
-import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 
+import net.pk.data.type.E1DetectorValue;
+import net.pk.data.type.SumoEdge;
 import net.pk.stream.api.environment.EnvironmentConfig;
-import net.pk.stream.format.E1DetectorValue;
+import net.pk.stream.xml.util.EdgeFinder;
 
 /**
  * Converts the id of a {@link E1DetectorValue} to the id of an edge (in the
@@ -18,21 +19,24 @@ import net.pk.stream.format.E1DetectorValue;
 public class E1DetectorValueToEdgeConverter implements ToEdgeConverter<E1DetectorValue> {
 
 	@Override
-	public String apply(final E1DetectorValue v) {
+	public SumoEdge apply(final E1DetectorValue v) {
 		String separator = EnvironmentConfig.getInstance().getSeparator();
-		List<String> splitByUnderline = Arrays.asList(v.getId().split(separator));
 
-		if (splitByUnderline.size() == 3) {
-			// e.g. e1det_A3A4_0
-			return splitByUnderline.get(1);
+		// turns
+		// e1det_26704628-cluster_1910176242_251106770_26938227_4911322574_654381302_0
+		// into
+		// 26704628-cluster_1910176242_251106770_26938227_4911322574_654381302
+		String substringAfterFirstSeparator = StringUtils.substringAfter(v.getId(), separator);
+		String substringAfterFirstAndBeforeLastSeparator = StringUtils.substringBeforeLast(substringAfterFirstSeparator,
+				separator);
+
+		SumoEdge edge = EdgeFinder.getInstance().byId(substringAfterFirstAndBeforeLastSeparator);
+		if (edge != null) {
+			return edge;
 		}
 
-		if (splitByUnderline.size() == 4) {
-			// e.g. e1det_n0_n1_0
-			return splitByUnderline.get(1) + separator + splitByUnderline.get(2);
-		}
-
-		throw new RuntimeException("Invalid id format " + v.getId());
+		throw new RuntimeException(
+				"No edge found by id " + substringAfterFirstAndBeforeLastSeparator + " for E1Detector " + v.getId());
 	}
 
 }

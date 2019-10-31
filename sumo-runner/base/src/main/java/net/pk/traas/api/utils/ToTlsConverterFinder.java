@@ -1,9 +1,9 @@
 package net.pk.traas.api.utils;
 
+import net.pk.data.type.AbstractValue;
+import net.pk.data.type.E1DetectorValue;
 import net.pk.stream.api.query.E1DetectorValueToEdgeConverter;
 import net.pk.stream.api.query.ToEdgeConverter;
-import net.pk.stream.format.AbstractValue;
-import net.pk.stream.format.E1DetectorValue;
 
 /**
  * Finder class that returns a {@link ToEdgeConverter} according to the given

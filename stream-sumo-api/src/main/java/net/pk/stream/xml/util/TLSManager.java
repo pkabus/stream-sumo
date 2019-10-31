@@ -8,10 +8,12 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.StringUtils;
 
+import net.pk.data.type.E1DetectorValue;
+import net.pk.data.type.EdgeValue;
+import net.pk.data.type.LaneValue;
+import net.pk.data.type.SumoEdge;
+import net.pk.data.type.TLSKey;
 import net.pk.stream.api.query.E1DetectorValueToEdgeConverter;
-import net.pk.stream.format.E1DetectorValue;
-import net.pk.stream.format.EdgeValue;
-import net.pk.stream.format.LaneValue;
 
 /**
  * CoachManager registers and obtains all {@link TLSCoach} of the used sumo
@@ -24,7 +26,9 @@ import net.pk.stream.format.LaneValue;
 public class TLSManager {
 
 	private static TLSManager instance;
-
+	
+	private TLSFinder tlsFinder;
+	private EdgeFinder edgeFinder;
 	private Set<TLS> set;
 	private HashMap<String, TLS> cache;
 
@@ -34,6 +38,8 @@ public class TLSManager {
 	private TLSManager() {
 		set = new HashSet<>();
 		this.cache = new HashMap<>();
+		this.edgeFinder = EdgeFinder.getInstance();
+		this.tlsFinder = TLSFinder.getInstance();
 	}
 
 	public static TLSManager getInstance() {
@@ -79,7 +85,18 @@ public class TLSManager {
 
 		// if not cached, get delegate, put it to cache and return the delegate
 
-		TLS coach = set.stream().filter(c -> StringUtils.endsWith(value.getId(), c.getTlsId())).findFirst()
+		SumoEdge edge = edgeFinder.byId(value.getId());
+		if (edge == null) {
+			return null;
+		}
+		
+		TLSKey tlsKey = tlsFinder.bySumoEdge(edge);
+		
+		if (tlsKey == null) {
+			return null;
+		}
+		
+		TLS coach = set.stream().filter(c -> StringUtils.equals(tlsKey.getId(), c.getTlsId())).findFirst()
 				.orElseThrow(() -> new RuntimeException("No TLS registered that is responsible for the given value + "
 						+ value + ". The wanted delegate should be associated with the id = " + value.getId()));
 
@@ -102,8 +119,20 @@ public class TLSManager {
 
 		// if not cached, get delegate, put it to cache and return the delegate
 
+		// use convention: laneId = edgeId + "_" + index
+		String edgeId = StringUtils.substringBeforeLast(value.getId(), "_");
+		SumoEdge edge = edgeFinder.byId(edgeId);
+		if (edge == null) {
+			return null;
+		}
+		
+		TLSKey tlsKey = tlsFinder.bySumoEdge(edge);
+		if (tlsKey == null) {
+			return null;
+		}
+		
 		TLS coach = set.stream()
-				.filter(c -> StringUtils.endsWith(StringUtils.substringBeforeLast(value.getId(), "_"), c.getTlsId()))
+				.filter(c -> StringUtils.equals(tlsKey.getId(), c.getTlsId()))
 				.findFirst().orElseGet(() -> null);
 
 		cache.put(value.getId(), coach);
@@ -124,15 +153,22 @@ public class TLSManager {
 		}
 
 		// if not cached, get delegate, put it to cache and return the delegate
-
+		
+		SumoEdge edge = new E1DetectorValueToEdgeConverter().apply(value);
+		if (edge == null) {
+			return null;
+		}
+		
+		TLSKey tlsKey = tlsFinder.bySumoEdge(edge);
 		TLS coach = set.stream()
-				.filter(c -> StringUtils.endsWith(new E1DetectorValueToEdgeConverter().apply(value), c.getTlsId()))
+				.filter(c -> StringUtils.equals(tlsKey.getId(), c.getTlsId()))
 				.findFirst()
 				.orElseThrow(() -> new RuntimeException("No TLS registered that is responsible for the given value + "
-						+ value + ". The wanted delegate should be associated with the id = " + value.getId()));
+						+ value + ". SumoEdge " + edge + " could not be found in " + set));
 
 		cache.put(value.getId(), coach);
 		return coach;
 	}
-
+	
+	
 }

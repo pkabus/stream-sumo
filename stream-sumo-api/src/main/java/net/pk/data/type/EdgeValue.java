@@ -1,4 +1,4 @@
-package net.pk.stream.format;
+package net.pk.data.type;
 
 import net.pk.stream.xml.util.TLS;
 import net.pk.stream.xml.util.TLSManager;

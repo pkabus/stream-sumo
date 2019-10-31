@@ -7,10 +7,10 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+import net.pk.data.type.E1DetectorValue;
+import net.pk.data.type.LaneValue;
+import net.pk.data.type.TLSValue;
 import net.pk.stream.api.environment.EnvironmentConfig;
-import net.pk.stream.format.E1DetectorValue;
-import net.pk.stream.format.LaneValue;
-import net.pk.stream.format.TLSValue;
 import net.pk.traas.server.ServerFactory;
 import net.pk.traas.server.TraasServer;
 

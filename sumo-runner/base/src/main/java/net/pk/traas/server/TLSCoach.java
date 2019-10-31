@@ -10,8 +10,9 @@ import org.slf4j.LoggerFactory;
 import de.tudresden.sumo.cmd.Simulation;
 import de.tudresden.sumo.cmd.Trafficlight;
 import it.polito.appeal.traci.SumoTraciConnection;
+import net.pk.data.type.EdgeValue;
+import net.pk.data.type.TLSKey;
 import net.pk.stream.api.conversion.function.EdgeValueToProgramIdFunction;
-import net.pk.stream.format.EdgeValue;
 import net.pk.stream.xml.util.JunctionUtil;
 import net.pk.stream.xml.util.TLS;
 

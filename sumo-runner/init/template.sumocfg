@@ -4,8 +4,8 @@
     <input>
         <net-file value="${scenario-name}.net.xml"/>
         <route-files value="trips.trips.xml"/>
-	<additional-files value="tls.add.xml,e1detector.add.xml"/>
-    <gui-settings-file value="settings.xml"/>
+		<additional-files value="tls.add.xml,e1detector.add.xml"/>
+    	<gui-settings-file value="settings.xml"/>
     </input>
     
     <time-to-teleport value="-1"/>

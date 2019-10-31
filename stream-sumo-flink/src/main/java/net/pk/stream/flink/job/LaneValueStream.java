@@ -7,9 +7,9 @@ import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.time.Time;
 
+import net.pk.data.type.E1DetectorValue;
+import net.pk.data.type.LaneValue;
 import net.pk.stream.flink.converter.ConvertPlainText;
-import net.pk.stream.format.E1DetectorValue;
-import net.pk.stream.format.LaneValue;
 
 /**
  * This stream encapsulation is a set of flink stream jobs. It defines the

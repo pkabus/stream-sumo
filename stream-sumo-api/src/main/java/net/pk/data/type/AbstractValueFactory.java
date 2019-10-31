@@ -1,4 +1,4 @@
-package net.pk.stream.format;
+package net.pk.data.type;
 
 /**
  * Factory of any kind of sensor data.
@@ -7,7 +7,7 @@ package net.pk.stream.format;
  *
  * @param <T>
  */
-public interface Factory<T extends AbstractValue> {
+public interface AbstractValueFactory<T extends AbstractValue> {
 
 	/**
 	 * Create function. Used to create a value object.

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.concurrent.ExecutionException;
 
-import net.pk.stream.format.AbstractValue;
+import net.pk.data.type.AbstractValue;
 
 /**
  * @author peter

@@ -8,9 +8,9 @@ import java.nio.file.Paths;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import net.pk.data.type.E1DetectorValue;
+import net.pk.data.type.E1DetectorValueFactory;
 import net.pk.integrationtest.traas.api.UpdateFileIntegrationTest;
-import net.pk.stream.format.E1DetectorValue;
-import net.pk.stream.format.E1DetectorValueFactory;
 import net.pk.traas.api.tracker.ValueTracker;
 
 /**

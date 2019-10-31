@@ -1,4 +1,4 @@
-package net.pk.stream.format;
+package net.pk.data.type;
 
 public interface TLSAssociated {
 

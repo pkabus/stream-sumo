@@ -9,8 +9,8 @@ import java.util.List;
 import org.apache.commons.collections.list.SynchronizedList;
 import org.apache.commons.io.input.ReversedLinesFileReader;
 
-import net.pk.stream.format.AbstractValue;
-import net.pk.stream.format.ValueFromXmlFactory;
+import net.pk.data.type.AbstractValue;
+import net.pk.data.type.ValueFromXmlFactory;
 
 /**
  * This reader reads a stream text (xml-formatted) file and parses them to

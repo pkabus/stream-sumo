@@ -8,9 +8,9 @@ import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.time.Time;
 
+import net.pk.data.type.TLSValue;
 import net.pk.stream.api.environment.EnvironmentConfig;
 import net.pk.stream.flink.converter.ConvertPlainText;
-import net.pk.stream.format.TLSValue;
 
 /**
  * @author peter

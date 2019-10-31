@@ -16,11 +16,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
-import net.pk.stream.format.AbstractValue;
-import net.pk.stream.format.E1DetectorValue;
-import net.pk.stream.format.EdgeValue;
-import net.pk.stream.format.LaneValue;
-import net.pk.stream.format.TLSValue;
+import net.pk.data.type.AbstractValue;
+import net.pk.data.type.E1DetectorValue;
+import net.pk.data.type.EdgeValue;
+import net.pk.data.type.LaneValue;
+import net.pk.data.type.TLSValue;
 import net.pk.stream.xml.util.DocumentDelivery;
 
 /**

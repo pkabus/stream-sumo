@@ -3,12 +3,12 @@ package net.pk.traas.api.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.pk.data.type.AbstractValue;
+import net.pk.data.type.E1DetectorValue;
+import net.pk.data.type.E1DetectorValueFactory;
+import net.pk.data.type.EdgeValue;
+import net.pk.data.type.EdgeValueFactory;
 import net.pk.stream.api.environment.EnvironmentConfig;
-import net.pk.stream.format.AbstractValue;
-import net.pk.stream.format.E1DetectorValue;
-import net.pk.stream.format.E1DetectorValueFactory;
-import net.pk.stream.format.EdgeValue;
-import net.pk.stream.format.EdgeValueFactory;
 import net.pk.traas.api.tracker.AbstractTracker;
 import net.pk.traas.api.tracker.ValueTracker;
 

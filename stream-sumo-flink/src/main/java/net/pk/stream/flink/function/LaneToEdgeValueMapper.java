@@ -3,8 +3,8 @@ package net.pk.stream.flink.function;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.flink.api.common.functions.MapFunction;
 
-import net.pk.stream.format.EdgeValue;
-import net.pk.stream.format.LaneValue;
+import net.pk.data.type.EdgeValue;
+import net.pk.data.type.LaneValue;
 
 /**
  * @author peter

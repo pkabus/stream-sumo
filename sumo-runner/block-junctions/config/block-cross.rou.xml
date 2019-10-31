@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vTypeDistribution id="passenger">
+	<vType id="passenger#0" probability="0.25" width="1.8" length="4.3" maxSpeed="50" guiShape="passenger/sedan" minGap="2.5" accel="2.9" decel="4.5" height="1.5"/>
+	<vType id="passenger#1" probability="0.25" width="1.8" length="4.3" maxSpeed="50" guiShape="passenger/hatchback" minGap="2.5" accel="2.9" decel="4.5" height="1.5"/>
+	<vType id="passenger#2" probability="0.20" width="1.8" length="4.3" maxSpeed="50" guiShape="passenger/wagon" minGap="2.5" accel="2.9" decel="4.5" height="1.5"/>
+	<vType id="passenger#3" probability="0.15" width="1.9" length="4.7" maxSpeed="50" guiShape="passenger/van" minGap="2.5" accel="2.9" decel="4.5" height="1.73"/>
+	<vType id="passenger#4" probability="0.15" width="2.16" length="6.5" maxSpeed="50" guiShape="delivery" minGap="2.5" accel="2.9" decel="4.5" height="2.86"/>
+    </vTypeDistribution>
+
+    <vTypeDistribution id="motorcycle">
+	<vType id="motorcycle#0" probability="0.15" width="1.8" length="2.2" maxSpeed="50" guiShape="motorcycle" minGap="2.5" accel="6" decel="4.5" height="1.5"/>
+    </vTypeDistribution>
+
+	<!-- from west to east -->
+	<route id="n10_n21" edges="n10_n1 n1_n2 n2_n21" />
+	<route id="n41_n30" edges="n41_n4 n4_n3 n3_n30" />
+
+	<!-- from east to west -->
+	<route id="n21_n10" edges="n21_n2 n2_n1 n1_n10" />
+	<route id="n30_n41" edges="n30_n3 n3_n4 n4_n41" />
+
+	<!-- from south to north -->
+	<route id="n40_n11" edges="n40_n4 n4_n1 n1_n11" />
+	<route id="n31_n20" edges="n31_n3 n3_n2 n2_n20" />
+
+	<!-- from north to south -->
+	<route id="n11_n40" edges="n11_n1 n1_n4 n4_n40" />
+	<route id="n20_n31" edges="n20_n2 n2_n3 n3_n31" />
+
+<!--	<vehicle id="" type="passenger" route="n10_n21" depart=""/> -->
+<!--	<vehicle id="" type="passenger" route="n41_n30" depart=""/> -->
+
+<!--	<vehicle id="" type="passenger" route="n21_n10" depart=""/> -->
+<!--	<vehicle id="" type="passenger" route="n30_n41" depart=""/> -->
+
+<!--	<vehicle id="" type="passenger" route="n40_n11" depart=""/> -->
+<!--	<vehicle id="" type="passenger" route="n31_n20" depart=""/> -->
+
+<!--	<vehicle id="" type="passenger" route="n11_n40" depart=""/> -->
+<!--	<vehicle id="" type="passenger" route="n20_n31" depart=""/> -->
+
+
+	<!-- upper west-east -->
+	<vehicle id="0" type="passenger" route="n10_n21" depart="0"/>
+	<vehicle id="1" type="passenger" route="n10_n21" depart="0"/>
+	<vehicle id="2" type="passenger" route="n10_n21" depart="0"/>
+	<vehicle id="3" type="passenger" route="n10_n21" depart="0"/>
+	<vehicle id="4" type="passenger" route="n10_n21" depart="0"/>
+	<vehicle id="5" type="passenger" route="n10_n21" depart="0"/>
+	<vehicle id="6" type="passenger" route="n10_n21" depart="0"/>
+	<vehicle id="7" type="passenger" route="n10_n21" depart="0"/>
+	<vehicle id="8" type="passenger" route="n10_n21" depart="0"/>
+	<vehicle id="9" type="passenger" route="n10_n21" depart="0"/>
+	<vehicle id="10" type="passenger" route="n10_n21" depart="0"/>
+	<vehicle id="11" type="passenger" route="n10_n21" depart="0"/>
+	<vehicle id="12" type="passenger" route="n21_n10" depart="0"/>
+	<vehicle id="13" type="passenger" route="n21_n10" depart="0"/>
+	<vehicle id="14" type="passenger" route="n21_n10" depart="0"/>
+	<vehicle id="16" type="passenger" route="n21_n10" depart="0"/>
+	<vehicle id="17" type="passenger" route="n21_n10" depart="0"/>
+	<vehicle id="18" type="passenger" route="n21_n10" depart="0"/>
+	<vehicle id="19" type="passenger" route="n21_n10" depart="0"/>
+	<vehicle id="20" type="passenger" route="n21_n10" depart="0"/>
+	<vehicle id="21" type="passenger" route="n21_n10" depart="0"/>
+	<vehicle id="22" type="passenger" route="n21_n10" depart="0"/>
+	<vehicle id="23" type="passenger" route="n21_n10" depart="0"/>
+	<vehicle id="24" type="passenger" route="n21_n10" depart="0"/>
+	<vehicle id="25" type="passenger" route="n21_n10" depart="0"/>
+
+
+	<!-- left north-south --> 
+	<vehicle id="26" type="passenger" route="n11_n40" depart="10"/>
+	<vehicle id="27" type="passenger" route="n40_n11" depart="10"/>
+	<vehicle id="29" type="passenger" route="n11_n40" depart="10"/>
+	<vehicle id="30" type="passenger" route="n40_n11" depart="10"/>
+	<vehicle id="31" type="passenger" route="n11_n40" depart="10"/>
+	<vehicle id="32" type="passenger" route="n40_n11" depart="10"/>
+	<vehicle id="33" type="passenger" route="n11_n40" depart="10"/>
+	<vehicle id="34" type="passenger" route="n40_n11" depart="10"/>
+	<vehicle id="35" type="passenger" route="n11_n40" depart="10"/>
+	<vehicle id="36" type="passenger" route="n40_n11" depart="10"/>
+	<vehicle id="37" type="passenger" route="n11_n40" depart="10"/>
+	<vehicle id="38" type="passenger" route="n40_n11" depart="10"/>
+	<vehicle id="39" type="passenger" route="n11_n40" depart="10"/>
+	<vehicle id="40" type="passenger" route="n40_n11" depart="10"/>
+	<vehicle id="41" type="passenger" route="n11_n40" depart="10"/>
+	<vehicle id="42" type="passenger" route="n40_n11" depart="10"/>
+	<vehicle id="43" type="passenger" route="n11_n40" depart="10"/>
+	<vehicle id="44" type="passenger" route="n40_n11" depart="10"/>
+	<vehicle id="45" type="passenger" route="n11_n40" depart="10"/>
+	<vehicle id="46" type="passenger" route="n40_n11" depart="10"/>
+	<vehicle id="47" type="passenger" route="n11_n40" depart="10"/>
+	<vehicle id="48" type="passenger" route="n40_n11" depart="10"/>
+	<vehicle id="49" type="passenger" route="n11_n40" depart="10"/>
+	<vehicle id="50" type="passenger" route="n40_n11" depart="10"/>
+	<vehicle id="51" type="passenger" route="n11_n40" depart="10"/>
+	<vehicle id="52" type="passenger" route="n40_n11" depart="10"/>
+
+
+	<!-- right north-south -->
+	<vehicle id="53" type="passenger" route="n31_n20" depart="20"/>
+	<vehicle id="54" type="passenger" route="n20_n31" depart="20"/>
+	<vehicle id="55" type="passenger" route="n31_n20" depart="20"/>
+	<vehicle id="56" type="passenger" route="n20_n31" depart="20"/>
+	<vehicle id="57" type="passenger" route="n31_n20" depart="20"/>
+	<vehicle id="58" type="passenger" route="n20_n31" depart="20"/>
+	<vehicle id="59" type="passenger" route="n31_n20" depart="20"/>
+	<vehicle id="60" type="passenger" route="n20_n31" depart="20"/>
+	<vehicle id="61" type="passenger" route="n31_n20" depart="20"/>
+	<vehicle id="62" type="passenger" route="n20_n31" depart="20"/>
+	<vehicle id="63" type="passenger" route="n31_n20" depart="20"/>
+	<vehicle id="64" type="passenger" route="n20_n31" depart="20"/>
+	<vehicle id="65" type="passenger" route="n31_n20" depart="20"/>
+	<vehicle id="66" type="passenger" route="n20_n31" depart="20"/>
+	<vehicle id="67" type="passenger" route="n31_n20" depart="20"/>
+	<vehicle id="68" type="passenger" route="n20_n31" depart="20"/>
+	<vehicle id="69" type="passenger" route="n31_n20" depart="20"/>
+	<vehicle id="70" type="passenger" route="n20_n31" depart="20"/>
+	<vehicle id="71" type="passenger" route="n31_n20" depart="20"/>
+	<vehicle id="72" type="passenger" route="n20_n31" depart="20"/>
+	<vehicle id="73" type="passenger" route="n31_n20" depart="20"/>
+	<vehicle id="74" type="passenger" route="n20_n31" depart="20"/>
+	<vehicle id="75" type="passenger" route="n31_n20" depart="20"/>
+	<vehicle id="76" type="passenger" route="n20_n31" depart="20"/>
+	<vehicle id="77" type="passenger" route="n31_n20" depart="20"/>
+	<vehicle id="78" type="passenger" route="n20_n31" depart="20"/>
+
+	<!-- down west-east -->
+	<vehicle id="79" type="passenger" route="n41_n30" depart="30"/>
+	<vehicle id="80" type="passenger" route="n30_n41" depart="30"/>
+	<vehicle id="81" type="passenger" route="n41_n30" depart="30"/>
+	<vehicle id="82" type="passenger" route="n30_n41" depart="30"/>
+	<vehicle id="83" type="passenger" route="n41_n30" depart="30"/>
+	<vehicle id="84" type="passenger" route="n30_n41" depart="30"/>
+	<vehicle id="85" type="passenger" route="n41_n30" depart="30"/>
+	<vehicle id="86" type="passenger" route="n30_n41" depart="30"/>
+	<vehicle id="87" type="passenger" route="n41_n30" depart="30"/>
+	<vehicle id="88" type="passenger" route="n30_n41" depart="30"/>
+	<vehicle id="89" type="passenger" route="n41_n30" depart="30"/>
+	<vehicle id="90" type="passenger" route="n30_n41" depart="30"/>
+	<vehicle id="91" type="passenger" route="n41_n30" depart="30"/>
+	<vehicle id="92" type="passenger" route="n30_n41" depart="30"/>
+	<vehicle id="93" type="passenger" route="n41_n30" depart="30"/>
+	<vehicle id="94" type="passenger" route="n30_n41" depart="30"/>
+	<vehicle id="95" type="passenger" route="n41_n30" depart="30"/>
+	<vehicle id="96" type="passenger" route="n30_n41" depart="30"/>
+	<vehicle id="97" type="passenger" route="n41_n30" depart="30"/>
+	<vehicle id="98" type="passenger" route="n30_n41" depart="30"/>
+	<vehicle id="99" type="passenger" route="n41_n30" depart="30"/>
+	<vehicle id="100" type="passenger" route="n30_n41" depart="30"/>
+	<vehicle id="101" type="passenger" route="n41_n30" depart="30"/>
+	<vehicle id="102" type="passenger" route="n30_n41" depart="30"/>
+	<vehicle id="103" type="passenger" route="n41_n30" depart="30"/>
+	<vehicle id="104" type="passenger" route="n30_n41" depart="30"/>
+</routes>

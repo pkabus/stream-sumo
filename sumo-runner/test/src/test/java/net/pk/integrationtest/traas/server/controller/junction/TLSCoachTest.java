@@ -5,12 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
+import net.pk.data.type.E1DetectorValue;
+import net.pk.data.type.EdgeValue;
+import net.pk.data.type.TLSKey;
 import net.pk.integrationtest.traas.TraasIntegrationTest;
-import net.pk.stream.format.E1DetectorValue;
-import net.pk.stream.format.EdgeValue;
 import net.pk.stream.xml.util.TLSManager;
 import net.pk.traas.server.TLSCoach;
-import net.pk.traas.server.TLSKey;
 
 /**
  * Tests the class {@link TLSCoach} and {@link TLSManager}.

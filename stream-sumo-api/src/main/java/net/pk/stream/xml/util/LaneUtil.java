@@ -11,8 +11,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import net.pk.data.type.LaneInformation;
 import net.pk.stream.api.environment.EnvironmentConfig;
-import net.pk.stream.format.LaneInformation;
 
 /**
  * @author peter

@@ -2,11 +2,11 @@ package net.pk.stream.api.conversion.function;
 
 import java.util.function.Function;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.pk.stream.api.environment.EnvironmentConfig;
+import net.pk.data.type.SumoEdge;
+import net.pk.stream.xml.util.EdgeFinder;
 
 /**
  * @author peter
@@ -15,17 +15,16 @@ import net.pk.stream.api.environment.EnvironmentConfig;
 public class ReverseEdgeFunction implements Function<String, String> {
 
 	private Logger log = LoggerFactory.getLogger(getClass());
+	private EdgeFinder edgeFinder = EdgeFinder.getInstance();
 	
 	@Override
 	public String apply(String edgeId) {
-		String separator = EnvironmentConfig.getInstance().getNodeSeparator();
-		
-		String[] nodes = StringUtils.split(edgeId, separator);
-		if (nodes.length != 2) {
-			this.log.info("Cannot find reverse edge for " + edgeId);
+		SumoEdge origin = edgeFinder.byId(edgeId);
+		SumoEdge reverse = edgeFinder.byFromTo(origin.getTo(), origin.getFrom());
+		if (reverse == null) {
+			this.log.debug("No reverse edge for " + edgeId);
 			return null;
 		}
-			return nodes[1] + separator + nodes[0];
+		return reverse.getId();
 	}
-
 }

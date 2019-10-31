@@ -1,12 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <additional>
-	<tlLogic id="n2" type="static" programID="n3_n2" offset="0">
-		<phase duration="60" state="GGGrrr" />
-	</tlLogic>
-	<tlLogic id="n2" type="static" programID="n1_n2" offset="0">
-		<phase duration="60" state="rrGGrr" />
-	</tlLogic>
-	<tlLogic id="n2" type="static" programID="n20_n2" offset="0">
-		<phase duration="60" state="rrrrGG" />
-	</tlLogic>
- 	<timedEvent type="SaveTLSStates" source="n2" dest="localhost:9001"/> 
+    <tlLogic id="n2" offset="0" programID="n1_n2" type="static">
+        <phase duration="60" state="rrGGrr"/>
+    </tlLogic>
+    <tlLogic id="n2" offset="0" programID="n3_n2" type="static">
+        <phase duration="60" state="GGGrrr"/>
+    </tlLogic>
+    <tlLogic id="n2" offset="0" programID="n20_n2" type="static">
+        <phase duration="60" state="rrrrGG"/>
+    </tlLogic>
+    <timedEvent dest="localhost:9001" source="n2" type="SaveTLSStates"/>
 </additional>

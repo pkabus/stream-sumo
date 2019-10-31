@@ -3,6 +3,7 @@ package net.pk.traas.server;
 import java.util.List;
 
 import de.tudresden.sumo.cmd.Trafficlight;
+import net.pk.data.type.TLSKey;
 import net.pk.stream.xml.util.TLSManager;
 
 /**
@@ -38,7 +39,6 @@ public abstract class CoachedServer extends TraasServer {
 			List<String> tlsIds = (List<String>) getConnection().do_job_get(Trafficlight.getIDList());
 			tlsIds.forEach(tlsId -> {
 				TLSKey key = new TLSKey(tlsId);
-				TLSKey.add(key);
 				coachManager.register(new TLSCoach(getConnection(), key));
 			});
 		} catch (Exception e) {

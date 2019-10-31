@@ -2,7 +2,8 @@ package net.pk.stream.api.query;
 
 import java.util.function.Function;
 
-import net.pk.stream.format.AbstractValue;
+import net.pk.data.type.AbstractValue;
+import net.pk.data.type.SumoEdge;
 
 /**
  * Converts something to the id of an (sumo) edge.
@@ -11,6 +12,6 @@ import net.pk.stream.format.AbstractValue;
  *
  * @param <V> generic type extends {@link AbstractValue}
  */
-public interface ToEdgeConverter<V extends AbstractValue> extends Function<V, String> {
+public interface ToEdgeConverter<V extends AbstractValue> extends Function<V, SumoEdge> {
 
 }

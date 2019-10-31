@@ -1,4 +1,4 @@
-package net.pk.stream.format;
+package net.pk.data.type;
 
 /**
  * This factory is responsible for the creation and parsing (xml) of

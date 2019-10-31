@@ -6,12 +6,12 @@ import java.util.List;
 import org.apache.flink.core.fs.FileSystem.WriteMode;
 import org.apache.flink.streaming.api.datastream.DataStream;
 
+import net.pk.data.type.E1DetectorValue;
+import net.pk.data.type.LaneValue;
 import net.pk.stream.api.environment.EngineMode;
 import net.pk.stream.api.environment.EnvironmentConfig;
 import net.pk.stream.flink.function.E1DetectorToEdgeValueMapper;
 import net.pk.stream.flink.function.LaneToEdgeValueMapper;
-import net.pk.stream.format.E1DetectorValue;
-import net.pk.stream.format.LaneValue;
 
 /**
  * @author peter

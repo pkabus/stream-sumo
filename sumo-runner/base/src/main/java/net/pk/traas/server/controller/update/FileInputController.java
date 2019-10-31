@@ -9,8 +9,8 @@ import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 
+import net.pk.data.type.AbstractValue;
 import net.pk.stream.api.environment.EnvironmentConfig;
-import net.pk.stream.format.AbstractValue;
 
 /**
  * Takes care of data stream entries coming from the stream engine. The stream

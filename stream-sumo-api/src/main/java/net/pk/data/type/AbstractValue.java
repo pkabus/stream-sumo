@@ -1,4 +1,4 @@
-package net.pk.stream.format;
+package net.pk.data.type;
 
 /**
  * Abstraction of any kind of sensor data that appears in the simulation.

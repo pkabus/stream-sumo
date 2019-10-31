@@ -5,10 +5,10 @@ import org.apache.flink.streaming.connectors.cassandra.CassandraSink.CassandraSi
 
 import com.datastax.driver.mapping.Mapper;
 
+import net.pk.data.type.AbstractValue;
+import net.pk.data.type.Loggable;
 import net.pk.db.cassandra.config.DbConfig;
 import net.pk.stream.flink.Streamable;
-import net.pk.stream.format.AbstractValue;
-import net.pk.stream.format.Loggable;
 
 /**
  * @author peter

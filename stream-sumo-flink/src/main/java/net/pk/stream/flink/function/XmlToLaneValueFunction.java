@@ -5,8 +5,8 @@ import java.util.List;
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.util.Collector;
 
-import net.pk.stream.format.LaneValue;
-import net.pk.stream.format.LaneValueFactory;
+import net.pk.data.type.LaneValue;
+import net.pk.data.type.LaneValueFactory;
 
 /**
  * Convert function. Takes a xml stream and converts it to a {@link LaneValue}

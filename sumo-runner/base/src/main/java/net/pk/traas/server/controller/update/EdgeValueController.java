@@ -10,11 +10,12 @@ import java.util.concurrent.ExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.pk.stream.format.AbstractValue;
-import net.pk.stream.format.EdgeValue;
+import net.pk.data.type.AbstractValue;
+import net.pk.data.type.EdgeValue;
+import net.pk.data.type.TLSKey;
+import net.pk.stream.xml.util.TLSFinder;
 import net.pk.traas.api.tracker.job.AbstractJob;
 import net.pk.traas.api.tracker.job.ReaderJob;
-import net.pk.traas.server.TLSKey;
 
 /**
  * This file driven controller takes care of values of type {@link EdgeValue}.
@@ -24,6 +25,7 @@ import net.pk.traas.server.TLSKey;
  */
 public class EdgeValueController extends FileInputController<EdgeValue> {
 
+	private TLSFinder tlsFinder;
 	private Logger log;
 	private ConcurrentHashMap<TLSKey, EdgeValue> mostRecentValues;
 
@@ -34,6 +36,7 @@ public class EdgeValueController extends FileInputController<EdgeValue> {
 		super(EdgeValue.class);
 		this.mostRecentValues = new ConcurrentHashMap<TLSKey, EdgeValue>();
 		this.log = LoggerFactory.getLogger(getClass());
+		this.tlsFinder = TLSFinder.getInstance();
 	}
 
 	@Override
@@ -42,8 +45,8 @@ public class EdgeValueController extends FileInputController<EdgeValue> {
 		try {
 			Collection<EdgeValue> fromFile = readerJob.start();
 			fromFile.stream() //
-					.filter(eVal -> eVal.greaterThan(mostRecentValues.get(TLSKey.findByEdgeId(eVal.getId())))) //
-					.forEach(eVal -> mostRecentValues.put(TLSKey.findByEdgeId(eVal.getId()), eVal));
+					.filter(eVal -> eVal.greaterThan(mostRecentValues.get(tlsFinder.bySumoEdgeId(eVal.getId())))) //
+					.forEach(eVal -> mostRecentValues.put(tlsFinder.bySumoEdgeId(eVal.getId()), eVal));
 		} catch (IOException | InterruptedException | ExecutionException e) {
 			this.log.error("ERR in update()", e);
 		}
@@ -64,7 +67,7 @@ public class EdgeValueController extends FileInputController<EdgeValue> {
 	 * @param v object to remove
 	 */
 	public void remove(final EdgeValue v) {
-		this.mostRecentValues.remove(TLSKey.findByEdgeId(v.getId()));
+		this.mostRecentValues.remove(tlsFinder.bySumoEdgeId(v.getId()));
 	}
 
 }

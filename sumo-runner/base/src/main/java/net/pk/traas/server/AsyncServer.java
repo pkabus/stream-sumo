@@ -3,7 +3,7 @@ package net.pk.traas.server;
 import java.util.List;
 
 import de.tudresden.sumo.cmd.Simulation;
-import net.pk.stream.format.EdgeValue;
+import net.pk.data.type.EdgeValue;
 import net.pk.traas.server.controller.update.EdgeValueController;
 
 /**

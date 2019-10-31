@@ -3,7 +3,7 @@ package net.pk.traas.api.tracker;
 import java.io.IOException;
 import java.util.List;
 
-import net.pk.stream.format.AbstractValue;
+import net.pk.data.type.AbstractValue;
 
 /**
  * Abstraction layer for tracker implementations. A tracker reads from a file

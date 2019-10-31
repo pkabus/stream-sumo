@@ -2,7 +2,7 @@ package net.pk.stream.xml.util;
 
 import java.util.HashMap;
 
-import net.pk.stream.format.LaneInformation;
+import net.pk.data.type.LaneInformation;
 
 /**
  * @author peter

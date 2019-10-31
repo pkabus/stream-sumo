@@ -9,14 +9,14 @@ import org.slf4j.LoggerFactory;
 
 import de.tudresden.sumo.cmd.Simulation;
 import it.polito.appeal.traci.SumoTraciConnection;
+import net.pk.data.type.E1DetectorValue;
+import net.pk.data.type.LaneValue;
+import net.pk.data.type.TLSValue;
 import net.pk.stream.api.environment.EnvironmentConfig;
 import net.pk.stream.flink.job.E1DetectorValueStream;
 import net.pk.stream.flink.job.Emitter;
 import net.pk.stream.flink.job.LaneValueStream;
 import net.pk.stream.flink.job.TLSValueStream;
-import net.pk.stream.format.E1DetectorValue;
-import net.pk.stream.format.LaneValue;
-import net.pk.stream.format.TLSValue;
 
 /**
  * Abstract class that is defining the TraCI lifecycle for the scenarios. Starts

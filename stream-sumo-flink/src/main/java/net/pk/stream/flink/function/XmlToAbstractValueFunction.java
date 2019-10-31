@@ -3,10 +3,10 @@ package net.pk.stream.flink.function;
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.util.Collector;
 
+import net.pk.data.type.AbstractValue;
+import net.pk.data.type.E1DetectorValue;
+import net.pk.data.type.ValueFactoryFinder;
 import net.pk.stream.flink.converter.ConvertPlainText;
-import net.pk.stream.format.AbstractValue;
-import net.pk.stream.format.E1DetectorValue;
-import net.pk.stream.format.ValueFactoryFinder;
 
 /**
  * {@link FlatMapFunction}, that maps a text line to a {@link E1DetectorValue}.

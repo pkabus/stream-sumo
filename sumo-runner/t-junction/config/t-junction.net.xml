@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on Mo 14 Okt 2019 11:38:41 CEST by Eclipse SUMO netedit Version v1_1_0+1526-08c2293b1a
+<!-- generated on Di 29 Okt 2019 11:53:08 CET by Eclipse SUMO netedit Version v1_1_0+1526-08c2293b1a
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
-        <sumo-net-file value="config/t-junction.net.xml"/>
+        <sumo-net-file value="t-junction.net.xml"/>
     </input>
 
     <output>
-        <output-file value="config/t-junction.net.xml"/>
+        <output-file value="t-junction.net.xml"/>
     </output>
 
     <processing>

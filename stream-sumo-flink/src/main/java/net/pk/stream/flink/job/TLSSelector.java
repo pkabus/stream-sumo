@@ -2,7 +2,7 @@ package net.pk.stream.flink.job;
 
 import org.apache.flink.api.java.functions.KeySelector;
 
-import net.pk.stream.format.TLSAssociated;
+import net.pk.data.type.TLSAssociated;
 
 /**
  * @author peter

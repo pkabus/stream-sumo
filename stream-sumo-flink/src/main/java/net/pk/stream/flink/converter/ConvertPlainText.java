@@ -3,11 +3,11 @@ package net.pk.stream.flink.converter;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 
+import net.pk.data.type.E1DetectorValue;
+import net.pk.data.type.LaneValue;
+import net.pk.data.type.TLSValue;
 import net.pk.stream.flink.function.XmlToAbstractValueFunction;
 import net.pk.stream.flink.function.XmlToLaneValueFunction;
-import net.pk.stream.format.E1DetectorValue;
-import net.pk.stream.format.LaneValue;
-import net.pk.stream.format.TLSValue;
 
 /**
  * Converts a plain text stream to a {@link E1DetectorValue} stream.
