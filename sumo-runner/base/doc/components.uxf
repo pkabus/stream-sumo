@@ -7,7 +7,7 @@ bg=red</help_text>
     <id>Relation</id>
     <coordinates>
       <x>488</x>
-      <y>264</y>
+      <y>192</y>
       <w>96</w>
       <h>80</h>
     </coordinates>
@@ -20,7 +20,7 @@ m2=provide ports
     <id>Relation</id>
     <coordinates>
       <x>480</x>
-      <y>328</y>
+      <y>256</y>
       <w>104</w>
       <h>88</h>
     </coordinates>
@@ -32,34 +32,34 @@ m1=require ports
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>184</x>
-      <y>368</y>
-      <w>264</w>
-      <h>112</h>
+      <x>328</x>
+      <y>392</y>
+      <w>120</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=[&lt;]-()
 m2=provide file
 </panel_attributes>
-    <additional_attributes>310.0;120.0;10.0;120.0;10.0;10.0</additional_attributes>
+    <additional_attributes>130.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>176</x>
-      <y>304</y>
-      <w>88</w>
+      <x>208</x>
+      <y>352</y>
+      <w>136</w>
       <h>80</h>
     </coordinates>
     <panel_attributes>lt=)-[^]
 m1=require file
 </panel_attributes>
-    <additional_attributes>20.0;70.0;20.0;10.0</additional_attributes>
+    <additional_attributes>140.0;70.0;10.0;70.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>384</x>
-      <y>120</y>
+      <y>48</y>
       <w>128</w>
       <h>72</h>
     </coordinates>
@@ -72,31 +72,30 @@ m2=provide ports
     <id>Relation</id>
     <coordinates>
       <x>272</x>
-      <y>112</y>
+      <y>40</y>
       <w>128</w>
-      <h>80</h>
+      <h>88</h>
     </coordinates>
     <panel_attributes>lt=[v]-(
 m1=require ports
 </panel_attributes>
-    <additional_attributes>10.0;80.0;10.0;20.0;130.0;20.0</additional_attributes>
+    <additional_attributes>10.0;90.0;10.0;20.0;130.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>104</x>
-      <y>176</y>
-      <w>224</w>
-      <h>136</h>
+      <x>120</x>
+      <y>112</y>
+      <w>200</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>symbol=component
 Sumo Runner
 --
 Responsibilities
 -- Configure SUMO
--- Configure SUMO Logging
+-- Configure SUMO Output
 -- Run SUMO
--- Read from file
 -- Make TraCI changes</panel_attributes>
     <additional_attributes/>
   </element>
@@ -104,7 +103,7 @@ Responsibilities
     <id>UMLGeneric</id>
     <coordinates>
       <x>432</x>
-      <y>176</y>
+      <y>104</y>
       <w>192</w>
       <h>96</h>
     </coordinates>
@@ -120,7 +119,7 @@ Responsibilities
     <id>UMLGeneric</id>
     <coordinates>
       <x>432</x>
-      <y>400</y>
+      <y>328</y>
       <w>192</w>
       <h>104</h>
     </coordinates>
@@ -133,5 +132,34 @@ Responsibilities
 -- Querying
 -- Write to file</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>120</x>
+      <y>280</y>
+      <w>200</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+File Watch Service
+--
+Responsibilities
+-- Watch file
+-- Notify Sumo Runner</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>208</x>
+      <y>216</y>
+      <w>80</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=-
+updates ^
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
   </element>
 </diagram>
