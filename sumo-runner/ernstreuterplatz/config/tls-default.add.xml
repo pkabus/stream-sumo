@@ -48,4 +48,9 @@
         <phase duration="3"  state="rrrrryyyrrryyrrrr"/>
     </tlLogic>
 
+	<timedEvent type="SaveTLSSwitchStates" source="cluster_21487143_4911322575_654381305" dest="Ernstreuterplatz_TLS_Switches.xml"/>
+	<timedEvent type="SaveTLSSwitchStates" source="cluster_21487144_4911322569_654381390" dest="Ernstreuterplatz_TLS_Switches.xml"/>
+	<timedEvent type="SaveTLSSwitchStates" source="cluster_21487142_251106773_251150123_26785753_4911322581_4911322583_667945032_667945033" dest="Ernstreuterplatz_TLS_Switches.xml"/>
+	<timedEvent type="SaveTLSSwitchStates" source="joinedS_0" dest="Ernstreuterplatz_TLS_Switches.xml"/>
+	<timedEvent type="SaveTLSSwitchStates" source="joinedS_1" dest="Ernstreuterplatz_TLS_Switches.xml"/>
 </additionals>
