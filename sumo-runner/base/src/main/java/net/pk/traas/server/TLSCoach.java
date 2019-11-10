@@ -32,6 +32,7 @@ public class TLSCoach implements Observer, TLS {
 	private String nextProgram;
 	private double nextProgramScheduledTimestep = -1;
 	private double minChangeInterval = TraasServer.MIN_TLS_CYCLE;
+	private int numberOfSwitches = 0;
 
 	private Logger log;
 
@@ -158,6 +159,7 @@ public class TLSCoach implements Observer, TLS {
 		}
 
 		this.log.info("[" + nextProgramScheduledTimestep + "] Switched " + tls + " to " + this.nextProgram);
+		this.numberOfSwitches++;
 		this.program = nextProgram;
 		this.lastChangeTimestep = c;
 		this.nextProgram = null;
@@ -202,5 +204,12 @@ public class TLSCoach implements Observer, TLS {
 	@Override 
 	public int hashCode() {
 	  return this.tls.hashCode();
+	}
+	
+	/**
+	 * @return
+	 */
+	public int getNumberOfSwitches() {
+		return this.numberOfSwitches;
 	}
 }

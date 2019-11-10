@@ -2,6 +2,7 @@ package net.pk.traas.server;
 
 import java.io.IOException;
 import java.util.Observable;
+import java.util.Set;
 
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.slf4j.Logger;
@@ -12,11 +13,14 @@ import it.polito.appeal.traci.SumoTraciConnection;
 import net.pk.data.type.E1DetectorValue;
 import net.pk.data.type.LaneValue;
 import net.pk.data.type.TLSValue;
+import net.pk.stream.api.environment.EngineMode;
 import net.pk.stream.api.environment.EnvironmentConfig;
 import net.pk.stream.flink.job.E1DetectorValueStream;
 import net.pk.stream.flink.job.Emitter;
 import net.pk.stream.flink.job.LaneValueStream;
 import net.pk.stream.flink.job.TLSValueStream;
+import net.pk.stream.xml.util.TLS;
+import net.pk.stream.xml.util.TLSManager;
 
 /**
  * Abstract class that is defining the TraCI lifecycle for the scenarios. Starts
@@ -122,8 +126,8 @@ public abstract class TraasServer extends Observable {
 	 */
 	public void startupComponents() {
 		/*** FIRST: START SUMO SERVER TO ATTACH SOCAT PORT ***/
-		getConnection().addOption("step-length", "0.1");
-		getConnection().addOption("start", "true");
+		connection.addOption("step-length", "0.1");
+		connection.addOption("start", "true");
 		// start Traci Server
 		try {
 			connection.runServer();
@@ -150,8 +154,13 @@ public abstract class TraasServer extends Observable {
 		try {
 			doSimulation();
 
-			/*** FOURTH: LOG FINISHING TIME ***/
+			/*** FOURTH: LOG FINISHING TIME AND STATISTICS ***/
 			this.log.info("Finished at timestep " + connection.do_job_get(Simulation.getTime()));
+			if (config.getEngineMode() != EngineMode.STATIC) {
+				Set<TLS> tls = TLSManager.getInstance().all();
+				this.log.info("Number of TLS Switches: " + tls.stream().filter(o -> o instanceof TLSCoach)
+						.mapToInt(o -> ((TLSCoach) o).getNumberOfSwitches()).sum());
+			}
 
 		} catch (Exception e) {
 			throw new RuntimeException(e);

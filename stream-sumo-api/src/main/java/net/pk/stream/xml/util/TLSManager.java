@@ -26,7 +26,7 @@ import net.pk.stream.api.query.E1DetectorValueToEdgeConverter;
 public class TLSManager {
 
 	private static TLSManager instance;
-	
+
 	private TLSFinder tlsFinder;
 	private EdgeFinder edgeFinder;
 	private Set<TLS> set;
@@ -89,13 +89,13 @@ public class TLSManager {
 		if (edge == null) {
 			return null;
 		}
-		
+
 		TLSKey tlsKey = tlsFinder.bySumoEdge(edge);
-		
+
 		if (tlsKey == null) {
 			return null;
 		}
-		
+
 		TLS coach = set.stream().filter(c -> StringUtils.equals(tlsKey.getId(), c.getTlsId())).findFirst()
 				.orElseThrow(() -> new RuntimeException("No TLS registered that is responsible for the given value + "
 						+ value + ". The wanted delegate should be associated with the id = " + value.getId()));
@@ -125,15 +125,14 @@ public class TLSManager {
 		if (edge == null) {
 			return null;
 		}
-		
+
 		TLSKey tlsKey = tlsFinder.bySumoEdge(edge);
 		if (tlsKey == null) {
 			return null;
 		}
-		
-		TLS coach = set.stream()
-				.filter(c -> StringUtils.equals(tlsKey.getId(), c.getTlsId()))
-				.findFirst().orElseGet(() -> null);
+
+		TLS coach = set.stream().filter(c -> StringUtils.equals(tlsKey.getId(), c.getTlsId())).findFirst()
+				.orElseGet(() -> null);
 
 		cache.put(value.getId(), coach);
 		return coach;
@@ -153,22 +152,28 @@ public class TLSManager {
 		}
 
 		// if not cached, get delegate, put it to cache and return the delegate
-		
+
 		SumoEdge edge = new E1DetectorValueToEdgeConverter().apply(value);
 		if (edge == null) {
 			return null;
 		}
-		
+
 		TLSKey tlsKey = tlsFinder.bySumoEdge(edge);
-		TLS coach = set.stream()
-				.filter(c -> StringUtils.equals(tlsKey.getId(), c.getTlsId()))
-				.findFirst()
+		TLS coach = set.stream().filter(c -> StringUtils.equals(tlsKey.getId(), c.getTlsId())).findFirst()
 				.orElseThrow(() -> new RuntimeException("No TLS registered that is responsible for the given value + "
 						+ value + ". SumoEdge " + edge + " could not be found in " + set));
 
 		cache.put(value.getId(), coach);
 		return coach;
 	}
-	
-	
+
+	/**
+	 * Returns all the {@link TLS} objects of the current network.
+	 * 
+	 * @return set of {@link TLS}
+	 */
+	public Set<TLS> all() {
+		return set;
+	}
+
 }

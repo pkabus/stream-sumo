@@ -65,7 +65,6 @@ public class LaneValueStream extends WindowedStreamJob {
 				.keyBy(new TLSSelector<LaneValue>())
 				.timeWindow(Time.seconds(4), Time.milliseconds(500)) //
 				.reduce((v1, v2) -> v1.getPosDistrib() > v2.getPosDistrib() + LaneValue.EPSILON ? v1 : v2);
-		stream.print();
 	}
 
 	@Override
