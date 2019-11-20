@@ -1,6 +1,8 @@
 package net.pk.stream.xml.util;
 
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
@@ -26,7 +28,9 @@ import net.pk.stream.api.environment.EnvironmentConfig;
 public class JunctionUtil {
 
 	private final static Logger LOG = LoggerFactory.getLogger(JunctionUtil.class);
-
+	
+	private static Map<String, String> redYellowGreenStateMap = new HashMap<>();
+	
 	/**
 	 * Returns the green-yellow-red state (as a string representation) of the tls
 	 * and program of the given ids in the given phase. Usually, TLS programs
@@ -38,6 +42,13 @@ public class JunctionUtil {
 	 * @return the green-yellow-red state string representation
 	 */
 	public static String getRedYellowGreenState(final String tlsId, final String programId, final int phase) {
+		String key = tlsId + "_" + programId + "_" + phase;
+		
+		if (redYellowGreenStateMap.containsKey(key)) {
+			LOG.debug("Using JunctionUtil cache for " + key);
+			return redYellowGreenStateMap.get(key);
+		}
+		
 		EnvironmentConfig conf = EnvironmentConfig.getInstance();
 		Document tlsDocument = DocumentDelivery
 				.getDocument(Paths.get(conf.getConfigFileDir(), EnvironmentConfig.ADD_TLS_FILE));
@@ -57,6 +68,8 @@ public class JunctionUtil {
 					"Expression " + xPath + " is supposed to have a single result, but has " + nodes.getLength());
 		}
 
-		return ((Element) nodes.item(0)).getAttribute("state");
+		String value = ((Element) nodes.item(0)).getAttribute("state");
+		redYellowGreenStateMap.put(key, value);
+		return value;
 	}
 }

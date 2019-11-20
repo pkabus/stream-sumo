@@ -77,7 +77,9 @@ public class TLSCoach implements Observer, TLS {
 		}
 
 		String programId = EDGE_PROGRAM_FUNCTION.apply(edgeValue);
-		boolean eval = !StringUtils.equals(program, programId)
+		String newState = JunctionUtil.getRedYellowGreenState(this.tls.getId(), programId, 0);
+		String currentState = this.program != null ? JunctionUtil.getRedYellowGreenState(this.tls.getId(), this.program, 0) : null;
+		boolean eval = !StringUtils.equals(program, programId) && !StringUtils.equals(currentState, newState)
 				&& this.lastChangeTimestep + this.minChangeInterval < currentTimestep;
 		if (eval) {
 			this.nextProgram = programId;
