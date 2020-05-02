@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on Fr 10 Jan 2020 14:23:55 CET by Eclipse SUMO GUI Version v1_1_0+1526-08c2293b1a
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="/home/peter/master/modules/sumo-runner/ernstreuterplatz/config/ernstreuterplatz.net.xml"/>
+        <route-files value="/home/peter/master/modules/sumo-runner/ernstreuterplatz/config/ernstreuterplatz.rou.xml"/>
+        <additional-files value="/home/peter/master/modules/sumo-runner/ernstreuterplatz/config/tls.add.xml,/home/peter/master/modules/sumo-runner/ernstreuterplatz/config/e1detector.add.xml"/>
+    </input>
+
+    <output>
+        <netstate-dump value="localhost:9002"/>
+    </output>
+
+    <time>
+        <step-length value="0.1"/>
+    </time>
+
+    <processing>
+        <time-to-teleport value="-1"/>
+    </processing>
+
+    <traci_server>
+        <remote-port value="45387"/>
+    </traci_server>
+
+    <random_number>
+        <seed value="0"/>
+    </random_number>
+
+    <gui_only>
+        <gui-settings-file value="/home/peter/master/modules/sumo-runner/ernstreuterplatz/config/settings.xml"/>
+        <start value="true"/>
+        <tracker-interval value="0.1"/>
+    </gui_only>
+
+</configuration>

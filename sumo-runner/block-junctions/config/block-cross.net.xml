@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on Mi 04 Sep 2019 18:07:01 CEST by Eclipse SUMO netedit Version v1_1_0+1526-08c2293b1a
+<!-- generated on Di 12 Nov 2019 12:09:25 CET by Eclipse SUMO netedit Version v1_1_0+1526-08c2293b1a
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
-        <sumo-net-file value="block-cross.net.xml"/>
+        <sumo-net-file value="/home/peter/master/modules/sumo-runner/block-junctions/config/block-cross.net.xml"/>
     </input>
 
     <output>
-        <output-file value="block-cross.net.xml"/>
+        <output-file value="/home/peter/master/modules/sumo-runner/block-junctions/config/block-cross.net.xml"/>
     </output>
 
     <processing>
@@ -27,6 +27,10 @@
     <pedestrian>
         <walkingareas value="false"/>
     </pedestrian>
+
+    <visualisation>
+        <registry-viewport value="true"/>
+    </visualisation>
 
 </configuration>
 -->

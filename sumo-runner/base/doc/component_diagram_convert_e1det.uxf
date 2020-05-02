@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <help_text>imulation
+bg=red</help_text>
+  <zoom_level>11</zoom_level>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>286</x>
+      <y>176</y>
+      <w>726</w>
+      <h>308</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+convert</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>0</x>
+      <y>88</y>
+      <w>1518</w>
+      <h>33</h>
+    </coordinates>
+    <panel_attributes>&lt;interval begin="57.0" end="58.0" id="e1Detector-n4_1_n4-0" nVehContrib="0" flow="0.0" occupancy="100.0" speed="-1.0" harmonicMeanSpeed="-1.0" length="-1.0" nVehEntered="0" /&gt;
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>594</x>
+      <y>110</y>
+      <w>99</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=-[v]
+in: String</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>792</x>
+      <y>429</y>
+      <w>33</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>lt=.[v]</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>605</x>
+      <y>286</y>
+      <w>154</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=-
+creates &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;120.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>462</x>
+      <y>165</y>
+      <w>165</w>
+      <h>121</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;60.0;130.0;60.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>297</x>
+      <y>264</y>
+      <w>319</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>:E1DetectorValueFactory
+--
+#create(): E1DetectorValue
+#parseXML(in: String): E1DetectorValue
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>792</x>
+      <y>473</y>
+      <w>143</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=-
+out: TLSValue</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>737</x>
+      <y>209</y>
+      <w>220</w>
+      <h>231</h>
+    </coordinates>
+    <panel_attributes>E1DetectorValue
+--
+id: String
+begin: float
+end: float
+nVehContrib: int
+nVehEntered: int
+flow: float
+occupancy: float
+speed: float
+harmonicMeanSpeed: float
+length: float
+tls: String</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
