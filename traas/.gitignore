@@ -1,0 +1,10 @@
+target/
+build/
+bin/
+dist/
+release/
+.classpath
+*.class
+*.jar
+.project
+.settings/

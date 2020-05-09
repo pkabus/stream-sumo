@@ -8,3 +8,4 @@ target/
 detector-value.csv
 testfile
 *-value.xml
+*.out.txt
